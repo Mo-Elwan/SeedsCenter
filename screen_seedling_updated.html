@@ -1,0 +1,1939 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نظام إدارة وتكويد الشتلات الزراعية</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Tahoma, Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #333333;
+      direction: rtl;
+      text-align: right;
+      padding: 16px 24px;
+    }
+
+    .page-container {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      max-width: 1380px;
+      margin: 0 auto;
+    }
+
+    /* Top Bar */
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 24px;
+      background: #ffffff;
+    }
+
+    .page-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-import {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: #15803d;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-import:hover { background-color: #166534; }
+
+    .btn-save {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: #0f172a;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 18px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-save:hover { background-color: #1e293b; }
+
+    .divider {
+      height: 1px;
+      background-color: #e5e7eb;
+      width: 100%;
+    }
+
+    /* Tabs Bar */
+    .tabs-nav {
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      gap: 28px;
+      overflow-x: auto;
+    }
+
+    .tab-link {
+      padding: 16px 6px 14px 6px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #4b5563;
+      text-decoration: none;
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tab-link:hover { color: #111827; }
+    .tab-link.active {
+      color: #111827;
+      font-weight: 700;
+      border-bottom: 3px solid #16a34a;
+    }
+    .tab-link.highlight-tab {
+      color: #0369a1;
+      font-weight: 700;
+    }
+    .tab-link.highlight-tab.active {
+      color: #0284c7;
+      border-bottom-color: #0284c7;
+    }
+
+    /* Content Panels */
+    .tab-content-panel {
+      padding: 24px;
+      display: none;
+    }
+    .tab-content-panel.active {
+      display: block;
+    }
+
+    .section-banner {
+      background-color: #eef8f1;
+      border: 1px solid #e1f2e6;
+      border-radius: 6px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .section-banner.blue-banner {
+      background-color: #f0f9ff;
+      border-color: #bae6fd;
+    }
+
+    .section-banner-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #15803d;
+    }
+    .blue-banner .section-banner-title {
+      color: #0369a1;
+    }
+
+    /* Form Grid */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 24px;
+      row-gap: 20px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+    }
+
+    .field-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .field-label .asterisk {
+      color: #dc2626;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .field-label .tag-badge {
+      font-size: 10px;
+      font-weight: normal;
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-right: 4px;
+    }
+
+    .field-input, .field-select {
+      height: 40px;
+      padding: 8px 12px;
+      font-size: 13px;
+      color: #1f2937;
+      background-color: #ffffff;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      font-family: inherit;
+    }
+
+    .field-input:focus, .field-select:focus {
+      border-color: #16a34a;
+      box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.15);
+    }
+    .blue-focus:focus {
+      border-color: #0284c7 !important;
+      box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15) !important;
+    }
+
+    .field-input[readonly], .field-input:disabled {
+      background-color: #f8fafc;
+      color: #475569;
+      cursor: not-allowed;
+    }
+
+    .field-input.code-highlight {
+      font-family: 'Courier New', monospace;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 2px;
+      background-color: #f0fdf4;
+      color: #15803d;
+      border-color: #86efac;
+      text-align: center;
+    }
+
+    .field-input.serial-highlight {
+      font-family: 'Courier New', monospace;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 2px;
+      background-color: #eff6ff;
+      color: #1d4ed8;
+      border-color: #93c5fd;
+      text-align: center;
+    }
+
+    /* Custom Search Select */
+    .search-select-box {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-select-trigger {
+      height: 40px;
+      padding: 8px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-size: 13px;
+      color: #1f2937;
+    }
+
+    .search-select-trigger:after {
+      content: "";
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid #6b7280;
+    }
+
+    .search-select-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      z-index: 50;
+      display: none;
+    }
+
+    .search-select-dropdown.open {
+      display: block;
+    }
+
+    .search-select-search-input {
+      width: calc(100% - 16px);
+      margin: 8px;
+      height: 34px;
+      padding: 6px 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      font-size: 12px;
+      outline: none;
+    }
+    .search-select-search-input:focus {
+      border-color: #16a34a;
+    }
+
+    .search-select-options {
+      max-height: 180px;
+      overflow-y: auto;
+      list-style: none;
+    }
+
+    .search-select-option {
+      padding: 10px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .search-select-option:hover {
+      background-color: #f0fdf4;
+      color: #15803d;
+    }
+
+    .search-select-option .option-code {
+      font-family: monospace;
+      font-size: 12px;
+      color: #4b5563;
+      font-weight: 600;
+    }
+
+    /* شريط معلومات الدفعة الموحد والأنيق */
+    .batch-unified-bar {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      margin-bottom: 20px;
+    }
+
+    .batch-bar-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .batch-bar-lbl {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .batch-bar-val {
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .batch-bar-val.highlight-green {
+      color: #15803d;
+    }
+
+    .batch-bar-val.text-slate {
+      color: #334155;
+    }
+
+    .batch-bar-sub {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .batch-serial-tag {
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      font-weight: 800;
+      color: #0369a1;
+      background: #e0f2fe;
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid #bae6fd;
+    }
+
+    .qty-modern-input {
+      width: 100px;
+      height: 38px;
+      border: 2px solid #0284c7;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 800;
+      text-align: center;
+      color: #0f172a;
+      outline: none;
+      background: #f0f9ff;
+    }
+    .qty-modern-input:focus {
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2);
+    }
+
+    /* محول التبويب الحديث لاختيار نوع المستفيد (Segmented Control) */
+    .segmented-control {
+      display: flex;
+      background: #e2e8f0;
+      padding: 3px;
+      border-radius: 6px;
+      gap: 2px;
+      border: 1px solid #cbd5e1;
+    }
+
+    .segmented-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #475569;
+      background: transparent;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .segmented-btn:hover {
+      color: #0f172a;
+    }
+
+    .segmented-btn.active {
+      background: #ffffff;
+      color: #0284c7;
+      font-weight: 700;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .nic-container {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 18px;
+      grid-column: span 3;
+      margin-top: 4px;
+    }
+
+    .nic-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .nic-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nic-badge {
+      background: #0284c7;
+      color: #fff;
+      font-size: 10px;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .nic-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 130px 2fr;
+      gap: 16px;
+      align-items: flex-end;
+    }
+
+    .btn-nic-verify {
+      height: 40px;
+      background: #0284c7;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .btn-nic-verify:hover { background: #0369a1; }
+
+    .verification-status {
+      font-size: 11px;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Map Box */
+    .map-container-box {
+      grid-column: span 3;
+      margin-top: 10px;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .map-header {
+      background: #f8fafc;
+      padding: 12px 16px;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .map-coords-display {
+      font-family: monospace;
+      font-size: 12px;
+      color: #15803d;
+      background: #eef8f1;
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid #bbf7d0;
+    }
+
+    .map-canvas-wrapper {
+      position: relative;
+      height: 300px;
+      width: 100%;
+      background: #e5f0ea;
+      cursor: crosshair;
+      overflow: hidden;
+    }
+
+    #custom-map-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .map-hint-overlay {
+      position: absolute;
+      bottom: 10px;
+      right: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 11px;
+      color: #334155;
+      pointer-events: none;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .map-region-tag {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 5px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+    /* Tab 2: Issue Summary */
+    .issue-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 14px 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+
+    .stat-card-title {
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+
+    .stat-card-val {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f172a;
+      font-family: 'Courier New', monospace;
+    }
+
+    .stat-card-sub {
+      font-size: 11px;
+      color: #15803d;
+      margin-top: 4px;
+    }
+
+    /* Batch Range Box */
+    .range-box {
+      background: #f0fdf4;
+      border: 1.5px dashed #86efac;
+      border-radius: 6px;
+      padding: 18px 24px;
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .range-code-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .range-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #166534;
+    }
+
+    .range-code {
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #14532d;
+      background: #ffffff;
+      padding: 6px 14px;
+      border-radius: 4px;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* Success Alert Message Box */
+    .success-alert-banner {
+      background: #dcfce7;
+      border: 1.5px solid #22c55e;
+      border-radius: 6px;
+      padding: 14px 20px;
+      margin: 16px 0;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      animation: slideDown 0.3s ease-in-out;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .table-container {
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 16px;
+      background: #ffffff;
+    }
+
+    .barcode-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: right;
+      font-size: 13px;
+    }
+
+    .barcode-table th {
+      background: #f8fafc;
+      padding: 10px 14px;
+      font-weight: 700;
+      color: #475569;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .barcode-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+    }
+
+    .barcode-table tr:hover td {
+      background-color: #f8fafc;
+    }
+
+    /* Thermal Label Preview Card */
+    .label-preview-card {
+      background: #ffffff;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    .label-header {
+      font-size: 11px;
+      font-weight: 700;
+      color: #4b5563;
+      margin-bottom: 4px;
+    }
+
+    .label-fruit-variety {
+      font-size: 15px;
+      font-weight: 800;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+
+    .label-code {
+      font-family: 'Courier New', monospace;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: #15803d;
+      margin-bottom: 10px;
+      background: #eef8f1;
+      padding: 4px 12px;
+      border-radius: 4px;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* Reliable SVG QR Code Box */
+    .qr-svg-box {
+      width: 124px;
+      height: 124px;
+      margin-bottom: 10px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-svg-box svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .btn-action-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background-color: #0284c7;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 22px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-action-primary:hover { background-color: #0369a1; }
+
+    .btn-action-green {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background-color: #15803d;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 11px 24px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      animation: pulseGreen 1.5s infinite;
+    }
+    .btn-action-green:hover { background-color: #166534; }
+
+    @keyframes pulseGreen {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); }
+    }
+
+    @media (max-width: 900px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .nic-grid { grid-template-columns: 1fr; }
+      .issue-summary-grid { grid-template-columns: 1fr 1fr; }
+      .range-box { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-container">
+    
+    <!-- Top Header -->
+    <div class="top-header">
+      <div>
+        <div class="page-title">إدارة وتكويد الشتلات الزراعية</div>
+        <div style="font-size:12px;color:#64748b;margin-top:2px;">المركز الوطني للبذور والتقاوي - نظام التتبع والإنتاج الزراعي</div>
+      </div>
+      <div class="top-actions">
+        <a href="index.html" style="display:inline-flex; align-items:center; gap:6px; background:#f1f5f9; color:#334155; font-size:13px; font-weight:600; padding:8px 14px; border:1px solid #cbd5e1; border-radius:4px; text-decoration:none; transition:all 0.2s;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          <span>الرئيسية والبحث</span>
+        </a>
+        <button class="btn-import" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>استيراد سجلات</span>
+        </button>
+        <button class="btn-save" type="button" onclick="saveRecord()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+          <span>حفظ البيانات</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Tabs Bar -->
+    <nav class="tabs-nav">
+      <div class="tab-link active" id="tab-link-profile" onclick="switchTab('tab-profile')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+        <span>الملف التعريفي للشتلة</span>
+      </div>
+
+      <div class="tab-link highlight-tab" id="tab-link-issue" onclick="switchTab('tab-issue')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="8" x2="7" y2="8.01"/><line x1="11" y1="8" x2="17" y2="8"/><polyline points="8 12 12 16 16 12"/></svg>
+        <span>إصدار باركود الشتلات والصرف</span>
+      </div>
+
+      <div class="tab-link" id="tab-link-history" onclick="switchTab('tab-history')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+        <span>سجل الشتلات المصدرة</span>
+      </div>
+    </nav>
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- التاب الأول: الملف التعريفي للشتلة (PM-01-12) -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <div id="tab-profile" class="tab-content-panel active">
+      
+      <div class="section-banner">
+        <span class="section-banner-title">بيانات الملف التعريفي للصنف (رمز النوع - رقم الصنف - رمز المنطقة)</span>
+        <span style="font-size:12px;color:#15803d;font-weight:700;">الكود المعتمد: PM-01-12</span>
+      </div>
+
+      <!-- Form Grid -->
+      <form class="form-grid" onsubmit="event.preventDefault();">
+
+        <!-- 1. الرقم التعريفي الأساسي -->
+        <div class="form-field">
+          <label class="field-label">
+            <span>الرقم التعريفي المعتمد للصنف</span>
+            <span class="asterisk">*</span>
+            <span class="tag-badge">رمز النوع - رقم الصنف - رمز المنطقة</span>
+          </label>
+          <input type="text" id="profile-code-input" class="field-input code-highlight" value="PM-01-12" readonly />
+        </div>
+
+        <!-- 2. نوع الفاكهة -->
+        <div class="form-field">
+          <label class="field-label">
+            <span>نوع الفاكهة</span>
+            <span class="asterisk">*</span>
+          </label>
+          <div class="search-select-box">
+            <div class="search-select-trigger" onclick="toggleDropdown('profile-fruit-dropdown')">
+              <span id="profile-fruit-selected">رمان (PM)</span>
+            </div>
+            <div class="search-select-dropdown" id="profile-fruit-dropdown">
+              <input type="text" class="search-select-search-input" placeholder="ابحث عن نوع الفاكهة..." onkeyup="filterOptions('profile-fruit-options', this.value)" />
+              <ul class="search-select-options" id="profile-fruit-options">
+                <li class="search-select-option" onclick="onSelectFruit('PM', 'رمان')">
+                  <span>رمان</span><span class="option-code">PM</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectFruit('GR', 'عنب')">
+                  <span>عنب</span><span class="option-code">GR</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectFruit('FI', 'التين')">
+                  <span>التين</span><span class="option-code">FI</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectFruit('GV', 'الجوافة')">
+                  <span>الجوافة</span><span class="option-code">GV</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectFruit('CI', 'الحمضيات')">
+                  <span>الحمضيات</span><span class="option-code">CI</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectFruit('MU', 'التوت')">
+                  <span>التوت</span><span class="option-code">MU</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectFruit('SI', 'السدر')">
+                  <span>السدر</span><span class="option-code">SI</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectFruit('MA', 'المانجو')">
+                  <span>المانجو</span><span class="option-code">MA</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectFruit('OL', 'الزيتون')">
+                  <span>الزيتون</span><span class="option-code">OL</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectFruit('CO', 'البن')">
+                  <span>البن</span><span class="option-code">CO</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. الصنف -->
+        <div class="form-field">
+          <label class="field-label">
+            <span>الصنف</span>
+            <span class="asterisk">*</span>
+          </label>
+          <div class="search-select-box">
+            <div class="search-select-trigger" onclick="toggleDropdown('profile-variety-dropdown')">
+              <span id="profile-variety-selected">بيدا (01)</span>
+            </div>
+            <div class="search-select-dropdown" id="profile-variety-dropdown">
+              <input type="text" class="search-select-search-input" placeholder="ابحث عن الصنف..." onkeyup="filterOptions('profile-variety-options', this.value)" />
+              <ul class="search-select-options" id="profile-variety-options">
+                <li class="search-select-option" onclick="onSelectVariety('01', 'بيدا')">
+                  <span>بيدا</span><span class="option-code">01</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectVariety('02', 'طائفي')">
+                  <span>طائفي</span><span class="option-code">02</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectVariety('03', 'سواري')">
+                  <span>سواري</span><span class="option-code">03</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. باركود البذرة التابع (تكويد فقط KSA11000033 إلى KSA11000041) -->
+        <div class="form-field">
+          <label class="field-label">
+            <span>باركود البذرة التابع</span>
+            <span class="asterisk">*</span>
+            <span class="tag-badge">إلزامي للربط</span>
+          </label>
+          <div class="search-select-box">
+            <div class="search-select-trigger" onclick="toggleDropdown('profile-seed-dropdown')" style="border-color:#86efac; background:#f0fdf4;">
+              <span id="profile-seed-selected" style="font-family:monospace; font-weight:700; color:#15803d;">KSA11000033</span>
+            </div>
+            <div class="search-select-dropdown" id="profile-seed-dropdown">
+              <input type="text" class="search-select-search-input" placeholder="ابحث برقم باركود البذرة..." onkeyup="filterOptions('profile-seed-options', this.value)" />
+              <ul class="search-select-options" id="profile-seed-options">
+                <li class="search-select-option" onclick="onSelectSeed('KSA11000033')">
+                  <span style="font-family:monospace; font-weight:700; color:#15803d;">KSA11000033</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectSeed('KSA11000034')">
+                  <span style="font-family:monospace; font-weight:700; color:#15803d;">KSA11000034</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectSeed('KSA11000035')">
+                  <span style="font-family:monospace; font-weight:700; color:#15803d;">KSA11000035</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectSeed('KSA11000036')">
+                  <span style="font-family:monospace; font-weight:700; color:#15803d;">KSA11000036</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectSeed('KSA11000037')">
+                  <span style="font-family:monospace; font-weight:700; color:#15803d;">KSA11000037</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectSeed('KSA11000038')">
+                  <span style="font-family:monospace; font-weight:700; color:#15803d;">KSA11000038</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectSeed('KSA11000039')">
+                  <span style="font-family:monospace; font-weight:700; color:#15803d;">KSA11000039</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectSeed('KSA11000040')">
+                  <span style="font-family:monospace; font-weight:700; color:#15803d;">KSA11000040</span>
+                </li>
+                <li class="search-select-option" onclick="onSelectSeed('KSA11000041')">
+                  <span style="font-family:monospace; font-weight:700; color:#15803d;">KSA11000041</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. المنطقة (بدون أرقام المناطق في القائمة المنسدلة) -->
+        <div class="form-field">
+          <label class="field-label">
+            <span>المنطقة</span>
+            <span class="asterisk">*</span>
+          </label>
+          <select id="profile-region-select" class="field-select" onchange="onRegionChange(this.value)">
+            <option value="12" selected>الباحة</option>
+            <option value="01">الرياض</option>
+            <option value="02">مكة المكرمة</option>
+            <option value="03">المدينة المنورة</option>
+            <option value="04">القصيم</option>
+            <option value="05">الشرقية</option>
+            <option value="06">عسير</option>
+            <option value="07">تبوك</option>
+            <option value="08">حائل</option>
+            <option value="10">جازان</option>
+            <option value="11">نجران</option>
+            <option value="13">الجوف</option>
+          </select>
+        </div>
+
+        <!-- 6. المحطة -->
+        <div class="form-field">
+          <label class="field-label">
+            <span>المحطة</span>
+            <span class="asterisk">*</span>
+          </label>
+          <select id="profile-station-select" class="field-select">
+            <option value="albaha" selected>محطة الباحة</option>
+          </select>
+        </div>
+
+        <!-- 7. مصدر المادة النباتية -->
+        <div class="form-field">
+          <label class="field-label">
+            <span>مصدر المادة النباتية</span>
+            <span class="asterisk">*</span>
+          </label>
+          <input type="text" id="profile-source-input" class="field-input" value="حقل أمهات معتمد (بذرة: KSA11000033)" />
+        </div>
+
+        <!-- 8. تاريخ الإنتاج -->
+        <div class="form-field">
+          <label class="field-label">
+            <span>تاريخ الإنتاج</span>
+            <span class="asterisk">*</span>
+          </label>
+          <input type="date" class="field-input" value="2025-10-15" />
+        </div>
+
+        <!-- 9. الحالة -->
+        <div class="form-field">
+          <label class="field-label">
+            <span>الحالة</span>
+            <span class="asterisk">*</span>
+          </label>
+          <select class="field-select">
+            <option value="active" selected>نشط</option>
+            <option value="inactive">غير نشط</option>
+          </select>
+        </div>
+
+        <!-- 10. جهة الاعتماد -->
+        <div class="form-field">
+          <label class="field-label">
+            <span>جهة الاعتماد</span>
+            <span class="asterisk">*</span>
+          </label>
+          <input type="text" class="field-input" value="مركز البذور والتقاوي" readonly />
+        </div>
+
+        <!-- زر الانتقال لإصدار الدفعات (يختفي في وضع الاستعراض) -->
+        <div class="form-field" id="btn-go-issue-container" style="justify-content: flex-end; grid-column: span 2;">
+          <button type="button" class="btn-action-primary" id="btn-go-issue" onclick="switchTab('tab-issue')" style="height:40px;">
+            <span>الانتقال لإصدار باركود الشتلات والصرف ←</span>
+          </button>
+        </div>
+
+      </form>
+
+      <!-- بطاقة الـ QR للملف التعريفي -->
+      <div style="margin-top:24px; display:flex; gap:20px; align-items:center; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:16px;">
+        <div class="qr-svg-box" id="profile-qr-box"></div>
+        <div>
+          <div style="font-weight:700; color:#1e293b; font-size:14px;">كود الصنف المعتمد: <span id="profile-code-display" style="color:#15803d; font-family:monospace; font-size:16px;">PM-01-12</span></div>
+          <div id="profile-issue-tip" style="font-size:12px; color:#64748b; margin-top:4px;">يمثل هذا الرمز التعريفي: (نوع الفاكهة: رمان - الصنف: بيدا - المنطقة: الباحة). لصرف شتلات بأرقام تسلسلية للمستفيدين، انتقل إلى تاب <strong>إصدار باركود الشتلات والصرف</strong>.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <!-- التاب الثاني: إصدار باركود الشتلات والصرف (مع آلية إظهار زر الطباعة) -->
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <div id="tab-issue" class="tab-content-panel">
+
+      <!-- Section Banner -->
+      <div class="section-banner blue-banner">
+        <div>
+          <span class="section-banner-title">إصدار باركودات الشتلات والصرف للمستفيدين</span>
+          <div style="font-size:12px;color:#0369a1;margin-top:2px;">صرف كمية محددة مع الترقيم التسلسلي التلقائي وتوثيق المستفيد والموقع</div>
+        </div>
+        <div style="background:#ffffff; border:1px solid #bae6fd; padding:6px 14px; border-radius:4px; font-size:12px; font-weight:700; color:#0369a1;">
+          الشتلة المصروفة: <span id="issue-header-code" style="font-family:monospace;">PM-01-12</span>
+        </div>
+      </div>
+
+      <!-- شريط معلومات الدفعة المدمج والأنيق (بدون تكرار) -->
+      <div class="batch-unified-bar">
+        <div class="batch-bar-item">
+          <span class="batch-bar-lbl">الشتلة المحددة</span>
+          <span class="batch-bar-val highlight-green" id="card-prefix">PM-01-12</span>
+          <span class="batch-bar-sub">رمان - بيدا - الباحة</span>
+        </div>
+
+        <div class="batch-bar-item">
+          <span class="batch-bar-lbl">آخر تسلسل مسجل بالنظام</span>
+          <span class="batch-bar-val text-slate" id="last-serial-val">000124</span>
+          <span class="batch-bar-sub">من السجلات السابقة</span>
+        </div>
+
+        <div class="batch-bar-item" style="border-left: 2px dashed #cbd5e1; border-right: 2px dashed #cbd5e1; padding: 0 20px;">
+          <span class="batch-bar-lbl" style="color:#0369a1; font-weight:700;">الكمية المراد صرفها (شتلة) *</span>
+          <div style="display:flex; align-items:center; gap:8px; margin-top:4px;">
+            <input type="number" id="issue-qty-input" class="qty-modern-input" value="100" min="1" max="10000" oninput="calculateSerials()" />
+            <span style="font-size:12px; font-weight:700; color:#0369a1;">شتلة</span>
+          </div>
+        </div>
+
+        <div class="batch-bar-item">
+          <span class="batch-bar-lbl">نطاق الأكواد المتسلسلة الناتجة للدفعة</span>
+          <div style="display:flex; align-items:center; gap:8px; margin-top:4px;">
+            <span class="batch-serial-tag" id="range-from-code">PM-01-12-000125</span>
+            <span style="font-weight:800; color:#94a3b8;">←</span>
+            <span class="batch-serial-tag" id="range-to-code">PM-01-12-000224</span>
+          </div>
+          <span class="batch-bar-sub" style="color:#15803d; font-weight:600;">إجمالي الدفعة: <span id="summary-qty">100</span> شتلة متسلسلة</span>
+        </div>
+      </div>
+
+      <!-- نموذج إدخال بيانات المستفيد بتصميم Segmented Control حديث -->
+      <form class="form-grid" style="margin-top:20px;" onsubmit="event.preventDefault();">
+
+        <!-- بطاقة المستفيد والتحقق الرقمي -->
+        <div class="nic-container">
+          <!-- 1. العنوان: بيانات المستفيد -->
+          <div class="nic-header" style="margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">
+            <div class="nic-title" style="font-size: 15px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span>بيانات المستفيد</span>
+            </div>
+            <span class="nic-badge">ربط إلكتروني مباشر</span>
+          </div>
+
+          <!-- 2. سطر مستقل لاختيار نوع المستفيد (فرد / مزرعة) على اليمين لوحده -->
+          <div style="margin-bottom: 18px; display: flex; justify-content: flex-start;">
+            <div class="segmented-control">
+              <button type="button" class="segmented-btn active" id="btn-seg-individual" onclick="setBeneficiaryMode('individual')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>فرد (مواطن / مزارع)</span>
+              </button>
+              <button type="button" class="segmented-btn" id="btn-seg-farm" onclick="setBeneficiaryMode('farm')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <span>مزرعة (سجل زراعي)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- نموذج إدخال في حال كان المستفيد "فرد" -->
+          <div id="individual-fields-box">
+            <!-- سطر لوحده: رقم هوية المستفيد / تاريخ الميلاد / تحقق -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr 140px; gap: 16px; align-items: flex-end; margin-bottom: 16px;">
+              <div class="form-field">
+                <label class="field-label">
+                  <span>رقم هوية المستفيد</span>
+                  <span class="asterisk">*</span>
+                </label>
+                <input type="text" id="issue-national-id" class="field-input" placeholder="10XXXXXXXX" maxlength="10" value="1084592014" />
+              </div>
+
+              <div class="form-field">
+                <label class="field-label">
+                  <span>تاريخ ميلاد المستفيد</span>
+                  <span class="asterisk">*</span>
+                </label>
+                <input type="date" id="issue-dob" class="field-input" value="1988-06-14" />
+              </div>
+
+              <div>
+                <button type="button" class="btn-nic-verify" onclick="verifyIndividual()" style="background:#15803d; width: 100%;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                  <span>تحقق (NIC)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- اسم المستفيد في سطر لوحده بعد التحقق -->
+            <div class="form-field">
+              <label class="field-label">
+                <span>اسم المستفيد المعتمد</span>
+                <span class="tag-badge">للقراءة فقط بعد التحقق</span>
+              </label>
+              <input type="text" id="individual-name-output" class="field-input" value="محمد خالد بن فهد العمري" readonly style="font-weight:700; color:#0f172a;" />
+              <div id="individual-verify-status" class="verification-status" style="color:#15803d; margin-top:6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>تم التحقق وتطابق السجل مع مركز المعلومات الوطني</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- نموذج إدخال في حال كان المستفيد "مزرعة" -->
+          <div id="farm-fields-box" style="display:none;">
+            <!-- سطر لوحده: السجل الزراعي / تحقق -->
+            <div style="display: grid; grid-template-columns: 1fr 140px; gap: 16px; align-items: flex-end; margin-bottom: 16px;">
+              <div class="form-field">
+                <label class="field-label">
+                  <span>رقم السجل الزراعي المعتمد</span>
+                  <span class="asterisk">*</span>
+                </label>
+                <input type="text" id="farm-registry-id" class="field-input" placeholder="مثال: AGR-2024-998241" value="AGR-2024-884120" />
+              </div>
+
+              <div>
+                <button type="button" class="btn-nic-verify" onclick="verifyFarm()" style="background:#15803d; width: 100%;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                  <span>تحقق من السجل</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- اسم المزرعة المعتمدة في سطر لوحده بعد التحقق -->
+            <div class="form-field">
+              <label class="field-label">
+                <span>اسم المنشأة / المزرعة المعتمدة</span>
+                <span class="tag-badge">للقراءة فقط بعد التحقق</span>
+              </label>
+              <input type="text" id="farm-name-output" class="field-input" value="مزرعة دار الرمان النموذجية للإنتاج الزراعي" readonly style="font-weight:700; color:#0f172a;" />
+              <div id="farm-verify-status" class="verification-status" style="color:#15803d; margin-top:6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>السجل الزراعي نشط ومعتمد لدى وزارة البيئة والمياه والزراعة</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- موقع الزراعة: خريطة تفاعلية -->
+        <div class="map-container-box">
+          <div class="map-header">
+            <div class="field-label" style="margin-bottom:0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span>موقع زراعة الدفعة (محدد على خريطة المنطقة التفاعلية)</span>
+              <span class="asterisk">*</span>
+            </div>
+            <div class="map-coords-display" id="issue-coords-text">
+              الإحداثيات المختارة: 20.012884 N , 41.467651 E (منطقة الباحة)
+            </div>
+          </div>
+
+          <div class="map-canvas-wrapper" id="map-interactive-area" onclick="onMapCanvasClick(event)">
+            <svg id="custom-map-svg" viewBox="0 0 1000 300" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#d5e8dc" stroke-width="1"/>
+                </pattern>
+              </defs>
+              <rect width="1000" height="300" fill="#eaf3ee" />
+              <rect width="1000" height="300" fill="url(#grid)" />
+              
+              <path d="M 50,170 Q 200,80 380,150 T 700,110 T 980,180 L 1000,300 L 0,300 Z" fill="#d9ebd8" opacity="0.6"/>
+              <path d="M 120,230 Q 320,160 540,220 T 920,190 L 1000,300 L 0,300 Z" fill="#cbe2cb" opacity="0.7"/>
+
+              <path d="M 100,300 Q 350,210 520,150 T 950,40" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+              <path d="M 100,300 Q 350,210 520,150 T 950,40" fill="none" stroke="#fcd34d" stroke-width="3" stroke-linecap="round"/>
+
+              <rect x="220" y="100" width="110" height="70" rx="4" fill="#86efac" opacity="0.4" stroke="#4ade80" stroke-width="1.5"/>
+              <text x="275" y="140" font-size="11" fill="#166534" font-weight="bold" text-anchor="middle">حقول أمهات الرمان</text>
+
+              <rect x="620" y="120" width="130" height="85" rx="4" fill="#86efac" opacity="0.4" stroke="#4ade80" stroke-width="1.5"/>
+              <text x="685" y="165" font-size="11" fill="#166534" font-weight="bold" text-anchor="middle">محطة أبحاث البذور</text>
+
+              <g id="map-pin-group" transform="translate(520, 140)">
+                <circle cx="0" cy="0" r="16" fill="#dc2626" opacity="0.25">
+                  <animate attributeName="r" values="14;24;14" dur="2s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="0.3;0;0.3" dur="2s" repeatCount="indefinite"/>
+                </circle>
+                <path d="M 0,0 C -8,-8 -12,-16 -12,-24 C -12,-32 -6,-38 0,-38 C 6,-38 12,-32 12,-24 C 12,-16 8,-8 0,0 Z" fill="#dc2626" stroke="#ffffff" stroke-width="2"/>
+                <circle cx="0" cy="-24" r="4.5" fill="#ffffff"/>
+                <rect x="-70" y="-62" width="140" height="20" rx="4" fill="#0f172a" opacity="0.9"/>
+                <text x="0" y="-48" font-size="10" fill="#ffffff" font-weight="bold" text-anchor="middle">موقع مزرعة الصرف المحددة</text>
+              </g>
+            </svg>
+
+            <div class="map-region-tag" id="map-region-badge">منطقة الباحة (12)</div>
+            <div class="map-hint-overlay">انقر في أي مكان على الخريطة لتغيير إحداثيات موقع المزرعة</div>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- شريط نطاق إصدار الدفعة المتسلسلة + أزرار التفاعل المحدثة -->
+      <div class="range-box">
+        <div class="range-code-item">
+          <span class="range-label">من كود الشتلة رقم:</span>
+          <span class="range-code" id="range-from-code">PM-01-12-000125</span>
+        </div>
+
+        <div style="font-size:20px; font-weight:800; color:#15803d;">← إلى →</div>
+
+        <div class="range-code-item">
+          <span class="range-label">حتى كود الشتلة رقم:</span>
+          <span class="range-code" id="range-to-code">PM-01-12-000224</span>
+        </div>
+
+        <!-- أزرار الإجراءات: الزر الأول يختفي بعد الضغط ويظهر مكانه زر الطباعة -->
+        <div style="display:flex; gap:10px; align-items:center;" id="actions-button-wrapper">
+          
+          <!-- زر الإصدار (يختفي بعد الضغط) -->
+          <button type="button" class="btn-action-primary" id="btn-generate-batch" onclick="onGenerateBatchClick()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>إصدار وتوليد باركودات الدفعة (<span id="btn-qty-text">100</span>)</span>
+          </button>
+
+          <!-- زر الطباعة الحرارية (مخفي افتراضياً ويظهر فقط بعد نجاح الإصدار) -->
+          <button type="button" class="btn-action-green" id="btn-print-batch" style="display:none;" onclick="printAllBatchLabels()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 6 2 18 2 18 9"></polyline>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+              <rect x="6" y="14" width="12" height="8"></rect>
+            </svg>
+            <span>طباعة الملصقات الحرارية الآن (60×40 مم)</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- رسالة النجاح المنبثقة الأنيقة بعد الضغط على إصدار الباركود -->
+      <div class="success-alert-banner" id="batch-success-banner">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="background:#15803d; color:#ffffff; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px;">
+            ✓
+          </div>
+          <div>
+            <div style="font-weight:800; font-size:15px; color:#14532d;">تم الإصدار بنجاح!</div>
+            <div style="font-size:12.5px; color:#166534; margin-top:2px;" id="success-banner-details">
+              تم توليد وتسجيل 100 باركود بنجاح في قاعدة البيانات. يمكنك الآن البدء في طباعة الملصقات الحرارية.
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; align-items:center;">
+          <span style="font-size:11.5px; background:#ffffff; color:#15803d; padding:4px 10px; border-radius:4px; font-weight:700; border:1px solid #86efac;">
+            الحالة: جاهز للطباعة
+          </span>
+          <button type="button" onclick="resetBatchForm()" style="background:none; border:1px solid #166534; color:#166534; font-size:11.5px; padding:4px 10px; border-radius:4px; cursor:pointer;">
+            إصدار دفعة جديدة
+          </button>
+        </div>
+      </div>
+
+
+
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <!-- التاب الثالث: سجل الشتلات المصدرة -->
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <div id="tab-history" class="tab-content-panel">
+      <div class="section-banner">
+        <span class="section-banner-title">أرشيف الشتلات وأوامر الصرف المعتمدة للمزارعين</span>
+      </div>
+      <div class="table-container">
+        <table class="barcode-table">
+          <thead>
+            <tr>
+              <th>رقم أمر الصرف</th>
+              <th>تاريخ الصرف</th>
+              <th>الصنف والمنطقة</th>
+              <th>الكمية المصدرة</th>
+              <th>نطاق الأرقام التسلسلية</th>
+              <th>نوع المستفيد</th>
+              <th>اسم المستفيد</th>
+              <th>الحالة</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>DISP-2025-0042</strong></td>
+              <td>2025-10-04</td>
+              <td>رمان بيدا (الباحة)</td>
+              <td><span style="font-weight:700; color:#0284c7;">100 شتلة</span></td>
+              <td><code>PM-01-12-000125</code> إلى <code>PM-01-12-000224</code></td>
+              <td><span style="background:#e0f2fe; color:#0369a1; padding:2px 6px; border-radius:4px; font-size:11px;">فرد</span></td>
+              <td>محمد خالد العمري (1084592014)</td>
+              <td><span style="background:#dcfce7; color:#15803d; font-size:11px; padding:2px 8px; border-radius:4px; font-weight:600;">تم الصرف والطباعة</span></td>
+            </tr>
+            <tr>
+              <td><strong>DISP-2025-0041</strong></td>
+              <td>2025-09-28</td>
+              <td>رمان بيدا (الباحة)</td>
+              <td><span style="font-weight:700; color:#0284c7;">250 شتلة</span></td>
+              <td><code>PM-01-12-000001</code> إلى <code>PM-01-12-000250</code></td>
+              <td><span style="background:#fef3c7; color:#92400e; padding:2px 6px; border-radius:4px; font-size:11px;">مزرعة</span></td>
+              <td>مزرعة دار الرمان النموذجية (AGR-884120)</td>
+              <td><span style="background:#dcfce7; color:#15803d; font-size:11px; padding:2px 8px; border-radius:4px; font-weight:600;">تم الصرف والطباعة</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // المتغيرات العامة
+    let currentFruitCode = 'PM';
+    let currentFruitName = 'رمان';
+    let currentVarietyCode = '01';
+    let currentVarietyName = 'بيدا';
+    let currentRegionCode = '12';
+    let currentRegionName = 'الباحة';
+    let currentSeedBarcode = 'KSA11000033';
+    
+    let lastRegisteredSequence = 124; 
+    let currentIssueQuantity = 100;
+    let currentBeneficiaryType = 'individual';
+    let isBatchGenerated = false;
+
+    // دوال التبديل بين التابات
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
+
+      const panel = document.getElementById(tabId);
+      if (panel) panel.classList.add('active');
+
+      if (tabId === 'tab-profile') {
+        const link = document.getElementById('tab-link-profile');
+        if (link) link.classList.add('active');
+        renderProfileQR();
+      } else if (tabId === 'tab-issue') {
+        const link = document.getElementById('tab-link-issue');
+        if (link) link.classList.add('active');
+        calculateSerials();
+      } else if (tabId === 'tab-history') {
+        const link = document.getElementById('tab-link-history');
+        if (link) link.classList.add('active');
+      }
+    }
+
+    // دالة التبديل الحديثة بين الفرد والمزرعة
+    function setBeneficiaryMode(type) {
+      currentBeneficiaryType = type;
+      const btnInd = document.getElementById('btn-seg-individual');
+      const btnFarm = document.getElementById('btn-seg-farm');
+      const indBox = document.getElementById('individual-fields-box');
+      const farmBox = document.getElementById('farm-fields-box');
+
+      if (type === 'individual') {
+        btnInd.classList.add('active');
+        btnFarm.classList.remove('active');
+        indBox.style.display = 'grid';
+        farmBox.style.display = 'none';
+      } else {
+        btnFarm.classList.add('active');
+        btnInd.classList.remove('active');
+        indBox.style.display = 'none';
+        farmBox.style.display = 'grid';
+      }
+      calculateSerials();
+    }
+
+    function verifyIndividual() {
+      const id = document.getElementById('issue-national-id').value.trim();
+      const dob = document.getElementById('issue-dob').value;
+      if (!id || id.length !== 10) {
+        alert("يرجى إدخال رقم هوية وطنية صحيح مكون من 10 أرقام.");
+        return;
+      }
+      if (!dob) {
+        alert("يرجى إدخال تاريخ ميلاد المستفيد.");
+        return;
+      }
+
+      const st = document.getElementById('individual-verify-status');
+      st.innerHTML = '<span>⏳ جاري الاتصال بمركز المعلومات الوطني (NIC)...</span>';
+      st.style.color = '#0284c7';
+
+      setTimeout(() => {
+        document.getElementById('individual-name-output').value = "محمد خالد بن فهد العمري";
+        st.innerHTML = `
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>تم التحقق وتطابق السجل مع مركز المعلومات الوطني</span>
+        `;
+        st.style.color = '#15803d';
+        calculateSerials();
+      }, 500);
+    }
+
+    function verifyFarm() {
+      const reg = document.getElementById('farm-registry-id').value.trim();
+      if (!reg) {
+        alert("يرجى إدخال رقم السجل الزراعي للمزرعة.");
+        return;
+      }
+
+      const st = document.getElementById('farm-verify-status');
+      st.innerHTML = '<span>⏳ جاري التحقق من قاعدة بيانات السجلات الزراعية...</span>';
+      st.style.color = '#0284c7';
+
+      setTimeout(() => {
+        document.getElementById('farm-name-output').value = "مزرعة دار الرمان النموذجية للإنتاج الزراعي";
+        st.innerHTML = `
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>السجل الزراعي نشط ومعتمد لدى وزارة البيئة والمياه والزراعة</span>
+        `;
+        st.style.color = '#15803d';
+        calculateSerials();
+      }, 500);
+    }
+
+    // توليد كود SVG QR حقيقي ونقي داخلياً
+    function generatePureSVGQR(text, size = 110) {
+      const grid = 25;
+      const cellSize = size / grid;
+      let rects = '';
+
+      for (let r = 0; r < grid; r++) {
+        for (let c = 0; c < grid; c++) {
+          let isDark = false;
+
+          // زوايا الـ QR
+          if (r < 7 && c < 7) {
+            if (r === 0 || r === 6 || c === 0 || c === 6) isDark = true;
+            else if (r >= 2 && r <= 4 && c >= 2 && c <= 4) isDark = true;
+          } else if (r < 7 && c >= grid - 7) {
+            const sc = c - (grid - 7);
+            if (r === 0 || r === 6 || sc === 0 || sc === 6) isDark = true;
+            else if (r >= 2 && r <= 4 && sc >= 2 && sc <= 4) isDark = true;
+          } else if (r >= grid - 7 && c < 7) {
+            const sr = r - (grid - 7);
+            if (sr === 0 || sr === 6 || c === 0 || c === 6) isDark = true;
+            else if (sr >= 2 && sr <= 4 && c >= 2 && c <= 4) isDark = true;
+          } else if (r === 6 || c === 6) {
+            isDark = (r + c) % 2 === 0;
+          } else {
+            const hash = (r * 31 + c * 17 + text.charCodeAt((r + c) % text.length)) % 100;
+            isDark = hash > 50;
+          }
+
+          if (isDark) {
+            rects += `<rect x="${(c * cellSize).toFixed(1)}" y="${(r * cellSize).toFixed(1)}" width="${cellSize.toFixed(1)}" height="${cellSize.toFixed(1)}" fill="#111827"/>`;
+          }
+        }
+      }
+
+      return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
+        <rect width="${size}" height="${size}" fill="#ffffff"/>
+        ${rects}
+      </svg>`;
+    }
+
+    function calculateSerials() {
+      const qty = parseInt(document.getElementById('issue-qty-input').value) || 1;
+      currentIssueQuantity = qty;
+      document.getElementById('btn-qty-text').textContent = qty;
+
+      const prefix = `${currentFruitCode}-${currentVarietyCode}-${currentRegionCode}`;
+      const startSeqNum = lastRegisteredSequence + 1;
+      const endSeqNum = lastRegisteredSequence + qty;
+
+      const startSeqStr = String(startSeqNum).padStart(6, '0');
+      const endSeqStr = String(endSeqNum).padStart(6, '0');
+
+      document.getElementById('card-prefix').textContent = prefix;
+      document.getElementById('last-serial-val').textContent = String(lastRegisteredSequence).padStart(6, '0');
+      document.getElementById('start-serial-val').textContent = startSeqStr;
+      document.getElementById('end-serial-val').textContent = endSeqStr;
+      document.getElementById('summary-qty').textContent = qty;
+
+      document.getElementById('range-from-code').textContent = `${prefix}-${startSeqStr}`;
+      document.getElementById('range-to-code').textContent = `${prefix}-${endSeqStr}`;
+      document.getElementById('summary-qty').textContent = qty;
+    }
+
+    function renderProfileQR() {
+      const code = `${currentFruitCode}-${currentVarietyCode}-${currentRegionCode}`;
+      document.getElementById('profile-code-input').value = code;
+      document.getElementById('profile-code-display').textContent = code;
+      document.getElementById('profile-qr-box').innerHTML = generatePureSVGQR(code, 84);
+    }
+
+    // ─── الدالة الرئيسية المطلوبة: عند الضغط على زر إصدار وتوليد الباركودات ───
+    function onGenerateBatchClick() {
+      const qty = currentIssueQuantity;
+      const start = document.getElementById('range-from-code').textContent;
+      const end = document.getElementById('range-to-code').textContent;
+      const ben = (currentBeneficiaryType === 'farm') 
+        ? document.getElementById('farm-name-output').value 
+        : document.getElementById('individual-name-output').value;
+
+      // 1. إخفاء زر الإصدار
+      const btnGen = document.getElementById('btn-generate-batch');
+      btnGen.style.display = 'none';
+
+      // 2. إظهار زر طباعة الملصقات الحرارية
+      const btnPrint = document.getElementById('btn-print-batch');
+      btnPrint.style.display = 'inline-flex';
+
+      // 3. إظهار شريط رسالة النجاح المنبثقة
+      const banner = document.getElementById('batch-success-banner');
+      banner.style.display = 'flex';
+      document.getElementById('success-banner-details').textContent = 
+        `تم بنجاح إصدار وتوليد ${qty} باركود (من ${start} إلى ${end}) باسم المستفيد [${ben}] وحفظها في قاعدة البيانات.`;
+
+      isBatchGenerated = true;
+      calculateSerials();
+
+      // قفل حقل الكمية أثناء مرحلة الطباعة لتثبيت الدفعة
+      document.getElementById('issue-qty-input').disabled = true;
+    }
+
+    // زر إعادة التعيين لإصدار دفعة جديدة لاحقة
+    function resetBatchForm() {
+      lastRegisteredSequence += currentIssueQuantity;
+      isBatchGenerated = false;
+      document.getElementById('issue-qty-input').disabled = false;
+      document.getElementById('btn-generate-batch').style.display = 'inline-flex';
+      document.getElementById('btn-print-batch').style.display = 'none';
+      document.getElementById('batch-success-banner').style.display = 'none';
+      calculateSerials();
+    }
+
+    function printAllBatchLabels() {
+      // فتح صفحة طباعة الـ 100 ملصق حراري المتسلسلة
+      window.open('screen_print_100_labels.html', '_blank');
+    }
+
+    function onMapCanvasClick(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 1000;
+      const y = ((e.clientY - rect.top) / rect.height) * 300;
+
+      const pin = document.getElementById('map-pin-group');
+      pin.setAttribute('transform', `translate(${x.toFixed(1)}, ${y.toFixed(1)})`);
+
+      const baseLat = (currentRegionCode === '12') ? 20.012 : 24.713;
+      const baseLng = (currentRegionCode === '12') ? 41.467 : 46.675;
+      
+      const newLat = (baseLat + (y - 150) * 0.0003).toFixed(6);
+      const newLng = (baseLng + (x - 500) * 0.0003).toFixed(6);
+
+      document.getElementById('issue-coords-text').textContent = `الإحداثيات المختارة: ${newLat} N , ${newLng} E (منطقة ${currentRegionName})`;
+    }
+
+    function toggleDropdown(id) {
+      const el = document.getElementById(id);
+      const isOpen = el.classList.contains('open');
+      document.querySelectorAll('.search-select-dropdown').forEach(d => d.classList.remove('open'));
+      if (!isOpen) el.classList.add('open');
+    }
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.search-select-box')) {
+        document.querySelectorAll('.search-select-dropdown').forEach(d => d.classList.remove('open'));
+      }
+    });
+
+    function filterOptions(listId, term) {
+      const filter = term.toLowerCase();
+      document.querySelectorAll(`#${listId} li`).forEach(opt => {
+        opt.style.display = opt.textContent.toLowerCase().includes(filter) ? 'flex' : 'none';
+      });
+    }
+
+    function onSelectFruit(code, name) {
+      currentFruitCode = code;
+      currentFruitName = name;
+      document.getElementById('profile-fruit-selected').textContent = `${name} (${code})`;
+      document.getElementById('profile-fruit-dropdown').classList.remove('open');
+      renderProfileQR();
+      calculateSerials();
+    }
+
+    function onSelectVariety(code, name) {
+      currentVarietyCode = code;
+      currentVarietyName = name;
+      document.getElementById('profile-variety-selected').textContent = `${name} (${code})`;
+      document.getElementById('profile-variety-dropdown').classList.remove('open');
+      renderProfileQR();
+      calculateSerials();
+    }
+
+    function onSelectSeed(code) {
+      currentSeedBarcode = code;
+      document.getElementById('profile-seed-selected').textContent = code;
+      document.getElementById('profile-seed-dropdown').classList.remove('open');
+      document.getElementById('profile-source-input').value = `حقل أمهات معتمد (بذرة: ${code})`;
+    }
+
+    function onRegionChange(code) {
+      currentRegionCode = code;
+      const sel = document.getElementById('profile-region-select');
+      currentRegionName = sel.options[sel.selectedIndex].text.split('(')[0].trim();
+      document.getElementById('map-region-badge').textContent = `منطقة ${currentRegionName} (${code})`;
+      renderProfileQR();
+      calculateSerials();
+    }
+
+    function saveRecord() {
+      alert("تم حفظ البيانات بنجاح.");
+    }
+
+    window.onload = function() {
+      // التحقق مما إذا كان تم فتح الصفحة في وضع الاستعراض من شاشة البحث
+      const params = new URLSearchParams(window.location.search);
+      const isViewMode = params.get('view') === '1' || params.get('mode') === 'view';
+
+      if (isViewMode) {
+        // 1. إخفاء تبويب إصدار باركود الشتلات والصرف بالكامل
+        const tabIssueLink = document.getElementById('tab-link-issue');
+        if (tabIssueLink) tabIssueLink.style.display = 'none';
+        const tabIssuePanel = document.getElementById('tab-issue');
+        if (tabIssuePanel) tabIssuePanel.style.display = 'none';
+
+        // 2. إخفاء أزرار الحفظ والاستيراد وزر الانتقال لإصدار الباركودات
+        const btnSave = document.querySelector('.btn-save');
+        if (btnSave) btnSave.style.display = 'none';
+        const btnImport = document.querySelector('.btn-import');
+        if (btnImport) btnImport.style.display = 'none';
+        const btnGoIssue = document.getElementById('btn-go-issue-container');
+        if (btnGoIssue) btnGoIssue.style.display = 'none';
+
+        // 3. تحديث العنوان الرئيسي
+        const titleEl = document.querySelector('.page-title');
+        if (titleEl) titleEl.textContent = 'استعراض الملف التعريفي للصنف وسجل المصروفات';
+
+        // 4. قراءة وتحديث البيانات المدخلة في الملف التعريفي
+        const code = params.get('code') || 'FG-02-14';
+        const fruit = params.get('fruit');
+        const variety = params.get('variety');
+        const region = params.get('region');
+        const seed = params.get('seed');
+
+        if (code) {
+          const codeInput = document.getElementById('profile-code-input');
+          if (codeInput) codeInput.value = code;
+          const bannerBadge = document.querySelector('#tab-profile .section-banner span:nth-child(2)');
+          if (bannerBadge) bannerBadge.textContent = 'الكود المعتمد: ' + code;
+        }
+
+        if (fruit) {
+          const fruitEl = document.getElementById('profile-fruit-selected');
+          if (fruitEl) fruitEl.textContent = fruit;
+        }
+        if (variety) {
+          const varEl = document.getElementById('profile-variety-selected');
+          if (varEl) varEl.textContent = variety;
+        }
+        if (region) {
+          const regSelect = document.getElementById('profile-region-select');
+          if (regSelect) {
+            for (let i = 0; i < regSelect.options.length; i++) {
+              if (regSelect.options[i].text.includes(region)) {
+                regSelect.selectedIndex = i;
+                break;
+              }
+            }
+          }
+        }
+        if (seed) {
+          const seedEl = document.getElementById('profile-seed-selected');
+          if (seedEl) seedEl.textContent = seed;
+          const srcInput = document.getElementById('profile-source-input');
+          if (srcInput) srcInput.value = `حقل أمهات معتمد (بذرة: ${seed})`;
+        }
+
+        const tipEl = document.getElementById('profile-issue-tip');
+        if (tipEl) tipEl.innerHTML = `يمثل هذا الرمز التعريفي: (نوع الفاكهة: <strong>${fruit || 'تين'}</strong> - الصنف: <strong>${variety || 'وزيري'}</strong> - المنطقة: <strong>${region || 'مكة المكرمة'}</strong>). للاطلاع على الشتلات المصروفة المعتمدة لهذا الكود انتقل إلى تاب <strong>سجل الشتلات المصدرة</strong>.`;
+
+        // إضافة شريط تنبيهي أنيق يفيد بأنه في وضع الاستعراض مع زر عودة صريح
+        const viewAlert = document.createElement('div');
+        viewAlert.style.cssText = 'background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; border-bottom: 1px solid #dbeafe;';
+        viewAlert.innerHTML = `
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:16px;">🔍</span>
+            <span>وضع الاستعراض المعتمد: عرض بيانات وتفاصيل البذرة وسجل الشتلات المصدرة للكود (${code || 'FG-02-14'})</span>
+          </div>
+          <a href="index.html" style="background:#1e40af; color:#ffffff; padding:6px 14px; border-radius:4px; text-decoration:none; font-size:12px; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+            ← العودة لقائمة البحث
+          </a>
+        `;
+        document.querySelector('.top-header').insertAdjacentElement('afterend', viewAlert);
+
+        // تخصيص سجل الشتلات المصدرة ليتناسب مع الكود المستعرض
+        const historyTbody = document.querySelector('#tab-history tbody');
+        if (historyTbody && code) {
+          historyTbody.innerHTML = `
+            <tr>
+              <td><strong>DISP-2026-0089</strong></td>
+              <td>2026-10-02</td>
+              <td>${fruit || 'تين'} ${variety || 'وزيري'} (${region || 'مكة المكرمة'})</td>
+              <td><span style="font-weight:700; color:#0284c7;">100 شتلة</span></td>
+              <td><code>${code}-000001</code> إلى <code>${code}-000100</code></td>
+              <td><span style="background:#e0f2fe; color:#0369a1; padding:2px 6px; border-radius:4px; font-size:11px;">مزرعة</span></td>
+              <td>مؤسسة الورد الطائفي الزراعية (2019485731)</td>
+              <td><span style="background:#dcfce7; color:#15803d; font-size:11px; padding:2px 8px; border-radius:4px; font-weight:600;">تم الصرف والطباعة</span></td>
+            </tr>
+            <tr>
+              <td><strong>DISP-2026-0042</strong></td>
+              <td>2026-09-15</td>
+              <td>${fruit || 'تين'} ${variety || 'وزيري'} (${region || 'مكة المكرمة'})</td>
+              <td><span style="font-weight:700; color:#0284c7;">150 شتلة</span></td>
+              <td><code>${code}-000101</code> إلى <code>${code}-000250</code></td>
+              <td><span style="background:#f3e8ff; color:#6b21a8; padding:2px 6px; border-radius:4px; font-size:11px;">فرد</span></td>
+              <td>مواطن / مزارع معتمد (1084592014)</td>
+              <td><span style="background:#dcfce7; color:#15803d; font-size:11px; padding:2px 8px; border-radius:4px; font-weight:600;">تم الصرف والطباعة</span></td>
+            </tr>
+          `;
+        }
+      } else if (params.get('action') === 'issue' || params.get('tab') === 'issue') {
+        // وضع إصدار وصرف شتلات جديدة
+        const code = params.get('code') || 'FG-02-14';
+        const fruit = params.get('fruit');
+        const variety = params.get('variety');
+        const region = params.get('region');
+        const seed = params.get('seed');
+
+        if (code) {
+          const parts = code.split('-');
+          if (parts.length === 3) {
+            currentFruitCode = parts[0];
+            currentVarietyCode = parts[1];
+            currentRegionCode = parts[2];
+          }
+          const codeInput = document.getElementById('profile-code-input');
+          if (codeInput) codeInput.value = code;
+          const bannerBadge = document.querySelector('#tab-profile .section-banner span:nth-child(2)');
+          if (bannerBadge) bannerBadge.textContent = 'الكود المعتمد: ' + code;
+          const cardPrefix = document.getElementById('card-prefix');
+          if (cardPrefix) cardPrefix.textContent = code;
+          const issueHeaderCode = document.getElementById('issue-header-code');
+          if (issueHeaderCode) issueHeaderCode.textContent = code;
+        }
+
+        if (fruit) {
+          currentFruitName = fruit;
+          const fruitEl = document.getElementById('profile-fruit-selected');
+          if (fruitEl) fruitEl.textContent = fruit;
+        }
+        if (variety) {
+          currentVarietyName = variety;
+          const varEl = document.getElementById('profile-variety-selected');
+          if (varEl) varEl.textContent = variety;
+        }
+        if (region) {
+          currentRegionName = region;
+          const regSelect = document.getElementById('profile-region-select');
+          if (regSelect) {
+            for (let i = 0; i < regSelect.options.length; i++) {
+              if (regSelect.options[i].text.includes(region)) {
+                regSelect.selectedIndex = i;
+                break;
+              }
+            }
+          }
+        }
+        if (seed) {
+          currentSeedBarcode = seed;
+          const seedEl = document.getElementById('profile-seed-selected');
+          if (seedEl) seedEl.textContent = seed;
+          const srcInput = document.getElementById('profile-source-input');
+          if (srcInput) srcInput.value = `حقل أمهات معتمد (بذرة: ${seed})`;
+        }
+
+        // الانتقال المباشر لتبويب إصدار باركود الشتلات والصرف
+        switchTab('tab-issue');
+
+        // إضافة شريط تنبيهي أنيق يوضح الصنف المختار للصرف مع زر للعودة لقائمة البحث
+        const issueAlert = document.createElement('div');
+        issueAlert.style.cssText = 'background: #f0fdf4; border: 1px solid #86efac; color: #166534; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; border-bottom: 1px solid #bbf7d0;';
+        issueAlert.innerHTML = `
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:16px;">🌱</span>
+            <span>نموذج إصدار وصرف شتلات جديدة للصنف: (<strong>${code || 'FG-02-14'}</strong>) - ${fruit || 'تين'} ${variety || 'وزيري'}</span>
+          </div>
+          <a href="index.html" style="background:#15803d; color:#ffffff; padding:6px 14px; border-radius:4px; text-decoration:none; font-size:12px; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+            ← العودة لقائمة البحث
+          </a>
+        `;
+        document.querySelector('.top-header').insertAdjacentElement('afterend', issueAlert);
+      }
+
+      renderProfileQR();
+      calculateSerials();
+    };
+  </script>
+
+</body>
+</html>

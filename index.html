@@ -1,0 +1,2556 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نظام إدارة وتكويد الشتلات - سجل وبحث الشتلات</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Tahoma, Arial, sans-serif;
+      background-color: #f4f6f9;
+      color: #333333;
+      direction: rtl;
+      text-align: right;
+      padding: 16px 24px;
+    }
+
+    .main-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Top Navigation / Branding Header */
+    .gov-header {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .gov-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .gov-logo-badge {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #15803d, #166534);
+      color: white;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 20px;
+      box-shadow: 0 2px 4px rgba(21, 128, 61, 0.2);
+    }
+
+    .brand-text h1 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.3;
+    }
+
+    .brand-text p {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-add-seedling {
+      background-color: #15803d;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 4px rgba(21, 128, 61, 0.25);
+      transition: all 0.2s;
+      border: 1px solid #166534;
+    }
+    .btn-add-seedling:hover {
+      background-color: #166534;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px rgba(21, 128, 61, 0.3);
+    }
+
+    .btn-print-batch {
+      background-color: #0f172a;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color 0.2s;
+    }
+    .btn-print-batch:hover {
+      background-color: #1e293b;
+    }
+
+    /* KPI Summary Cards */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .kpi-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+
+    .kpi-info h4 {
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+
+    .kpi-info .kpi-value {
+      font-size: 24px;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .kpi-info .kpi-sub {
+      font-size: 11px;
+      color: #15803d;
+      font-weight: 600;
+    }
+
+    .kpi-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .kpi-green { background: #dcfce7; color: #15803d; }
+    .kpi-blue { background: #e0f2fe; color: #0284c7; }
+    .kpi-amber { background: #fef3c7; color: #d97706; }
+    .kpi-purple { background: #f3e8ff; color: #7e22ce; }
+
+    /* Filter Box */
+    .filter-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 18px 22px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .filter-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 10px;
+    }
+
+    .filter-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px 14px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .form-control {
+      height: 38px;
+      padding: 6px 12px;
+      font-size: 13px;
+      border: 1px solid #cbd5e1;
+      border-radius: 5px;
+      background-color: #ffffff;
+      color: #1e293b;
+      outline: none;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .form-control:focus {
+      border-color: #15803d;
+      box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.12);
+    }
+
+    .filter-actions-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .btn-search {
+      background-color: #15803d;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 24px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color 0.2s;
+    }
+    .btn-search:hover { background-color: #166534; }
+
+    .btn-reset {
+      background-color: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+      border-radius: 5px;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-reset:hover {
+      background-color: #e2e8f0;
+      color: #0f172a;
+    }
+
+    /* Table Container */
+    .table-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .table-top-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .table-counts {
+      font-size: 13px;
+      color: #64748b;
+    }
+    .table-counts strong {
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    .table-quick-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .table-quick-actions button {
+      background: white;
+      border: 1px solid #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .table-quick-actions button:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    table.gov-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: right;
+      font-size: 13px;
+    }
+
+    table.gov-table thead tr {
+      background-color: #f1f5f9;
+      color: #1e293b;
+      border-bottom: 2px solid #cbd5e1;
+    }
+
+    table.gov-table th {
+      padding: 12px 14px;
+      font-weight: 700;
+      font-size: 12.5px;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    table.gov-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #e2e8f0;
+      color: #334155;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    table.gov-table tbody tr:hover {
+      background-color: #f8fafc;
+    }
+
+    /* Badges */
+    .badge-code {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-family: monospace;
+      font-size: 13px;
+      direction: ltr;
+    }
+
+    .badge-seed {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      padding: 3px 7px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 12px;
+      direction: ltr;
+      display: inline-block;
+    }
+
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 9px;
+      border-radius: 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+    .badge-issued-farm {
+      background-color: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+    }
+    .badge-issued-person {
+      background-color: #f3e8ff;
+      color: #6b21a8;
+      border: 1px solid #e9d5ff;
+    }
+    .badge-nursery {
+      background-color: #ecfdf5;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+    }
+
+    .action-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-action-view {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #0284c7;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+    .btn-action-view:hover {
+      background: #f0f9ff;
+      border-color: #0284c7;
+    }
+
+    .btn-action-issue {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      color: #15803d;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-action-issue:hover {
+      background: #15803d;
+      color: #ffffff;
+      border-color: #15803d;
+    }
+
+    .btn-action-print {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #15803d;
+      padding: 5px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-action-print:hover {
+      background: #f0fdf4;
+      border-color: #15803d;
+    }
+
+    /* Pagination */
+    .table-pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .page-nav-btns {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-page {
+      min-width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #cbd5e1;
+      background: white;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+    }
+    .btn-page.active {
+      background: #15803d;
+      border-color: #15803d;
+      color: white;
+    }
+    .btn-page:hover:not(.active) {
+      background: #e2e8f0;
+    }
+
+    /* Modal / Drawer for Viewing Seedling Details */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      backdrop-filter: blur(2px);
+      padding: 20px;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 860px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+      animation: modalFadeIn 0.2s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-header {
+      padding: 16px 24px;
+      background: #0f172a;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 22px;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .modal-close-btn:hover { color: #ffffff; }
+
+    .modal-body {
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .detail-section-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #0f172a;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px 16px;
+      background: #f8fafc;
+      padding: 14px 16px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .detail-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .detail-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .detail-value {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .qr-trace-box {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .qr-svg-holder {
+      width: 100px;
+      height: 100px;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 4px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .modal-footer {
+      padding: 14px 24px;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* ──── تنسيقات الخريطة التفاعلية للمملكة ومواقع المحطات والصرف ──── */
+    .btn-map-trigger {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #ffffff;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 9px 18px;
+      border-radius: 6px;
+      border: 1px solid #0284c7;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 4px rgba(2, 132, 199, 0.25);
+      transition: all 0.2s;
+    }
+    .btn-map-trigger:hover {
+      background: linear-gradient(135deg, #0369a1, #075985);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(2, 132, 199, 0.35);
+    }
+
+    /* Esri ArcGIS Light Topographic Theme Modal Dialog */
+    .map-modal-dialog {
+      max-width: 1380px;
+      width: 96%;
+      max-height: 94vh;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+      border: 1px solid #cbd5e1;
+    }
+
+    .map-modal-header {
+      background: #ffffff;
+      color: #0f172a;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .map-gis-layout {
+      display: grid;
+      grid-template-columns: 1fr 390px;
+      height: 640px;
+      background: #f8fafc;
+      position: relative;
+    }
+
+    .map-canvas-area {
+      position: relative;
+      background: #e6edf4; /* Esri ArcGIS light ocean/water pale tint */
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-left: 1px solid #cbd5e1;
+      user-select: none;
+    }
+
+    /* Esri Navigation Tools (Floating Widget) */
+    .esri-nav-tools {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      border: 1px solid #cbd5e1;
+      overflow: hidden;
+    }
+
+    .esri-nav-btn {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border: none;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .esri-nav-btn:last-child {
+      border-bottom: none;
+    }
+    .esri-nav-btn:hover {
+      background: #f8fafc;
+      color: #0284c7;
+    }
+
+    /* Esri Scale Bar (Bottom Left) */
+    .esri-scale-bar {
+      position: absolute;
+      bottom: 14px;
+      left: 16px;
+      z-index: 15;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(4px);
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      font-size: 10px;
+      color: #475569;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .scale-line-ruler {
+      width: 120px;
+      height: 5px;
+      border-left: 2px solid #334155;
+      border-right: 2px solid #334155;
+      border-bottom: 2px solid #334155;
+      position: relative;
+    }
+    .scale-line-mid {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 2px;
+      height: 4px;
+      background: #334155;
+    }
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      width: 120px;
+      font-weight: 600;
+      font-size: 9.5px;
+      color: #334155;
+    }
+
+    /* Esri Layer / Filter Pill Bar */
+    .map-filter-controls {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 15;
+      display: flex;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 6px 8px;
+      border-radius: 8px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      border: 1px solid #cbd5e1;
+    }
+
+    .map-filter-btn {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #475569;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .map-filter-btn:hover {
+      color: #0f172a;
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+    .map-filter-btn.active {
+      background: #006837;
+      color: #ffffff;
+      border-color: #006837;
+      box-shadow: 0 2px 4px rgba(0, 104, 55, 0.25);
+    }
+
+    /* Esri Legend Box */
+    .map-legend-box {
+      position: absolute;
+      bottom: 14px;
+      right: 16px;
+      z-index: 15;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      color: #334155;
+      font-size: 11.5px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .map-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .legend-dot.station { background: #16a34a; box-shadow: 0 0 0 2px #bbf7d0; }
+    .legend-dot.farm { background: #0284c7; box-shadow: 0 0 0 2px #bae6fd; }
+    .legend-dot.ind { background: #9333ea; box-shadow: 0 0 0 2px #e9d5ff; }
+
+    /* Map Sidebar (Esri Style Details Panel) */
+    .map-sidebar {
+      background: #ffffff;
+      padding: 22px 20px;
+      overflow-y: auto;
+      color: #1e293b;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border-right: 1px solid #e2e8f0;
+      box-shadow: -4px 0 10px rgba(0,0,0,0.02);
+    }
+
+    .station-detail-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .station-stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      border-bottom: 1px dashed #e2e8f0;
+      padding-bottom: 8px;
+    }
+    .station-stat-row:last-child { border-bottom: none; }
+    .station-stat-lbl { color: #64748b; font-weight: 500; }
+    .station-stat-val { font-weight: 700; color: #0f172a; }
+
+    /* Pin styling & hover stability (No jittering) */
+    .map-pin {
+      cursor: pointer;
+      outline: none;
+    }
+    .map-pin .pin-core {
+      transition: stroke 0.2s ease, filter 0.2s ease, r 0.2s ease;
+    }
+    .map-pin:hover .pin-core {
+      stroke: #ffffff;
+      stroke-width: 4px;
+      filter: drop-shadow(0 0 10px rgba(2, 132, 199, 0.85));
+    }
+    .map-pin.active .pin-core {
+      stroke: #0284c7;
+      stroke-width: 4.5px;
+      filter: drop-shadow(0 0 14px rgba(2, 132, 199, 0.95));
+    }
+    .map-pin .pin-label-box {
+      transition: all 0.2s ease;
+    }
+    .map-pin:hover .pin-label-box {
+      stroke-width: 2.2px;
+      filter: drop-shadow(0 3px 8px rgba(0,0,0,0.2));
+    }
+
+    .pulse-ring {
+      animation: pinPulse 2s infinite;
+      pointer-events: none;
+    }
+    @keyframes pinPulse {
+      0% { r: 16; opacity: 0.8; }
+      100% { r: 36; opacity: 0; }
+    }
+
+    /* Esri ArcGIS Floating Hover Tooltip */
+    .map-hover-tooltip {
+      position: absolute;
+      z-index: 100;
+      pointer-events: none;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(8px);
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      padding: 12px 14px;
+      box-shadow: 0 12px 28px -4px rgba(15, 23, 42, 0.22), 0 4px 8px -2px rgba(15, 23, 42, 0.1);
+      width: 260px;
+      font-family: inherit;
+      transform: translate(-50%, -115%);
+      transition: opacity 0.15s ease;
+    }
+    .map-hover-tooltip::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 6px;
+      background: #ffffff;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      border-top: 1px solid #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="main-wrapper">
+
+    <!-- Top Gov Bar & Actions -->
+    <header class="gov-header">
+      <div class="gov-brand">
+        <div class="gov-logo-badge">🌱</div>
+        <div class="brand-text">
+          <h1>المركز الوطني للبذور والتقاوي - نظام تكويد وتتبع الشتلات</h1>
+          <p>وزارة البيئة والمياه والزراعة • السجل الوطني الموحد للشتلات المصدرة والمصروفة</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="btn-map-trigger" onclick="openMapModal()">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+          الخريطة التفاعلية للمحطات ومواقع الصرف
+        </button>
+        <a href="screen_print_100_labels.html" target="_blank" class="btn-print-batch">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          طباعة الملصقات الحرارية
+        </a>
+        <a href="screen_seedling_updated.html" class="btn-add-seedling">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          + إضافة صنف جديد
+        </a>
+      </div>
+    </header>
+
+    <!-- KPI Statistics Overview -->
+    <section class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-info">
+          <h4>إجمالي الشتلات المسجلة</h4>
+          <div class="kpi-value">1,248 <span style="font-size:13px; font-weight:normal; color:#64748b;">شتلة</span></div>
+          <span class="kpi-sub">↑ +100 شتلة اليوم</span>
+        </div>
+        <div class="kpi-icon kpi-green">🌿</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-info">
+          <h4>شتلات تم صرفها للمستفيدين</h4>
+          <div class="kpi-value">464 <span style="font-size:13px; font-weight:normal; color:#64748b;">شتلة</span></div>
+          <span class="kpi-sub" style="color:#0284c7;">37% من الإجمالي</span>
+        </div>
+        <div class="kpi-icon kpi-blue">🤝</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-info">
+          <h4>المزارع والمستفيدين المعتمدين</h4>
+          <div class="kpi-value">420 <span style="font-size:13px; font-weight:normal; color:#64748b;">مستفيد</span></div>
+          <span class="kpi-sub" style="color:#d97706;">سجلات زراعية وأفراد</span>
+        </div>
+        <div class="kpi-icon kpi-amber">🏡</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-info">
+          <h4>المحطات البحثية النشطة</h4>
+          <div class="kpi-value">7 <span style="font-size:13px; font-weight:normal; color:#64748b;">محطات</span></div>
+          <span class="kpi-sub" style="color:#7e22ce;">الباحة، الطائف، الرياض، جازان...</span>
+        </div>
+        <div class="kpi-icon kpi-purple">📍</div>
+      </div>
+    </section>
+
+    <!-- Search & Filter Card -->
+    <section class="filter-card">
+      <div class="filter-card-header">
+        <div class="filter-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          فلاتر البحث والاستعلام عن الشتلات
+        </div>
+        <span style="font-size:12px; color:#64748b;">تحديث البيانات فوري وفق معايير البحث</span>
+      </div>
+
+      <div class="filter-grid">
+        <div class="form-group">
+          <label class="form-label">كود الصنف</label>
+          <input type="text" id="filterSeedlingCode" class="form-control" placeholder="مثال: FG-02-14">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">نوع الفاكهة</label>
+          <select id="filterFruit" class="form-control">
+            <option value="">الجميع</option>
+            <option value="رمان">رمان (PM)</option>
+            <option value="تين">تين (FG)</option>
+            <option value="لوز">لوز (AL)</option>
+            <option value="زيتون">زيتون (OL)</option>
+            <option value="حمضيات">حمضيات (CT)</option>
+            <option value="مانجو">مانجو (MG)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">الصنف</label>
+          <select id="filterVariety" class="form-control">
+            <option value="">الجميع</option>
+            <option value="بيدا">بيدا (01)</option>
+            <option value="وزيري">وزيري (02)</option>
+            <option value="طائفي">طائفي (03)</option>
+            <option value="حلواني">حلواني (04)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">المنطقة / محطة الإنتاج</label>
+          <select id="filterRegion" class="form-control">
+            <option value="">الجميع</option>
+            <option value="الباحة">الباحة - محطة أبحاث الباحة</option>
+            <option value="الرياض">الرياض - محطة الخرج</option>
+            <option value="جازان">جازان - مركز الأبحاث الزراعية</option>
+            <option value="مكة المكرمة">مكة المكرمة - محطة الطائف</option>
+            <option value="القصيم">القصيم - محطة عنيزة</option>
+            <option value="الجوف">الجوف - مركز أبحاث الزيتون</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">باركود البذرة</label>
+          <select id="filterSeedLot" class="form-control">
+            <option value="">الجميع</option>
+            <option value="KSA11000033">KSA11000033</option>
+            <option value="KSA11000034">KSA11000034</option>
+            <option value="KSA11000035">KSA11000035</option>
+            <option value="KSA11000036">KSA11000036</option>
+            <option value="KSA11000037">KSA11000037</option>
+            <option value="KSA11000038">KSA11000038</option>
+            <option value="KSA11000039">KSA11000039</option>
+            <option value="KSA11000040">KSA11000040</option>
+            <option value="KSA11000041">KSA11000041</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">نوع المستفيد أو جهة الصرف</label>
+          <select id="filterBeneficiaryType" class="form-control">
+            <option value="">الجميع</option>
+            <option value="فرد">فرد</option>
+            <option value="مزرعة">مزرعة</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="grid-column: span 2;">
+          <label class="form-label">اسم المستفيد أو رقم الهوية / السجل</label>
+          <input type="text" id="filterBeneficiaryText" class="form-control" placeholder="البحث باسم المستفيد أو رقم الهوية / السجل الزراعي...">
+        </div>
+      </div>
+
+      <div class="filter-actions-bar">
+        <button type="button" class="btn-reset" onclick="resetFilters()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+          إعادة ضبط
+        </button>
+        <button type="button" class="btn-search" onclick="applyFilters()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          تطبيق البحث
+        </button>
+      </div>
+    </section>
+
+    <!-- Results Data Table -->
+    <section class="table-card">
+      <div class="table-top-toolbar">
+        <div class="table-counts">
+          تم العثور على <strong id="visibleCount">10</strong> شتلة من إجمالي <strong>1,248</strong>
+        </div>
+        <div class="table-quick-actions">
+          <button onclick="exportTableToCSV()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            تصدير النتائج (Excel)
+          </button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="gov-table" id="seedlingsTable">
+          <thead>
+            <tr>
+              <th style="width: 40px; text-align: center;">#</th>
+              <th>كود الصنف</th>
+              <th>نوع الفاكهة</th>
+              <th>الصنف</th>
+              <th>المنطقة ومحطة الإنتاج</th>
+              <th>باركود البذرة</th>
+              <th>المستفيد المصروف له</th>
+              <th>تاريخ الصرف</th>
+              <th>الحالة</th>
+              <th style="text-align: center;">الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <!-- Dynamically populated via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="table-pagination">
+        <span style="font-size:12px; color:#64748b;">عرض 1 إلى 10 من 1,248 شتلة</span>
+        <div class="page-nav-btns">
+          <button class="btn-page" title="السابق">«</button>
+          <button class="btn-page active">1</button>
+          <button class="btn-page">2</button>
+          <button class="btn-page">3</button>
+          <button class="btn-page">...</button>
+          <button class="btn-page">125</button>
+          <button class="btn-page" title="التالي">»</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Modal: View Seedling Details (استعراض بيانات الشتلة) -->
+  <div class="modal-overlay" id="detailModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          بطاقة الشتلة وبيانات التتبع الرقمي (Digital Seedling Passport)
+        </div>
+        <button class="modal-close-btn" onclick="closeModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        
+        <!-- Top QR & Quick Identity -->
+        <div class="qr-trace-box">
+          <div class="qr-svg-holder" id="modalQrHolder">
+            <!-- Inline SVG QR will be rendered here -->
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:12px; color:#64748b; margin-bottom:4px;">كود الصنف المعتمد (Variety Code)</div>
+            <div style="font-size:20px; font-weight:800; font-family:monospace; color:#0f172a;" id="modalSeedlingCode">FG-02-14</div>
+            <div style="margin-top:6px; display:flex; gap:8px; align-items:center;">
+              <span id="modalStatusBadge" class="badge-status badge-issued-farm">تم الصرف لمزرعة</span>
+              <span style="font-size:12px; color:#475569;" id="modalStationHeader">محطة أبحاث الباحة • رمان بيدا</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 1: Seedling Specs -->
+        <div>
+          <div class="detail-section-title">
+            <span>🌱</span> مواصفات الشتلة ومرحلة الإنتاج بالمشتل
+          </div>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="detail-label">نوع الفاكهة</span>
+              <span class="detail-value" id="modalFruit">رمان (Pomegranate)</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">الصنف</span>
+              <span class="detail-value" id="modalVariety">بيدا (01)</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">المنطقة والمحطة</span>
+              <span class="detail-value" id="modalRegion">الباحة - محطة أبحاث الباحة</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">الدفعة / المجموعة</span>
+              <span class="detail-value">دفعة موسم 2026 (100 شتلة)</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">تاريخ التطعيم / التجهيز</span>
+              <span class="detail-value">15/01/2026</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">حالة الفحص الصحي</span>
+              <span class="detail-value" style="color:#15803d;">خالية من الآفات ومُعتمدة ✓</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Seed Lot Traceability -->
+        <div>
+          <div class="detail-section-title">
+            <span>🧬</span> بيانات تتبع البذرة الأصل (Seed Batch Traceability)
+          </div>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="detail-label">باركود البذرة الأصل</span>
+              <span class="detail-value" style="font-family:monospace; color:#1d4ed8;" id="modalSeedLot">KSA11000033</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">نسبة الإنبات للبذرة</span>
+              <span class="detail-value">94.5%</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">بلد المنشأ للبذور</span>
+              <span class="detail-value">المملكة العربية السعودية (محلي)</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">تاريخ شهادة فحص البذور</span>
+              <span class="detail-value">04/10/2025</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">رقم إرسالية البذور</span>
+              <span class="detail-value">LOT-2025-089</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">رتبة الإكثار</span>
+              <span class="detail-value">مسجلة (Registered)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Beneficiary & Location Details -->
+        <div>
+          <div class="detail-section-title">
+            <span>👤</span> بيانات المستفيد وموقع الزراعة النهائي
+          </div>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="detail-label">نوع المستفيد</span>
+              <span class="detail-value" id="modalBeneficiaryType">مزرعة تجارية</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">اسم المستفيد / المنشأة</span>
+              <span class="detail-value" id="modalBeneficiaryName">مزرعة السعادة الزراعية</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">رقم السجل الزراعي / الهوية</span>
+              <span class="detail-value" style="font-family:monospace;" id="modalBeneficiaryId">1029384756</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">تاريخ الصرف والتسليم</span>
+              <span class="detail-value" id="modalIssueDate">04/10/2026</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">إحداثيات المزرعة المعتمدة</span>
+              <span class="detail-value" style="font-family:monospace; font-size:12px;">20.0128° N, 41.4676° E</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">التحقق الحكومي الرقمي</span>
+              <span class="detail-value" style="color:#15803d;">موثق عبر سجل وزارة الزراعة ✓</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-reset" onclick="closeModal()">إغلاق</button>
+        <div style="display:flex; gap:8px;">
+          <a href="screen_print_100_labels.html" target="_blank" class="btn-add-seedling" style="font-size:13px; padding:8px 16px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            طباعة الملصق الحراري (60×40 مم)
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- نافذة الخريطة التفاعلية للمملكة ومواقع المحطات وأماكن صرف الشتلات -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="mapModal">
+    <div class="modal-box map-modal-dialog">
+      
+      <!-- شريط العنوان العلوي للخريطة (Esri Light Style) -->
+      <div class="map-modal-header">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:38px; height:38px; background:linear-gradient(135deg, #006837, #0f3e2b); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:20px; color:#ffffff; box-shadow: 0 2px 6px rgba(0, 104, 55, 0.25);">
+            🗺️
+          </div>
+          <div>
+            <div style="font-size:16px; font-weight:800; color:#0f172a;">الخريطة التفاعلية للمحطات ومواقع صرف وتوزيع الشتلات بالمملكة</div>
+            <div style="font-size:12px; color:#64748b;">المركز الوطني للبذور والتقاوي • التوزيع الجغرافي للمحطات البحثية ونقاط الصرف للمزارع والأفراد (ArcGIS Light Basemap)</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" style="color:#64748b;" onclick="closeMapModal()">&times;</button>
+      </div>
+
+      <!-- محتوى الخريطة واللوحة الجانبية -->
+      <div class="map-gis-layout">
+
+                <!-- مساحة الخريطة التفاعلية (SVG) -->
+        <div class="map-canvas-area" onmouseleave="hideMapTooltip()">
+          
+          <!-- نافذة المعلومات العائمة عند مرور الفأرة (Interactive ArcGIS Hover Tooltip) -->
+          <div id="mapHoverTooltip" class="map-hover-tooltip" style="display:none;"></div>
+
+          <!-- أدوات الملاحة والتكبير (Esri Navigation Widgets) -->
+          <div class="esri-nav-tools">
+            <button type="button" class="esri-nav-btn" title="تكبير الخريطة" onclick="zoomMap(1.25)">+</button>
+            <button type="button" class="esri-nav-btn" title="تصغير الخريطة" onclick="zoomMap(0.8)">−</button>
+            <button type="button" class="esri-nav-btn" title="إعادة ضبط الامتداد الجغرافي للمملكة" onclick="resetMapZoom()">⌂</button>
+            <div style="width:36px; height:36px; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:default; background:#f8fafc;" title="اتجاه الشمال الجغرافي">
+              <span style="font-size:10px; font-weight:900; color:#dc2626; line-height:1;">▲</span>
+              <span style="font-size:8.5px; font-weight:800; color:#1e293b; line-height:1;">N</span>
+            </div>
+          </div>
+
+          <!-- شريط تصفية طبقات الخريطة الجغرافية -->
+          <div class="map-filter-controls">
+            <button type="button" class="map-filter-btn active" onclick="filterMapMarkers('all', this)">
+              <span>🌐 الجميع (17)</span>
+            </button>
+            <button type="button" class="map-filter-btn" onclick="filterMapMarkers('station', this)">
+              <span class="legend-dot station" style="width:8px; height:8px;"></span>
+              <span>المحطات البحثية (7)</span>
+            </button>
+            <button type="button" class="map-filter-btn" onclick="filterMapMarkers('farm', this)">
+              <span class="legend-dot farm" style="width:8px; height:8px;"></span>
+              <span>مزارع المستفيدين (6)</span>
+            </button>
+            <button type="button" class="map-filter-btn" onclick="filterMapMarkers('individual', this)">
+              <span class="legend-dot ind" style="width:8px; height:8px;"></span>
+              <span>المستفيدين الأفراد (4)</span>
+            </button>
+          </div>
+
+          <!-- مقياس الرسم الجغرافي (Esri Scale Bar) -->
+          <div class="esri-scale-bar">
+            <div class="scale-labels">
+              <span>0</span>
+              <span>150</span>
+              <span>300 كم</span>
+            </div>
+            <div class="scale-line-ruler">
+              <div class="scale-line-mid"></div>
+            </div>
+            <div style="font-size:8.5px; color:#64748b; margin-top:2px; font-weight:600;">Esri World Topo • WGS 84</div>
+          </div>
+
+          <!-- دليل مفاتيح الخريطة (ArcGIS Map Legend) -->
+          <div class="map-legend-box">
+            <div style="font-weight:700; font-size:11px; color:#0f172a; margin-bottom:2px; border-bottom:1px solid #f1f5f9; padding-bottom:4px;">
+              دليل الرموز الجغرافية
+            </div>
+            <div class="map-legend-item">
+              <span class="legend-dot station"></span>
+              <span>محطة أبحاث رئيسية معتمدة (7)</span>
+            </div>
+            <div class="map-legend-item">
+              <span class="legend-dot farm"></span>
+              <span>مزرعة مستفيدة (سجل زراعي) (6)</span>
+            </div>
+            <div class="map-legend-item">
+              <span class="legend-dot ind"></span>
+              <span>موقع صرف لفرد (مواطن/مزارع) (4)</span>
+            </div>
+            <div class="map-legend-item">
+              <span style="display:inline-block; width:18px; height:2px; background:#0284c7; border-top:1px dashed #0284c7;"></span>
+              <span>مسار توريد وتتبع الشتلات المعتمد</span>
+            </div>
+          </div>
+
+          <!-- شريط الإسناد المكاني السفلي -->
+          <div style="position:absolute; bottom:8px; left:50%; transform:translateX(-50%); font-size:9.5px; color:#64748b; background:rgba(255,255,255,0.92); padding:3px 12px; border-radius:4px; pointer-events:none; border:1px solid #cbd5e1; z-index:10; white-space:nowrap; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+            المرجع الجيومكاني: الحدود الإدارية المعتمدة للمملكة العربية السعودية • هيئة المساحة والمعلومات الجيومكانية
+          </div>
+
+          <!-- خريطة المملكة المتجهة الحقيقية (Real Geographic Vector Map of Saudi Arabia) -->
+          <svg viewBox="20 10 1780 1480" width="100%" height="100%" style="overflow:hidden;" id="ksaGisSvg">
+            <defs>
+              <filter id="pinShadow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.18" />
+              </filter>
+              <filter id="labelShadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#0f172a" flood-opacity="0.15" />
+              </filter>
+            </defs>
+
+            <!-- حاوية الخريطة القابلة للتكبير والتحريك (Zoomable Group) -->
+            <g id="mapZoomContainer" style="transition: transform 0.25s ease-out;">
+
+              <!-- خطوط الإحداثيات الجغرافية (Esri Coordinate Graticule) -->
+              <g opacity="0.3" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,4">
+                <line x1="0" y1="200" x2="1800" y2="200" />
+                <line x1="0" y1="400" x2="1800" y2="400" />
+                <line x1="0" y1="600" x2="1800" y2="600" />
+                <line x1="0" y1="800" x2="1800" y2="800" />
+                <line x1="0" y1="1000" x2="1800" y2="1000" />
+                <line x1="0" y1="1200" x2="1800" y2="1200" />
+                <line x1="300" y1="0" x2="300" y2="1500" />
+                <line x1="600" y1="0" x2="600" y2="1500" />
+                <line x1="900" y1="0" x2="900" y2="1500" />
+                <line x1="1200" y1="0" x2="1200" y2="1500" />
+                <line x1="1500" y1="0" x2="1500" y2="1500" />
+              </g>
+
+              <!-- مسطحات البحار المحيطة وعناوينها -->
+              <text x="260" y="900" fill="#64748b" font-size="22" font-weight="700" opacity="0.6" transform="rotate(-60 260 900)">البحر الأحمر (Red Sea)</text>
+              <text x="1420" y="470" fill="#64748b" font-size="22" font-weight="700" opacity="0.6">الخليج العربي (Arabian Gulf)</text>
+
+              <!-- ═════════════════════════════════════════════════ -->
+              <!-- كتلة يابسة المملكة العربية السعودية الرسمية الحقيقية (Real KSA Landmass) -->
+              <!-- ═════════════════════════════════════════════════ -->
+              <path id="ksaMainLand" 
+                    d="m 1435.799,737.981 1.375,11.5 0.035,12.932 18.688,25.447 62.482,80.211 200.547,38.501 18.189,-15.854 37.691,64.202 -20.188,66.614 -34.934,115.279 -248.027,90.946 0.055,-0.211 c -0.068,0.026 -39.781,8.694 -81.641,15.387 -42.064,6.726 -86.273,11.476 -86.273,11.476 l -68.949,7.959 -71.924,37.758 c -1.051,0.556 -5.95,3.146 -6.825,4.627 -0.875,1.481 -45.323,60.709 -46.899,63.115 -1.574,2.406 -9.449,26.467 -9.799,27.578 -0.35,1.11 -2.275,4.257 -2.275,4.257 0,0 -19.25,11.29 -19.949,11.846 -0.701,0.555 -2.801,1.851 -4.201,1.851 h -13.475 l -20.648,-29.429 c 0,0 -10.5,1.48 -14.875,2.221 -4.375,0.741 -21.701,2.222 -25.725,1.666 -4.025,-0.556 -55.299,-6.849 -57.574,-7.033 -2.274,-0.186 -13.475,-1.48 -15.051,-2.036 -1.574,-0.556 -8.049,-5.923 -9.449,-6.663 -1.399,-0.74 -4.551,-2.036 -5.6,-2.036 h -46.199 l -6.125,2.406 c -1.4,0.556 -3.5,-0.185 -6.125,-1.666 -2.625,-1.48 -9.975,-0.925 -13.301,-0.37 -3.324,0.556 -14,3.597 -14,3.597 l -2.176,-1.516 c -1.464,3.15 -1.232,2.87 -3.355,5.736 l -2.99,-3.178 c -0.81,-0.86 -0.685,-0.897 -1.939,-0.947 l -2.524,-0.096 -0.585,-0.487 -0.242,0.227 0.014,0.544 c -0.582,0.865 -2.736,4.351 -3.281,4.883 l -2.997,2.928 -5.403,-0.783 c -0.651,-0.683 -0.506,-2.382 -0.416,-3.241 l -0.096,-0.189 -0.474,-0.131 -0.72,0.679 c -0.547,-0.465 -1.714,-0.658 -2.383,-0.51 l -0.902,-0.659 -0.713,-0.011 -0.734,0.452 -0.269,-0.631 0.089,-0.917 c -0.254,-0.088 -0.576,-0.158 -0.809,-0.283 -0.117,-0.063 -0.566,-0.418 -0.646,-0.444 -0.109,-0.036 -2.355,-0.146 -2.566,-0.159 l -1.791,1.106 c -0.416,0.146 -1.947,-0.71 -2.36,-0.904 -0.463,-0.161 -0.869,-0.259 -1.181,-0.412 -0.88,-0.434 -1.747,-2.845 -3.656,-3.885 -0.292,-0.159 -0.793,-0.23 -1.123,-0.326 l -1.759,-2.632 c -0.606,-0.908 -1.437,-2.064 -2.397,-2.615 -1.495,-0.856 -3.029,-1.751 -4.383,-2.847 -1.148,-0.931 -2.246,-2.013 -3.353,-3.004 -0.271,-0.242 -0.627,-0.446 -0.923,-0.656 l -0.656,0.306 c -1.086,-0.803 -2.152,-1.762 -3.377,-2.329 -2.721,-1.262 -4.947,-1.259 -7.688,-0.271 l -1.205,0.435 c -0.104,0.055 -1.361,1.146 -1.584,1.334 -2.532,3.511 -4.338,7.021 -4.513,11.327 -0.073,1.796 0.961,1.843 0.503,4.047 -0.004,0.021 -0.205,0.249 -0.228,0.275 -0.024,0.263 0.509,1.017 0.751,1.121 l 1.658,0.182 c 0.493,0.428 1.073,1.052 1.609,1.395 0.892,0.571 1.615,0.276 2.359,1.42 l 0.034,0.399 -0.519,0.685 0.393,0.295 0.907,0.071 c 0.662,0.524 1.651,1.52 1.203,2.539 -0.659,-0.2 -1.618,-0.261 -2.29,-0.063 l -0.223,0.5 -0.73,0.076 -1.174,0.97 c -0.764,-0.256 -1.834,-0.221 -2.605,-0.046 l -0.758,0.831 c -1.02,0.288 -1.968,0.547 -2.932,1.019 l -0.385,1.354 c 0.139,1.004 0.868,1.834 1.422,2.622 l -0.028,0.753 c -0.569,0.599 -1.13,1.347 -1.927,1.612 l -0.182,0.457 0.175,0.586 c -0.188,0.423 -1.347,0.757 -1.725,0.821 l 0.017,0.459 0.371,0.506 -0.277,2.713 -1.486,0.801 -0.241,0.5 c -0.011,0.756 0.033,1.911 0.297,2.633 0.408,-0.28 1.839,-1.14 2.354,-1.023 l 5.424,4.984 c -0.227,1.81 -6.518,0.581 -6.475,2.406 l 0.205,4.824 c 0.053,0.523 0.117,1.504 0.576,1.941 l -1.467,1.114 c -0.99,0.099 -1.145,0.106 -2.093,0.648 -0.103,0.059 0.055,0.93 0.071,1.089 l -0.202,0.458 c 0.556,0.563 0.818,1.34 0.673,2.177 l 0.712,-0.245 c 0.387,0.327 0.444,0.596 0.722,1.031 0.402,0.636 0.917,1.24 1.363,1.847 0.498,0.025 0.909,-0.048 1.337,0.306 l 1.065,-0.116 0.312,0.189 0.311,0.568 0.691,-0.078 c 0.436,0.731 0.551,1.247 0.789,2.116 l 1.309,1.2 0.887,-0.137 0.236,0.146 c 0.138,1.258 0.129,2.2 -0.519,3.211 l 0.666,0.384 0.478,1.799 -1.148,0.783 c -0.381,0.114 -1.725,-0.45 -2.285,-0.506 0.269,0.695 0.217,0.782 0.092,1.425 l -0.869,0.64 c -0.124,0.856 0.393,1.723 0.688,2.511 l -0.308,1.417 0.742,0.781 c 0.083,0.442 0.215,1.454 0.061,1.899 -0.715,0.397 -1.164,0.524 -1.98,0.381 l -0.711,-0.613 c -0.525,-0.142 -1.342,-0.208 -1.811,-0.503 -0.42,-0.264 -1.61,-1.117 -2.052,-1.14 l -0.429,-0.565 -0.334,-0.065 -1.242,0.51 0.035,0.543 1.012,1.367 -0.002,0.376 c -0.429,0.474 -1.102,1.406 -1.096,2.109 0.014,1.438 -0.197,1.495 -0.778,2.875 -0.06,0.806 -0.279,1.268 -0.597,1.988 l 0.494,2.048 -0.377,0.645 c -0.648,0.445 -1.363,0.289 -2.049,0.506 -0.104,0.032 -0.883,0.615 -0.928,0.618 -1.996,0.131 -2.615,0.466 -4.57,1.385 -0.436,0.123 -0.918,0.309 -1.359,0.387 -0.605,0.106 -2.086,-0.114 -2.557,0.459 -0.328,0.4 -0.715,0.994 -1.09,1.329 -0.559,0.497 -1.405,0.891 -2.051,1.301 l -0.084,0.438 c 0.404,0.981 1.307,3.004 1.372,3.933 l -0.194,1.683 -0.098,0.841 -2.85,0.106 c -1.501,1.423 -3.242,2.119 -5.177,2.647 -0.073,0.02 -0.187,0.066 -0.26,0.07 -1.146,0.062 -1.696,-0.114 -2.652,0.482 -0.2,-0.029 -0.427,-0.186 -0.565,-0.324 -0.57,-0.574 -1.193,-0.883 -1.877,-1.219 L 565.341,1474.788 25.05,471.98 22.238,409.379 55.508,284.98 l 7.211,0.846 c 1.132,0.13 2.218,0.366 3.358,0.46 0.027,0.003 0.055,0.016 0.081,0.019 0.749,0.091 1.511,0.145 2.253,0.27 2.982,0.5 5.959,1.052 8.936,1.585 4.629,0.829 9.266,1.628 13.898,2.442 2.801,0.492 5.607,0.961 8.412,1.433 1.408,0.236 2.814,0.507 4.225,0.729 1.254,0.196 2.529,0.393 3.789,0.555 0.387,0.05 0.777,0.056 1.164,0.119 4.434,0.738 8.826,1.73 13.255,2.488 2.142,0.366 4.314,0.68 6.468,0.979 0.685,0.095 1.375,0.166 2.057,0.283 1.185,0.203 2.367,0.462 3.545,0.701 2.09,0.424 4.195,0.799 6.289,1.211 2.268,0.446 4.533,0.933 6.811,1.332 2.449,0.43 4.932,0.735 7.396,1.073 4.895,-4.058 9.9,-8.018 14.861,-11.995 2.011,-1.613 21.043,-16.616 21.059,-16.647 0.887,-1.653 5.922,-9.619 7.421,-12.053 1.751,-2.843 3.526,-5.672 5.274,-8.516 0.861,-1.4 1.668,-2.832 2.52,-4.237 1.014,-1.673 2.084,-3.312 3.109,-4.978 0.765,-1.24 1.486,-2.505 2.264,-3.738 10.324,-1.975 20.645,-3.967 30.961,-5.977 4.832,-0.941 9.666,-1.896 14.506,-2.798 3.086,-0.575 13.889,-2.562 16.18,-3.099 0.02,-0.022 0.061,-0.062 0.073,-0.087 1.475,-3.05 2.943,-6.109 4.317,-9.201 1.038,-2.335 2.004,-4.701 3.025,-7.044 2.047,-4.693 4.086,-9.406 6.344,-14.012 4.373,-2.537 8.742,-5.051 13.189,-7.463 3.514,-1.905 7.012,-3.847 10.512,-5.773 1.236,-0.68 2.462,-1.396 3.719,-2.039 l -0.1,-0.114 c -2.467,-2.847 -5.023,-5.624 -7.49,-8.471 -1.397,-1.612 -2.834,-3.191 -4.236,-4.799 -0.318,-0.364 -0.617,-0.743 -0.947,-1.1 -1.521,-1.644 -3.014,-3.326 -4.48,-5.017 -0.461,-0.53 -0.971,-1.032 -1.42,-1.57 -0.535,-0.638 -1.053,-1.352 -1.526,-2.029 -0.364,-0.522 -0.505,-1.003 -0.969,-1.504 -4.862,-5.251 -9.683,-10.539 -14.503,-15.825 -0.416,-0.457 -0.891,-0.855 -1.332,-1.289 -0.564,-0.556 -1.074,-1.141 -1.604,-1.724 -0.281,-0.31 -1.327,-1.396 -1.561,-1.64 -0.452,-0.473 -0.937,-0.913 -1.378,-1.397 -3.828,-4.2 -7.658,-8.4 -11.475,-12.61 -1.843,-2.032 -3.672,-4.088 -5.555,-6.085 l -0.095,-0.1 c -0.562,-0.614 -1.124,-1.228 -1.681,-1.845 -0.308,-0.341 -0.614,-0.731 -0.953,-1.042 -0.154,-0.142 -0.33,-0.271 -0.479,-0.418 -0.773,-0.771 -1.484,-1.625 -2.225,-2.427 -1.693,-1.83 -3.382,-3.664 -5.066,-5.5 -4.418,-4.813 -8.893,-9.581 -13.299,-14.404 11.025,-3.138 22.078,-6.206 33.138,-9.232 2.003,-0.548 4.017,-1.066 6.016,-1.626 1.875,-0.524 3.729,-1.131 5.604,-1.663 l 11.256,-3.203 c 2.104,-0.601 4.225,-1.153 6.331,-1.749 3.674,-1.04 7.334,-2.128 11.013,-3.154 4.013,-1.12 8.046,-2.176 12.056,-3.302 0.869,-0.244 1.727,-0.521 2.596,-0.764 4.911,-1.368 9.83,-2.721 14.748,-4.066 7.602,-2.079 15.224,-4.076 22.843,-6.094 4.058,-1.075 8.055,-2.196 12.112,-3.27 6.289,-1.663 12.602,-3.261 18.896,-4.905 1.867,-0.488 3.736,-0.978 5.61,-1.445 0.798,-0.199 1.931,-0.33 2.685,-0.674 0.037,-0.017 0.361,-0.302 0.412,-0.345 5.354,-4.534 10.551,-9.272 16.082,-13.605 0.16,-0.126 0.309,-0.271 0.462,-0.406 32.017,5.813 98.862,18.389 100.233,18.761 0.043,0.012 0.518,0.314 0.617,0.375 14.76,8.968 80.162,49.308 80.162,49.308 1.464,0.912 2.985,2.075 4.57,2.776 15.588,6.897 31.16,13.83 46.705,20.817 l 6.201,2.789 c 0.934,0.536 73.682,57.5 83.199,65.042 9.742,7.719 78.422,62.829 95.453,76.716 5.811,4.739 36.82,30.189 39.307,32.24 46.703,3.801 93.373,7.949 140.011,12.4 0.101,0.01 0.83,0.093 0.883,0.085 0.111,-0.017 10.482,-3.598 10.775,-3.772 24.949,2.806 49.847,6.136 74.748,9.299 l 1.309,0.978 c 0.701,0.523 0.757,0.546 1.176,1.291 0.463,0.822 1.67,3.265 2.18,3.872 l 2.004,2.393 c 0.836,0.997 1.243,2.816 1.877,3.58 1.434,1.728 1.438,1.511 2.23,3.531 0.039,0.1 0.734,3.731 0.734,3.731 0.365,2.062 -0.258,3.382 -0.362,5.32 -0.01,0.167 0.278,3.811 0.335,4.073 0.016,0.071 0.633,1.891 0.652,1.925 0.27,0.479 2.133,2.289 2.539,2.647 0.252,0.786 0.461,1.816 0.818,2.552 0.115,0.237 4.678,5.266 5.114,5.757 l -0.401,1.625 c 20.021,-0.384 40.043,-0.723 60.067,-1.003 l 100.937,-1.563 78.25,102 -26.75,132 26.197,45.53 9.3767,41.75483 6.3984,11.61086 1.7599,13.67931 c 0.4956,0.81085 3.6634,5.99602 3.9445,6.51812 0.3051,0.56659 5.6658,11.68026 5.6658,11.68026 l 5.4479,3.83531 8.8037,2.87649 2.3394,-0.30387 15.0974,-0.85703 8.6974,-9.60151 -0.3884,-2.64845 0.01,-0.002 1.9773,-1.79232 c 0.211,0.0617 0.4348,0.13498 0.673,0.221 4.5,1.625 9.875,7.625 9.875,7.625 z" 
+                    fill="#fcfbf8" stroke="#94a3b8" stroke-width="2.5" filter="url(#pinShadow)" />
+
+              <!-- تضاريس ومرتفعات جبال السروات والحجاز (Sarawat Mountain Relief) -->
+              <path d="M 190 380 Q 320 650 440 920 Q 520 1050 600 1150 Q 660 1280 690 1420 L 730 1410 Q 690 1270 630 1140 Q 550 1020 470 900 Q 360 640 220 370 Z" 
+                    fill="#ede7dc" opacity="0.95" />
+
+              <!-- تضاريس صحراء النفود الكبير (شمال المملكة) -->
+              <path d="M 450 260 Q 600 230 750 320 Q 680 400 520 370 Z" 
+                    fill="#fef6e7" opacity="0.9" />
+
+              <!-- تضاريس عروق الربع الخالي (جنوب وشرق المملكة) -->
+              <path d="M 1100 1350 Q 1350 1320 1550 1150 Q 1580 950 1420 900 Q 1250 1050 1100 1250 Z" 
+                    fill="#fef6e7" opacity="0.9" />
+
+              <!-- ═════════════════════════════════════════════════ -->
+              <!-- الحدود الإدارية الرسمية لمناطق المملكة (33 Official Province Boundaries) -->
+              <!-- ═════════════════════════════════════════════════ -->
+              <g stroke="#cbd5e1" stroke-width="1.8" stroke-dasharray="6,4" fill="none" opacity="0.95">
+<path d="path622" />
+                <path d="path624" />
+                <path d="path626" />
+                <path d="path630" />
+                <path d="m 1372.781,705.555 c 0.496,0.811 3.664,5.996 3.945,6.518 0.305,0.567 5.666,11.680 5.666,11.680 l 5.448,3.835 8.804,2.876 2.339,-0.304 15.097,-0.857 8.697,-9.602 -0.388,-2.648 0.01,-0.002" />
+                <path d="path634" />
+                <path d="path636" />
+                <path d="path638" />
+                <path d="path640" />
+                <path d="path642" />
+                <path d="path644" />
+                <path d="path646" />
+                <path d="path648" />
+                <path d="path650" />
+                <path d="path654" />
+                <path d="path658" />
+                <path d="path660" />
+                <path d="path662" />
+                <path d="path664" />
+                <path d="path668" />
+                <path d="path670" />
+                <path d="path672" />
+                <path d="path674" />
+                <path d="path678" />
+                <path d="path680" />
+                <path d="path682" />
+                <path d="path684" />
+                <path d="path686" />
+                <path d="path688" />
+                <path d="path690" />
+                <path d="m 596.075,1272.902 c 0,0 -0.155,-5.32 -0.155,-6.32 0,-1 1.667,-2.667 3.667,-2.667 2,0 9.333,-1.334 12.333,-1.667 3,-0.333 4.667,-1.667 4.667,-3 0,-1.333 -1.333,-4.667 -1.333,-6 0,-1.333 -2.333,-5.667 -3,-7 -0.667,-1.333 -8.667,-10.666 -8.667,-10.666 0,0 -4.333,-2.001 -2.333,-4.334 2,-2.333 3,-4.666 5,-4.333 2,0.333 6,0 6,0 0,0 0.333,-7.667 0.667,-9 0.334,-1.333 0.333,-5.667 0.333,-5.667 0,0 1.666,-1.666 4.333,-1.666 2.667,0 10,1.999 10.667,3.666 0.667,1.667 2,5.667 2,5.667 0,0 1.667,3 4,3 2.333,0 3.667,-0.334 3.667,-2.667 0,-2.333 -1.667,-5.334 0.667,-6 2.334,-0.666 3,-2.333 3,-4.333 0,-2 0,-8.333 0,-8.333 0,0 -1.333,-3.334 0.333,-3.667 1.666,-0.333 3.333,-1.001 2,-3.667 -1.333,-2.666 -1.333,-2.666 -1.333,-2.666 l -6.667,-2 -2.667,-6 c 0,0 -1.667,-1.667 -0.333,-4.667 1.334,-3 2.333,-4.334 1,-5.667 -1.333,-1.333 -2.667,-6.999 -1.333,-7.666 1.334,-0.667 1.667,-4 1.667,-5 0,-1 -0.333,-2.667 -0.333,-2.667 l -6,6.667 c 0,0 -3.667,1.334 -5,0 -1.333,-1.334 -3.333,-3.001 -5.333,-2.334 -2,0.667 -6.333,2.667 -6.333,2.667 0,0 -3.333,1.999 -1,4.333 2.333,2.334 1.667,3 0,4 -1.667,1 -1.667,3.667 -1.333,4.667 0.334,1 0,3 -1.667,3 -1.667,0 -5.334,10e-4 -5.667,1.667 -0.333,1.666 -3.666,1.333 -5.333,1.333 -1.667,0 -6,-0.333 -6.333,1.667 -0.333,2 -5.667,3.999 -5.667,1.666 0,-2.333 -0.333,-6.334 -2.333,-6 -2,0.334 -7,0.334 -8.667,0.334 -1.667,0 -3,-1.667 0.333,-3.667 3.333,-2 5.333,-5.667 5.333,-5.667 0,0 -0.333,-3.333 -2,-4.333 -1.667,-1 -10,-6.001 -11,-6.667 -1,-0.666 -4,-0.999 -2.333,-3.666 1.667,-2.667 3.667,-4.667 3.667,-5.667 0,-1 -1.333,-2.667 -3.333,-1.667 -2,1 -5.333,-2.332 -5.667,-3.666 -0.334,-1.334 -6.334,-3.666 -5.667,-6 0.667,-2.334 0.333,-6.001 -1,-7.334 -1.333,-1.333 -3.666,-8.666 -3.333,-9.666 0.333,-1 1,-5 3.333,-6.667 2.333,-1.667 6.667,-7 6.667,-7 0,0 2,-0.999 2,-3.333 0,-2.334 0.333,-3.334 1.667,-3.667 1.334,-0.333 2.333,-2.999 2.333,-4.333 0,-1.334 2,-2 3.667,-1.667 1.667,0.333 3.333,4.333 1.333,5.333 -2,1 -2.667,4.001 -1.667,5.334 1,1.333 3.667,1.667 4.667,1 1,-0.667 4.333,-7.666 5,-9 0.667,-1.334 2,-8.334 2,-9.334 0,-1 0.667,-3.999 2.667,-4.666 2,-0.667 3.667,-1.668 3.667,-4.334 0,-2.666 -0.333,-8 1.667,-9 2,-1 3,-6 3,-6 l -0.333,-7.666 c 0,0 0.667,-2.668 3,-3.334 2.333,-0.666 5,-3.666 6.667,-1.333 1.667,2.333 6,7 6,7 0,0 4,0.667 5.667,0.667 1.667,0 4.333,1.666 5.333,2.666 1,1 5.333,7.001 6,8.334 0.667,1.333 3,2.666 3.333,0.333 0.333,-2.333 3.333,-2 5.667,-1 2.334,1 4.333,-0.666 5.333,-1.333 1,-0.667 4,-3.667 4,-3.667 0,0 2.667,-0.667 2.667,2 0,2.667 -0.333,5.333 0.667,7.333 1,2 3,0.668 4.333,0.334 1.333,-0.334 6,-0.667 7.333,-0.667 1.333,0 2.667,1.667 1.667,3.667 -1,2 -1.333,5.667 -0.667,7 0.666,1.333 1.667,6.666 2,7.666 0.333,1 0.667,7.666 2.333,9 1.666,1.334 6,3 7.333,3 1.333,0 3.334,-3.334 4.667,-4 1.333,-0.666 6.333,-1.999 8.333,0.334 2,2.333 3.667,4.666 5.333,6.333 1.666,1.667 5,0.667 6.667,-1.333 1.667,-2 5,-8.667 5,-8.667 0,0 2,-2.999 4.667,-2.333 2.667,0.666 4,0 4,-1.667 0,-1.667 -1.667,-6.667 -1.667,-6.667 0,0 2.334,-4 4.667,-4 2.333,0 11,1 11,1 l 3.333,-7.333 10,-0.333 12,-20 29,3.666 9,6 12.667,1.667" />
+                <path d="m 622.92,1164.582 6.617,-8.201 0.383,-7.466 c 0,0 0.333,-3.667 2.333,-4.667 2,-1 2.667,-2 2.667,-4.333 0,-2.333 0,-5.333 0,-5.333 l 3.333,-3.667 -0.667,-13.667 c 0,0 5.667,-5.334 6.667,-6 1,-0.666 2.333,-5.999 2.333,-7.666 0,-1.667 1.334,-5.334 2.667,-6.334 1.333,-1 9.181,-4.857 9.424,-3.929" />
+                <path d="m 1367.569,633.309 c 0,0 6.353,-1.222 4.521,-3.788 -1.832,-2.566 -2.442,-4.155 0.245,-4.643 2.687,-0.488 4.154,-3.299 4.521,-6.72 0.367,-3.421 -0.611,-10.63 -0.611,-10.63" />
+              </g>
+
+              <!-- أسماء المناطق الإدارية الرسمية للمملكة (Province Labels in Esri Style) -->
+              <g fill="#64748b" font-size="18" font-weight="700" opacity="0.75" pointer-events="none">
+                <text x="1035" y="780">منطقة الرياض</text>
+                <text x="430" y="980">منطقة مكة المكرمة</text>
+                <text x="400" y="680">منطقة المدينة المنورة</text>
+                <text x="1350" y="800">المنطقة الشرقية</text>
+                <text x="780" y="540">منطقة القصيم</text>
+                <text x="680" y="410">منطقة حائل</text>
+                <text x="240" y="340">منطقة تبوك</text>
+                <text x="480" y="190">منطقة الجوف</text>
+                <text x="820" y="220">منطقة الحدود الشمالية</text>
+                <text x="600" y="1280">منطقة عسير</text>
+                <text x="545" y="1145">منطقة الباحة</text>
+                <text x="635" y="1455">منطقة جازان</text>
+                <text x="960" y="1320">منطقة نجران</text>
+                <text x="1320" y="1180" font-size="19" fill="#a1a1aa">صحراء الربع الخالي</text>
+                <text x="540" y="310" font-size="16" fill="#a1a1aa">النفود الكبير</text>
+              </g>
+
+              <!-- العاصمة: مدينة الرياض -->
+              <g transform="translate(1035, 710)" pointer-events="none">
+                <circle cx="0" cy="0" r="9" fill="#ffffff" stroke="#0f172a" stroke-width="3" />
+                <circle cx="0" cy="0" r="4.5" fill="#0f172a" />
+                <text x="15" y="7" font-size="19" font-weight="800" fill="#0f172a">الرياض (العاصمة ⭐)</text>
+              </g>
+
+              <!-- مسارات توريد وتتبع الشتلات من المحطات (Traceability Flow Arcs) -->
+              <g id="mapConnectionArcs" opacity="0.85">
+                <!-- الباحة -> مزرعة السعادة وبلجرشي ومحمد الغامدي وعبدالله الزهراني -->
+                <path d="M 601 1136 Q 630 1125 660 1115" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
+                <path d="M 601 1136 Q 620 1165 640 1195" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
+                <path d="M 601 1136 Q 570 1145 540 1155" fill="none" stroke="#7e22ce" stroke-width="2.5" stroke-dasharray="5,4" />
+                <path d="M 601 1136 Q 570 1110 545 1085" fill="none" stroke="#7e22ce" stroke-width="2.5" stroke-dasharray="5,4" />
+
+                <!-- الطائف -> مزرعة الورد ومواطن القرشي -->
+                <path d="M 515 1020 Q 480 1010 450 1000" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
+                <path d="M 515 1020 Q 490 1040 470 1060" fill="none" stroke="#7e22ce" stroke-width="2.5" stroke-dasharray="5,4" />
+
+                <!-- الخرج -> مزارع نجد للحمضيات -->
+                <path d="M 1084 759 Q 1117 770 1150 780" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
+
+                <!-- الجوف -> شركة الجوف الزراعية -->
+                <path d="M 496 232 Q 463 241 430 250" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
+
+                <!-- القصيم -> مزرعة القصيم -->
+                <path d="M 810 584 Q 845 592 880 600" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
+
+                <!-- جازان -> مواطن الفيفي (فيفا) -->
+                <path d="M 691 1420 Q 720 1395 750 1375" fill="none" stroke="#7e22ce" stroke-width="2.5" stroke-dasharray="5,4" />
+              </g>
+
+              <!-- ═════════════════════════════════════════════════ -->
+              <!-- 1. المحطات البحثية المعتمدة (Station Markers - Green) -->
+              <!-- ═════════════════════════════════════════════════ -->
+              <g id="stationsGroup">
+                
+                <!-- محطة 1: الباحة -->
+                <g class="map-pin marker-station" 
+                   onmouseenter="showMapTooltip('st-baha', event)" onmouseleave="hideMapTooltip()" 
+                   onclick="selectMapLocation('st-baha')" transform="translate(601, 1136)">
+                  <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
+                  <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
+                  <rect x="-60" y="-46" width="120" height="26" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">محطة الباحة</text>
+                </g>
+
+                <!-- محطة 2: الطائف (مكة المكرمة) -->
+                <g class="map-pin marker-station" 
+                   onmouseenter="showMapTooltip('st-taif', event)" onmouseleave="hideMapTooltip()" 
+                   onclick="selectMapLocation('st-taif')" transform="translate(515, 1020)">
+                  <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
+                  <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
+                  <rect x="-60" y="-46" width="120" height="26" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">محطة الطائف</text>
+                </g>
+
+                <!-- محطة 3: الخرج (الرياض) -->
+                <g class="map-pin marker-station" 
+                   onmouseenter="showMapTooltip('st-kharj', event)" onmouseleave="hideMapTooltip()" 
+                   onclick="selectMapLocation('st-kharj')" transform="translate(1084, 759)">
+                  <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
+                  <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
+                  <rect x="-60" y="-46" width="120" height="26" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">محطة الخرج</text>
+                </g>
+
+                <!-- محطة 4: الجوف (أبحاث الزيتون) -->
+                <g class="map-pin marker-station" 
+                   onmouseenter="showMapTooltip('st-jouf', event)" onmouseleave="hideMapTooltip()" 
+                   onclick="selectMapLocation('st-jouf')" transform="translate(496, 232)">
+                  <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
+                  <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
+                  <rect x="-60" y="-46" width="120" height="26" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">مركز الجوف</text>
+                </g>
+
+                <!-- محطة 5: عنيزة (القصيم) -->
+                <g class="map-pin marker-station" 
+                   onmouseenter="showMapTooltip('st-qassim', event)" onmouseleave="hideMapTooltip()" 
+                   onclick="selectMapLocation('st-qassim')" transform="translate(810, 584)">
+                  <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
+                  <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
+                  <rect x="-60" y="-46" width="120" height="26" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">محطة القصيم</text>
+                </g>
+
+                <!-- محطة 6: جازان (الأبحاث الزراعية) -->
+                <g class="map-pin marker-station" 
+                   onmouseenter="showMapTooltip('st-jazan', event)" onmouseleave="hideMapTooltip()" 
+                   onclick="selectMapLocation('st-jazan')" transform="translate(691, 1420)">
+                  <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
+                  <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
+                  <rect x="-60" y="-46" width="120" height="26" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">مركز جازان</text>
+                </g>
+
+                <!-- محطة 7: الأحساء (المنطقة الشرقية) -->
+                <g class="map-pin marker-station" 
+                   onmouseenter="showMapTooltip('st-ahsa', event)" onmouseleave="hideMapTooltip()" 
+                   onclick="selectMapLocation('st-ahsa')" transform="translate(1272, 647)">
+                  <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
+                  <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
+                  <rect x="-60" y="-46" width="120" height="26" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">محطة الأحساء</text>
+                </g>
+              </g>
+
+              <!-- ═════════════════════════════════════════════════ -->
+              <!-- 2. مواقع صرف المزارع المستفيدة (Farm Markers - Blue) -->
+              <!-- ═════════════════════════════════════════════════ -->
+              <g id="farmsGroup">
+                <!-- مزرعة السعادة (الباحة) -->
+                <g class="map-pin marker-farm" 
+                   onmouseenter="showMapTooltip('farm-saada', event)" onmouseleave="hideMapTooltip()" 
+                   onclick="selectMapLocation('farm-saada')" transform="translate(660, 1115)">
+                  <circle cx="0" cy="0" r="12" fill="#0284c7" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="4" text-anchor="middle" font-size="9" fill="#ffffff">🌾</text>
+                  <rect x="16" y="-12" width="100" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="66" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">مزرعة السعادة</text>
+                </g>
+
+                <!-- مؤسسة الورد الطائفي (الطائف) -->
+                <g class="map-pin marker-farm" 
+                   onmouseenter="showMapTooltip('farm-taif-rose', event)" onmouseleave="hideMapTooltip()" 
+                   onclick="selectMapLocation('farm-taif-rose')" transform="translate(450, 1000)">
+                  <circle cx="0" cy="0" r="12" fill="#0284c7" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="4" text-anchor="middle" font-size="9" fill="#ffffff">🌾</text>
+                  <rect x="-120" y="-12" width="105" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="-68" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">الورد الطائفي</text>
+                </g>
+
+                <!-- مزارع نجد للحمضيات (الخرج) -->
+                <g class="map-pin marker-farm" 
+                   onmouseenter="showMapTooltip('farm-najd', event)" onmouseleave="hideMapTooltip()" 
+                   onclick="selectMapLocation('farm-najd')" transform="translate(1150, 780)">
+                  <circle cx="0" cy="0" r="12" fill="#0284c7" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="4" text-anchor="middle" font-size="9" fill="#ffffff">🌾</text>
+                  <rect x="16" y="-12" width="118" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="75" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">مزارع نجد للحمضيات</text>
+                </g>
+
+                <!-- شركة الجوف للتنمية الزراعية (الجوف) -->
+                <g class="map-pin marker-farm" 
+                   onmouseenter="showMapTooltip('farm-jouf', event)" onmouseleave="hideMapTooltip()" 
+                   onclick="selectMapLocation('farm-jouf')" transform="translate(430, 250)">
+                  <circle cx="0" cy="0" r="12" fill="#0284c7" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="4" text-anchor="middle" font-size="9" fill="#ffffff">🌾</text>
+                  <rect x="-132" y="-12" width="116" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="-74" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">شركة الجوف الزراعية</text>
+                </g>
+
+                <!-- مزرعة القصيم العضوية (القصيم) -->
+                <g class="map-pin marker-farm" 
+                   onmouseenter="showMapTooltip('farm-qassim', event)" onmouseleave="hideMapTooltip()" 
+                   onclick="selectMapLocation('farm-qassim')" transform="translate(880, 600)">
+                  <circle cx="0" cy="0" r="12" fill="#0284c7" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="4" text-anchor="middle" font-size="9" fill="#ffffff">🌾</text>
+                  <rect x="16" y="-12" width="98" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="65" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">مزرعة القصيم</text>
+                </g>
+
+                <!-- مزرعة الفاكهة التراثية (بلجرشي) -->
+                <g class="map-pin marker-farm" 
+                   onmouseenter="showMapTooltip('farm-baljurashi', event)" onmouseleave="hideMapTooltip()" 
+                   onclick="selectMapLocation('farm-baljurashi')" transform="translate(640, 1195)">
+                  <circle cx="0" cy="0" r="12" fill="#0284c7" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="4" text-anchor="middle" font-size="9" fill="#ffffff">🌾</text>
+                  <rect x="16" y="-12" width="98" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="65" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">مزرعة بلجرشي</text>
+                </g>
+              </g>
+
+              <!-- ═════════════════════════════════════════════════ -->
+              <!-- 3. مواقع صرف الأفراد (Individual Markers - Purple) -->
+              <!-- ═════════════════════════════════════════════════ -->
+              <g id="individualsGroup">
+                <!-- محمد بن سعيد الغامدي (الباحة) -->
+                <g class="map-pin marker-individual" 
+                   onmouseenter="showMapTooltip('ind-mohammed', event)" onmouseleave="hideMapTooltip()" 
+                   onclick="selectMapLocation('ind-mohammed')" transform="translate(540, 1155)">
+                  <circle cx="0" cy="0" r="11" fill="#7e22ce" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="3.5" text-anchor="middle" font-size="8" fill="#ffffff">👤</text>
+                  <rect x="-106" y="-11" width="94" height="22" rx="4" fill="#ffffff" stroke="#7e22ce" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="-59" y="4" text-anchor="middle" font-size="11" fill="#6b21a8" font-weight="700">محمد الغامدي</text>
+                </g>
+
+                <!-- سالم بن منصور القرشي (الطائف) -->
+                <g class="map-pin marker-individual" 
+                   onmouseenter="showMapTooltip('ind-salem', event)" onmouseleave="hideMapTooltip()" 
+                   onclick="selectMapLocation('ind-salem')" transform="translate(470, 1060)">
+                  <circle cx="0" cy="0" r="11" fill="#7e22ce" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="3.5" text-anchor="middle" font-size="8" fill="#ffffff">👤</text>
+                  <rect x="-102" y="-11" width="90" height="22" rx="4" fill="#ffffff" stroke="#7e22ce" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="-57" y="4" text-anchor="middle" font-size="11" fill="#6b21a8" font-weight="700">سالم القرشي</text>
+                </g>
+
+                <!-- عبدالله الزهراني (المندق) -->
+                <g class="map-pin marker-individual" 
+                   onmouseenter="showMapTooltip('ind-abdullah', event)" onmouseleave="hideMapTooltip()" 
+                   onclick="selectMapLocation('ind-abdullah')" transform="translate(545, 1085)">
+                  <circle cx="0" cy="0" r="11" fill="#7e22ce" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="3.5" text-anchor="middle" font-size="8" fill="#ffffff">👤</text>
+                  <rect x="-112" y="-11" width="100" height="22" rx="4" fill="#ffffff" stroke="#7e22ce" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="-62" y="4" text-anchor="middle" font-size="11" fill="#6b21a8" font-weight="700">عبدالله الزهراني</text>
+                </g>
+
+                <!-- يحيى بن حسن الفيفي (جازان / فيفا) -->
+                <g class="map-pin marker-individual" 
+                   onmouseenter="showMapTooltip('ind-faifi', event)" onmouseleave="hideMapTooltip()" 
+                   onclick="selectMapLocation('ind-faifi')" transform="translate(750, 1375)">
+                  <circle cx="0" cy="0" r="11" fill="#7e22ce" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="3.5" text-anchor="middle" font-size="8" fill="#ffffff">👤</text>
+                  <rect x="15" y="-11" width="90" height="22" rx="4" fill="#ffffff" stroke="#7e22ce" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="60" y="4" text-anchor="middle" font-size="11" fill="#6b21a8" font-weight="700">يحيى الفيفي</text>
+                </g>
+              </g>
+
+            </g> <!-- End of mapZoomContainer -->
+          </svg>
+        </div>
+
+        <!-- اللوحة الجانبية الذكية للبيانات والإحصائيات الجغرافية (Esri Light Style) -->
+        <div class="map-sidebar" id="mapSidebar">
+          
+          <div style="border-bottom: 1px solid #e2e8f0; padding-bottom: 12px;">
+            <div style="font-size:11px; color:#15803d; font-weight:800; display:inline-block; background:#f0fdf4; padding:3px 8px; border-radius:4px; border:1px solid #bbf7d0;" id="sbTypeBadge">محطة أبحاث رئيسية معتمدة</div>
+            <div style="font-size:18px; font-weight:800; color:#0f172a; margin-top:6px;" id="sbTitle">محطة أبحاث الباحة</div>
+            <div style="font-size:12px; color:#64748b; margin-top:3px;" id="sbRegion">منطقة الباحة • مركز الأبحاث الزراعية</div>
+          </div>
+
+          <!-- بطاقة الإحصائيات الشاملة للموقع المحدد -->
+          <div class="station-detail-card">
+            <div style="font-size:12.5px; font-weight:700; color:#0f172a; display:flex; align-items:center; gap:6px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
+              <span style="font-size:15px;">📊</span>
+              <span>المؤشرات وإحصائيات الإنتاج والصرف</span>
+            </div>
+
+            <div class="station-stat-row">
+              <span class="station-stat-lbl">الشتلات المنتجة بالمحطة:</span>
+              <span class="station-stat-val" id="sbProduced">450 شتلة</span>
+            </div>
+
+            <div class="station-stat-row">
+              <span class="station-stat-lbl">إجمالي الشتلات المصروفة:</span>
+              <span class="station-stat-val" style="color:#15803d;" id="sbDispatched">280 شتلة (62%)</span>
+            </div>
+
+            <div class="station-stat-row">
+              <span class="station-stat-lbl">المزارع والمستفيدين التابعين:</span>
+              <span class="station-stat-val" id="sbBeneficiaries">18 مستفيد (سجلات وأفراد)</span>
+            </div>
+
+            <div class="station-stat-row">
+              <span class="station-stat-lbl">الأصناف الرئيسية المعتمدة:</span>
+              <span class="station-stat-val" id="sbVarieties">رمان بيدا (PM-01)، لوز بيدا (AL-01)</span>
+            </div>
+
+            <div class="station-stat-row">
+              <span class="station-stat-lbl">لوتات البذور المربوطة:</span>
+              <span class="station-stat-val" style="font-family:monospace; color:#0284c7;" id="sbSeedLots">KSA11000033, KSA11000035</span>
+            </div>
+
+            <div class="station-stat-row">
+              <span class="station-stat-lbl">الإحداثيات الجغرافية (GPS):</span>
+              <span class="station-stat-val" style="font-family:monospace; font-size:11px;" id="sbCoords">20.0128° N, 41.4676° E</span>
+            </div>
+
+            <div class="station-stat-row">
+              <span class="station-stat-lbl">حالة الاعتماد:</span>
+              <span class="station-stat-val" style="color:#15803d;">معتمدة ومحدثة لحظياً ✓</span>
+            </div>
+          </div>
+
+          <!-- أزرار الإجراءات السريعة المرتبطة بجدول البحث -->
+          <div style="display:flex; flex-direction:column; gap:8px; margin-top:auto;">
+            <button type="button" class="btn-search" style="justify-content:center; padding:10px; font-weight:700;" id="btnFilterTableByStation" onclick="applyMapSelectionToFilter()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <span>تصفية الشتلات التابعة في الجدول</span>
+            </button>
+            <button type="button" class="btn-reset" style="justify-content:center; background:#f1f5f9; color:#334155; border-color:#cbd5e1; padding:9px;" onclick="closeMapModal()">
+              <span>إغلاق الخريطة</span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // سجل الشتلات المصروفة المعتمدة
+    const SEEDLINGS_DATA = [
+      {
+        id: 1,
+        code: "FG-02-14",
+        fruit: "تين (FG)",
+        variety: "وزيري",
+        region: "مكة المكرمة",
+        station: "محطة أبحاث الطائف",
+        seedLot: "KSA11000034",
+        beneficiaryType: "مزرعة",
+        beneficiaryName: "مؤسسة الورد الطائفي الزراعية",
+        beneficiaryId: "2019485731",
+        issueDate: "2026/10/02",
+        status: "منصرف",
+        statusLabel: "تم الصرف لمزرعة",
+        statusBadgeClass: "badge-issued-farm"
+      },
+      {
+        id: 2,
+        code: "FG-02-14",
+        fruit: "تين (FG)",
+        variety: "وزيري",
+        region: "مكة المكرمة",
+        station: "محطة أبحاث الطائف",
+        seedLot: "KSA11000034",
+        beneficiaryType: "فرد",
+        beneficiaryName: "سالم بن منصور القرشي",
+        beneficiaryId: "1074629183",
+        issueDate: "2026/10/01",
+        status: "منصرف",
+        statusLabel: "تم الصرف لمواطن",
+        statusBadgeClass: "badge-issued-person"
+      },
+      {
+        id: 3,
+        code: "PM-01-12",
+        fruit: "رمان (PM)",
+        variety: "بيدا",
+        region: "الباحة",
+        station: "محطة أبحاث الباحة",
+        seedLot: "KSA11000033",
+        beneficiaryType: "مزرعة",
+        beneficiaryName: "مزرعة السعادة الزراعية",
+        beneficiaryId: "1029384756",
+        issueDate: "2026/10/04",
+        status: "منصرف",
+        statusLabel: "تم الصرف لمزرعة",
+        statusBadgeClass: "badge-issued-farm"
+      },
+      {
+        id: 4,
+        code: "PM-01-12",
+        fruit: "رمان (PM)",
+        variety: "بيدا",
+        region: "الباحة",
+        station: "محطة أبحاث الباحة",
+        seedLot: "KSA11000033",
+        beneficiaryType: "فرد",
+        beneficiaryName: "محمد بن سعيد الغامدي",
+        beneficiaryId: "1087654321",
+        issueDate: "2026/10/03",
+        status: "منصرف",
+        statusLabel: "تم الصرف لمواطن",
+        statusBadgeClass: "badge-issued-person"
+      },
+      {
+        id: 5,
+        code: "AL-01-12",
+        fruit: "لوز (AL)",
+        variety: "بيدا",
+        region: "الباحة",
+        station: "محطة أبحاث الباحة",
+        seedLot: "KSA11000035",
+        beneficiaryType: "فرد",
+        beneficiaryName: "عبدالله بن أحمد الزهراني",
+        beneficiaryId: "1045239871",
+        issueDate: "2026/10/01",
+        status: "منصرف",
+        statusLabel: "تم الصرف لمواطن",
+        statusBadgeClass: "badge-issued-person"
+      },
+      {
+        id: 6,
+        code: "OL-03-16",
+        fruit: "زيتون (OL)",
+        variety: "طائفي",
+        region: "الجوف",
+        station: "مركز أبحاث الجوف للزيتون",
+        seedLot: "KSA11000036",
+        beneficiaryType: "مزرعة",
+        beneficiaryName: "شركة الجوف للتنمية الزراعية",
+        beneficiaryId: "3029182746",
+        issueDate: "2026/09/28",
+        status: "منصرف",
+        statusLabel: "تم الصرف لمزرعة",
+        statusBadgeClass: "badge-issued-farm"
+      },
+      {
+        id: 7,
+        code: "MG-04-18",
+        fruit: "مانجو (MG)",
+        variety: "حلواني",
+        region: "جازان",
+        station: "مركز الأبحاث الزراعية بجازان",
+        seedLot: "KSA11000037",
+        beneficiaryType: "فرد",
+        beneficiaryName: "يحيى بن حسن الفيفي",
+        beneficiaryId: "1098273645",
+        issueDate: "2026/09/25",
+        status: "منصرف",
+        statusLabel: "تم الصرف لمواطن",
+        statusBadgeClass: "badge-issued-person"
+      },
+      {
+        id: 8,
+        code: "CT-01-11",
+        fruit: "حمضيات (CT)",
+        variety: "بيدا",
+        region: "الرياض",
+        station: "محطة أبحاث الخرج",
+        seedLot: "KSA11000038",
+        beneficiaryType: "مزرعة",
+        beneficiaryName: "مزارع نجد للحمضيات",
+        beneficiaryId: "1092837465",
+        issueDate: "2026/09/22",
+        status: "منصرف",
+        statusLabel: "تم الصرف لمزرعة",
+        statusBadgeClass: "badge-issued-farm"
+      }
+    ];
+
+    // SVG QR Code generator (100% offline & reliable)
+    function generateOfflineSvgQR(text) {
+      const size = 90;
+      let hash = 0;
+      for (let i = 0; i < text.length; i++) {
+        hash = ((hash << 5) - hash) + text.charCodeAt(i);
+        hash |= 0;
+      }
+      
+      let rects = '';
+      const matrixSize = 17;
+      const step = size / matrixSize;
+
+      function drawCorner(x, y) {
+        return `
+          <rect x="${x}" y="${y}" width="${step*5}" height="${step*5}" fill="#0f172a" />
+          <rect x="${x+step}" y="${y+step}" width="${step*3}" height="${step*3}" fill="#ffffff" />
+          <rect x="${x+step*1.5}" y="${y+step*1.5}" width="${step*2}" height="${step*2}" fill="#0f172a" />
+        `;
+      }
+
+      rects += drawCorner(step, step);
+      rects += drawCorner(size - step*6, step);
+      rects += drawCorner(step, size - step*6);
+
+      for (let r = 0; r < matrixSize; r++) {
+        for (let c = 0; c < matrixSize; c++) {
+          if ((r < 6 && c < 6) || (r < 6 && c > matrixSize - 7) || (r > matrixSize - 7 && c < 6)) {
+            continue;
+          }
+          const bit = Math.abs((hash ^ (r * 31 + c * 17))) % 3;
+          if (bit === 0 || (r + c) % 2 === 0) {
+            rects += `<rect x="${c * step}" y="${r * step}" width="${step - 0.5}" height="${step - 0.5}" fill="#0f172a" />`;
+          }
+        }
+      }
+
+      return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
+        <rect width="${size}" height="${size}" fill="#ffffff" />
+        ${rects}
+      </svg>`;
+    }
+
+    // Render table rows
+    function renderTable(data) {
+      const tbody = document.getElementById("tableBody");
+      tbody.innerHTML = "";
+
+      if (data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; padding: 32px; color: #94a3b8;">لا توجد شتلات مطابقة لمعايير البحث المدخلة.</td></tr>`;
+        document.getElementById("visibleCount").innerText = "0";
+        return;
+      }
+
+      document.getElementById("visibleCount").innerText = data.length;
+
+      data.forEach((row, index) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td style="text-align: center; color: #94a3b8; font-weight: 600;">${index + 1}</td>
+          <td>
+            <span class="badge-code">${row.code}</span>
+          </td>
+          <td><strong>${row.fruit}</strong></td>
+          <td>${row.variety}</td>
+          <td>
+            <div>${row.region}</div>
+            <div style="font-size: 11px; color: #64748b;">${row.station}</div>
+          </td>
+          <td>
+            <span class="badge-seed">${row.seedLot}</span>
+          </td>
+          <td>
+            <div>${row.beneficiaryName}</div>
+            <div style="font-size: 11px; color: #64748b; font-family: monospace;">${row.beneficiaryId !== '—' ? 'سجل/هوية: ' + row.beneficiaryId : ''}</div>
+          </td>
+          <td>${row.issueDate}</td>
+          <td>
+            <span class="badge-status ${row.statusBadgeClass}">${row.statusLabel}</span>
+          </td>
+          <td style="text-align: center;">
+            <div class="action-btn-group" style="justify-content: center;">
+              <!-- زر استعراض ينقل للصفحة الكاملة التي تحتوي تفاصيل البذرة وسجل الشتلات المصدرة مع إخفاء تبويب الإصدار -->
+              <a href="screen_seedling_updated.html?view=1&code=${encodeURIComponent(row.code)}&fruit=${encodeURIComponent(row.fruit)}&variety=${encodeURIComponent(row.variety)}&region=${encodeURIComponent(row.region)}&seed=${encodeURIComponent(row.seedLot)}" class="btn-action-view" title="استعراض تفاصيل الصنف والبذرة وسجل الصرف">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                استعراض
+              </a>
+              <!-- زر إصدار/صرف شتلات جديدة ينقل مباشرة لصفحة إصدار باركود الشتلات والصرف -->
+              <a href="screen_seedling_updated.html?action=issue&code=${encodeURIComponent(row.code)}&fruit=${encodeURIComponent(row.fruit)}&variety=${encodeURIComponent(row.variety)}&region=${encodeURIComponent(row.region)}&seed=${encodeURIComponent(row.seedLot)}" class="btn-action-issue" title="إصدار وصرف شتلات جديدة لهذا الصنف">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                إصدار/صرف شتلات جديدة
+              </a>
+              <a href="screen_print_100_labels.html" target="_blank" class="btn-action-print" title="طباعة الملصق الحراري">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+              </a>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Filter Logic
+    function applyFilters() {
+      const codeVal = document.getElementById("filterSeedlingCode").value.trim().toLowerCase();
+      const fruitVal = document.getElementById("filterFruit").value;
+      const varietyVal = document.getElementById("filterVariety").value;
+      const regionVal = document.getElementById("filterRegion").value;
+      const seedLotVal = document.getElementById("filterSeedLot").value;
+      const benTypeVal = document.getElementById("filterBeneficiaryType").value;
+      const benTextVal = document.getElementById("filterBeneficiaryText").value.trim().toLowerCase();
+
+      const filtered = SEEDLINGS_DATA.filter(item => {
+        if (codeVal && !item.code.toLowerCase().includes(codeVal)) return false;
+        if (fruitVal && !item.fruit.includes(fruitVal)) return false;
+        if (varietyVal && !item.variety.includes(varietyVal)) return false;
+        if (regionVal && !item.region.includes(regionVal)) return false;
+        if (seedLotVal && item.seedLot !== seedLotVal) return false;
+        if (benTypeVal && item.beneficiaryType !== benTypeVal) return false;
+        if (benTextVal) {
+          const matchName = item.beneficiaryName.toLowerCase().includes(benTextVal);
+          const matchId = item.beneficiaryId.toLowerCase().includes(benTextVal);
+          if (!matchName && !matchId) return false;
+        }
+        return true;
+      });
+
+      renderTable(filtered);
+    }
+
+    function resetFilters() {
+      document.getElementById("filterSeedlingCode").value = "";
+      document.getElementById("filterFruit").value = "";
+      document.getElementById("filterVariety").value = "";
+      document.getElementById("filterRegion").value = "";
+      document.getElementById("filterSeedLot").value = "";
+      document.getElementById("filterBeneficiaryType").value = "";
+      document.getElementById("filterBeneficiaryText").value = "";
+      renderTable(SEEDLINGS_DATA);
+    }
+
+    // Modal Details functions
+    function openDetailsModal(id) {
+      const item = SEEDLINGS_DATA.find(x => x.id === id);
+      if (!item) return;
+
+      document.getElementById("modalSeedlingCode").innerText = item.code;
+      document.getElementById("modalFruit").innerText = item.fruit;
+      document.getElementById("modalVariety").innerText = item.variety;
+      document.getElementById("modalRegion").innerText = `${item.region} - ${item.station}`;
+      document.getElementById("modalSeedLot").innerText = item.seedLot;
+      document.getElementById("modalBeneficiaryType").innerText = item.beneficiaryType === 'مزرعة' ? 'مزرعة (سجل زراعي)' : (item.beneficiaryType === 'فرد' ? 'فرد (مواطن/مزارع)' : 'غير منصرفة');
+      document.getElementById("modalBeneficiaryName").innerText = item.beneficiaryName;
+      document.getElementById("modalBeneficiaryId").innerText = item.beneficiaryId;
+      document.getElementById("modalIssueDate").innerText = item.issueDate;
+      document.getElementById("modalStationHeader").innerText = `${item.station} • ${item.fruit} صنف ${item.variety}`;
+
+      const statusBadge = document.getElementById("modalStatusBadge");
+      statusBadge.className = `badge-status ${item.statusBadgeClass}`;
+      statusBadge.innerText = item.statusLabel;
+
+      // Generate offline QR
+      document.getElementById("modalQrHolder").innerHTML = generateOfflineSvgQR(item.code);
+
+      document.getElementById("detailModal").classList.add("active");
+    }
+
+    function closeModal() {
+      document.getElementById("detailModal").classList.remove("active");
+    }
+
+    // Export Table CSV
+    function exportTableToCSV() {
+      let csv = "\uFEFFالرقم,كود الشتلة,نوع الفاكهة,الصنف,المنطقة,المحطة,باركود البذرة,المستفيد,الهوية/السجل,تاريخ الصرف,الحالة\n";
+      SEEDLINGS_DATA.forEach(row => {
+        csv += `"${row.id}","${row.code}","${row.fruit}","${row.variety}","${row.region}","${row.station}","${row.seedLot}","${row.beneficiaryName}","${row.beneficiaryId}","${row.issueDate}","${row.statusLabel}"\n`;
+      });
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `seedlings_registry_${new Date().toISOString().slice(0,10)}.csv`;
+      link.click();
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // بيانات وإحصائيات المحطات ونقاط الصرف على الخريطة
+    // ══════════════════════════════════════════════════════════
+    const MAP_LOCATIONS = {
+      'st-baha': {
+        type: 'محطة أبحاث رئيسية معتمدة',
+        typeColor: '#15803d',
+        title: 'محطة أبحاث الباحة',
+        region: 'منطقة الباحة • مركز الأبحاث الزراعية',
+        produced: '450 شتلة',
+        dispatched: '280 شتلة (62%)',
+        beneficiaries: '18 مستفيد (سجلات وأفراد)',
+        varieties: 'رمان بيدا (PM-01)، لوز بيدا (AL-01)',
+        seedLots: 'KSA11000033, KSA11000035',
+        coords: '20.0128° N, 41.4676° E',
+        searchQuery: 'الباحة'
+      },
+      'st-taif': {
+        type: 'محطة أبحاث رئيسية معتمدة',
+        typeColor: '#15803d',
+        title: 'محطة أبحاث الطائف',
+        region: 'منطقة مكة المكرمة • الهدا والشفا',
+        produced: '380 شتلة',
+        dispatched: '210 شتلة (55%)',
+        beneficiaries: '14 مستفيد معتمد',
+        varieties: 'تين وزيري (FG-02)، ورد طائفي',
+        seedLots: 'KSA11000034',
+        coords: '21.2854° N, 40.4244° E',
+        searchQuery: 'مكة المكرمة'
+      },
+      'st-kharj': {
+        type: 'محطة أبحاث رئيسية معتمدة',
+        typeColor: '#15803d',
+        title: 'محطة أبحاث الخرج',
+        region: 'منطقة الرياض • محطة الأبحاث والإنتاج',
+        produced: '520 شتلة',
+        dispatched: '340 شتلة (65%)',
+        beneficiaries: '22 مزرعة ومنشأة',
+        varieties: 'حمضيات بيدا (CT-01)',
+        seedLots: 'KSA11000038',
+        coords: '24.1556° N, 47.3119° E',
+        searchQuery: 'الرياض'
+      },
+      'st-jouf': {
+        type: 'محطة أبحاث رئيسية معتمدة',
+        typeColor: '#15803d',
+        title: 'مركز أبحاث الجوف للزيتون',
+        region: 'منطقة الجوف • سكاكا وبسيطا',
+        produced: '600 شتلة',
+        dispatched: '420 شتلة (70%)',
+        beneficiaries: '28 شركة ومزرعة',
+        varieties: 'زيتون طائفي ومحلي (OL-03)',
+        seedLots: 'KSA11000036',
+        coords: '29.9539° N, 40.1970° E',
+        searchQuery: 'الجوف'
+      },
+      'st-qassim': {
+        type: 'محطة أبحاث رئيسية معتمدة',
+        typeColor: '#15803d',
+        title: 'محطة أبحاث القصيم (عنيزة)',
+        region: 'منطقة القصيم • مركز التنمية الزراعية',
+        produced: '310 شتلة',
+        dispatched: '190 شتلة (61%)',
+        beneficiaries: '12 مزرعة',
+        varieties: 'أشجار فاكهة وبذور محمية',
+        seedLots: 'KSA11000039',
+        coords: '26.0843° N, 43.9934° E',
+        searchQuery: 'القصيم'
+      },
+      'st-jazan': {
+        type: 'محطة أبحاث رئيسية معتمدة',
+        typeColor: '#15803d',
+        title: 'مركز الأبحاث الزراعية بجازان',
+        region: 'منطقة جازان • مركز الفواكه الاستوائية',
+        produced: '410 شتلة',
+        dispatched: '290 شتلة (71%)',
+        beneficiaries: '19 مزارع ومواطن',
+        varieties: 'مانجو حلواني (MG-04)، موز استوائي',
+        seedLots: 'KSA11000037',
+        coords: '16.8892° N, 42.5611° E',
+        searchQuery: 'جازان'
+      },
+      'st-ahsa': {
+        type: 'محطة أبحاث رئيسية معتمدة',
+        typeColor: '#15803d',
+        title: 'محطة أبحاث الأحساء',
+        region: 'المنطقة الشرقية • واحة الأحساء',
+        produced: '290 شتلة',
+        dispatched: '180 شتلة (62%)',
+        beneficiaries: '15 مزرعة',
+        varieties: 'نخيل وفاكهة شبه استوائية',
+        seedLots: 'KSA11000040',
+        coords: '25.3833° N, 49.5833° E',
+        searchQuery: 'الأحساء'
+      },
+      'farm-saada': {
+        type: 'مزرعة مستفيدة (سجل زراعي معتمد)',
+        typeColor: '#0284c7',
+        title: 'مزرعة السعادة الزراعية',
+        region: 'الباحة • بني سار',
+        produced: 'تم استلام 100 شتلة',
+        dispatched: 'تمت الزراعة والتثبيت بالكامل',
+        beneficiaries: 'سجل زراعي: 1029384756',
+        varieties: 'رمان بيدا (PM-01-12)',
+        seedLots: 'KSA11000033 (أمهات الباحة)',
+        coords: '20.0812° N, 41.4820° E',
+        searchQuery: 'مزرعة السعادة'
+      },
+      'farm-taif-rose': {
+        type: 'مزرعة مستفيدة (سجل زراعي معتمد)',
+        typeColor: '#0284c7',
+        title: 'مؤسسة الورد الطائفي الزراعية',
+        region: 'مكة المكرمة • الهدا',
+        produced: 'تم استلام 100 شتلة',
+        dispatched: 'مغروسة تحت إشراف المحطة',
+        beneficiaries: 'سجل زراعي: 2019485731',
+        varieties: 'تين وزيري (FG-02-14)',
+        seedLots: 'KSA11000034',
+        coords: '21.3120° N, 40.3850° E',
+        searchQuery: 'الورد الطائفي'
+      },
+      'farm-najd': {
+        type: 'مزرعة مستفيدة (سجل زراعي معتمد)',
+        typeColor: '#0284c7',
+        title: 'مزارع نجد للحمضيات النموذجية',
+        region: 'منطقة الرياض • محافظة الخرج',
+        produced: 'تم استلام 120 شتلة',
+        dispatched: 'شبكة ري مرشدة وموثقة',
+        beneficiaries: 'سجل زراعي: 1092837465',
+        varieties: 'حمضيات بيدا (CT-01-11)',
+        seedLots: 'KSA11000038',
+        coords: '24.1950° N, 47.3480° E',
+        searchQuery: 'مزارع نجد'
+      },
+      'farm-jouf': {
+        type: 'مزرعة مستفيدة (سجل زراعي معتمد)',
+        typeColor: '#0284c7',
+        title: 'شركة الجوف للتنمية الزراعية',
+        region: 'منطقة الجوف • وادي السرحان',
+        produced: 'تم استلام 200 شتلة',
+        dispatched: 'مشروع زراعة زيتون مكثف',
+        beneficiaries: 'سجل زراعي: 3029182746',
+        varieties: 'زيتون طائفي ومحلي (OL-03-16)',
+        seedLots: 'KSA11000036',
+        coords: '29.9810° N, 40.1620° E',
+        searchQuery: 'شركة الجوف'
+      },
+      'farm-qassim': {
+        type: 'مزرعة مستفيدة (سجل زراعي معتمد)',
+        typeColor: '#0284c7',
+        title: 'مزرعة القصيم العضوية',
+        region: 'منطقة القصيم • عنيزة',
+        produced: 'تم استلام 80 شتلة',
+        dispatched: 'إنتاج عضوي موثق',
+        beneficiaries: 'سجل زراعي: 4091827364',
+        varieties: 'أشجار موسمية متنوعة',
+        seedLots: 'KSA11000039',
+        coords: '26.0950° N, 44.0210° E',
+        searchQuery: 'القصيم'
+      },
+      'farm-baljurashi': {
+        type: 'مزرعة مستفيدة (سجل زراعي معتمد)',
+        typeColor: '#0284c7',
+        title: 'مزرعة بلجرشي التراثية',
+        region: 'منطقة الباحة • بلجرشي',
+        produced: 'تم استلام 60 شتلة',
+        dispatched: 'مدرجات زراعية مطورة',
+        beneficiaries: 'سجل زراعي: 1083746291',
+        varieties: 'رمان ولوز محلي',
+        seedLots: 'KSA11000033',
+        coords: '19.8600° N, 41.5600° E',
+        searchQuery: 'الباحة'
+      },
+      'ind-mohammed': {
+        type: 'موقع صرف لفرد (مواطن / مزارع)',
+        typeColor: '#7e22ce',
+        title: 'محمد بن سعيد الغامدي',
+        region: 'منطقة الباحة • قرية الظفير',
+        produced: 'صرف 25 شتلة',
+        dispatched: 'زراعة منزلية نموذجية',
+        beneficiaries: 'هوية وطنية: 1087654321',
+        varieties: 'رمان بيدا (PM-01-12)',
+        seedLots: 'KSA11000033',
+        coords: '20.0340° N, 41.4410° E',
+        searchQuery: 'محمد بن سعيد'
+      },
+      'ind-salem': {
+        type: 'موقع صرف لفرد (مواطن / مزارع)',
+        typeColor: '#7e22ce',
+        title: 'سالم بن منصور القرشي',
+        region: 'مكة المكرمة • وادي محرم',
+        produced: 'صرف 30 شتلة',
+        dispatched: 'حقل خاص مستدام',
+        beneficiaries: 'هوية وطنية: 1074629183',
+        varieties: 'تين وزيري (FG-02-14)',
+        seedLots: 'KSA11000034',
+        coords: '21.2610° N, 40.4120° E',
+        searchQuery: 'سالم بن منصور'
+      },
+      'ind-abdullah': {
+        type: 'موقع صرف لفرد (مواطن / مزارع)',
+        typeColor: '#7e22ce',
+        title: 'عبدالله بن أحمد الزهراني',
+        region: 'منطقة الباحة • المندق',
+        produced: 'صرف 40 شتلة',
+        dispatched: 'مزرعة مدرجات عائلية',
+        beneficiaries: 'هوية وطنية: 1045239871',
+        varieties: 'لوز بيدا (AL-01-12)',
+        seedLots: 'KSA11000035',
+        coords: '20.1580° N, 41.2890° E',
+        searchQuery: 'عبدالله بن أحمد'
+      },
+      'ind-faifi': {
+        type: 'موقع صرف لفرد (مواطن / مزارع)',
+        typeColor: '#7e22ce',
+        title: 'يحيى بن حسن الفيفي',
+        region: 'منطقة جازان • جبال فيفا',
+        produced: 'صرف 35 شتلة',
+        dispatched: 'مدرجات استوائية جبلية',
+        beneficiaries: 'هوية وطنية: 1098273645',
+        varieties: 'مانجو حلواني (MG-04-18)',
+        seedLots: 'KSA11000037',
+        coords: '17.2620° N, 43.1180° E',
+        searchQuery: 'يحيى بن حسن'
+      }
+    };
+
+    let currentSelectedMapId = 'st-baha';
+    let currentMapZoom = 1;
+
+    function showMapTooltip(locId, evt) {
+      const loc = MAP_LOCATIONS[locId];
+      if (!loc) return;
+      const tip = document.getElementById('mapHoverTooltip');
+      if (!tip) return;
+
+      const canvas = document.querySelector('.map-canvas-area');
+      const rect = canvas.getBoundingClientRect();
+      const x = evt.clientX - rect.left;
+      const y = evt.clientY - rect.top;
+
+      tip.innerHTML = `
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:5px;">
+          <span style="font-size:10.5px; font-weight:800; color:${loc.typeColor}; background:#f8fafc; padding:2px 7px; border-radius:4px; border:1px solid #e2e8f0;">${loc.type}</span>
+        </div>
+        <div style="font-size:14px; font-weight:800; color:#0f172a; margin-bottom:2px;">${loc.title}</div>
+        <div style="font-size:11.5px; color:#64748b; margin-bottom:8px;">${loc.region}</div>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:7px 9px; font-size:11.5px; display:flex; flex-direction:column; gap:4px;">
+          <div style="display:flex; justify-content:space-between;"><span style="color:#64748b;">الإنتاج / الاستلام:</span><b style="color:#0f172a;">${loc.produced}</b></div>
+          <div style="display:flex; justify-content:space-between;"><span style="color:#64748b;">المنصرف / الحقل:</span><b style="color:#15803d;">${loc.dispatched}</b></div>
+          <div style="display:flex; justify-content:space-between;"><span style="color:#64748b;">الأصناف:</span><b style="color:#0284c7;">${loc.varieties}</b></div>
+        </div>
+        <div style="font-size:10px; color:#0284c7; margin-top:6px; text-align:center; font-weight:700;">👆 انقر لمعاينة التفاصيل الكاملة باللوحة الجانبية</div>
+      `;
+
+      // Position tooltip nicely above mouse
+      tip.style.left = Math.max(140, Math.min(rect.width - 140, x)) + 'px';
+      tip.style.top = Math.max(100, y - 10) + 'px';
+      tip.style.display = 'block';
+    }
+
+    function hideMapTooltip() {
+      const tip = document.getElementById('mapHoverTooltip');
+      if (tip) tip.style.display = 'none';
+    }
+
+    function zoomMap(factor) {
+      currentMapZoom = Math.max(0.7, Math.min(2.8, currentMapZoom * factor));
+      const container = document.getElementById('mapZoomContainer');
+      if (container) {
+        const cx = 900, cy = 750;
+        container.setAttribute('transform', `translate(${cx}, ${cy}) scale(${currentMapZoom}) translate(${-cx}, ${-cy})`);
+      }
+    }
+
+    function resetMapZoom() {
+      currentMapZoom = 1;
+      const container = document.getElementById('mapZoomContainer');
+      if (container) {
+        container.setAttribute('transform', 'matrix(1 0 0 1 0 0)');
+      }
+    }
+
+    function openMapModal() {
+      document.getElementById('mapModal').classList.add('active');
+      selectMapLocation('st-baha');
+    }
+
+    function closeMapModal() {
+      document.getElementById('mapModal').classList.remove('active');
+    }
+
+    function selectMapLocation(locId) {
+      const loc = MAP_LOCATIONS[locId];
+      if (!loc) return;
+      currentSelectedMapId = locId;
+
+      document.getElementById('sbTypeBadge').innerText = loc.type;
+      document.getElementById('sbTypeBadge').style.color = loc.typeColor;
+      document.getElementById('sbTitle').innerText = loc.title;
+      document.getElementById('sbRegion').innerText = loc.region;
+      document.getElementById('sbProduced').innerText = loc.produced;
+      document.getElementById('sbDispatched').innerText = loc.dispatched;
+      document.getElementById('sbBeneficiaries').innerText = loc.beneficiaries;
+      document.getElementById('sbVarieties').innerText = loc.varieties;
+      document.getElementById('sbSeedLots').innerText = loc.seedLots;
+      document.getElementById('sbCoords').innerText = loc.coords;
+
+      document.querySelectorAll('.map-pin').forEach(p => p.classList.remove('active'));
+      const activePin = document.querySelector(`[onclick="selectMapLocation('${locId}')"]`);
+      if (activePin) activePin.classList.add('active');
+    }
+
+    function filterMapMarkers(type, btn) {
+      document.querySelectorAll('.map-filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      const stGroup = document.getElementById('stationsGroup');
+      const farmGroup = document.getElementById('farmsGroup');
+      const indGroup = document.getElementById('individualsGroup');
+      const arcsGroup = document.getElementById('mapConnectionArcs');
+
+      if (type === 'all') {
+        stGroup.style.display = 'inline';
+        farmGroup.style.display = 'inline';
+        indGroup.style.display = 'inline';
+        arcsGroup.style.display = 'inline';
+      } else if (type === 'station') {
+        stGroup.style.display = 'inline';
+        farmGroup.style.display = 'none';
+        indGroup.style.display = 'none';
+        arcsGroup.style.display = 'none';
+      } else if (type === 'farm') {
+        stGroup.style.display = 'none';
+        farmGroup.style.display = 'inline';
+        indGroup.style.display = 'none';
+        arcsGroup.style.display = 'inline';
+      } else if (type === 'individual') {
+        stGroup.style.display = 'none';
+        farmGroup.style.display = 'none';
+        indGroup.style.display = 'inline';
+        arcsGroup.style.display = 'inline';
+      }
+    }
+
+    function applyMapSelectionToFilter() {
+      const loc = MAP_LOCATIONS[currentSelectedMapId];
+      if (!loc) return;
+
+      closeMapModal();
+
+      if (loc.type.includes('محطة')) {
+        const regSelect = document.getElementById('filterRegion');
+        if (regSelect) {
+          for (let i = 0; i < regSelect.options.length; i++) {
+            if (regSelect.options[i].text.includes(loc.searchQuery)) {
+              regSelect.selectedIndex = i;
+              break;
+            }
+          }
+        }
+      } else {
+        document.getElementById('filterBeneficiaryText').value = loc.searchQuery;
+      }
+
+      applyFilters();
+    }
+
+    // Close modal on click outside
+    window.onclick = function(event) {
+      const detailModal = document.getElementById("detailModal");
+      const mapModal = document.getElementById("mapModal");
+      if (event.target === detailModal) {
+        closeModal();
+      }
+      if (event.target === mapModal) {
+        closeMapModal();
+      }
+    };
+
+    // Initial table load
+    renderTable(SEEDLINGS_DATA);
+  </script>
+</body>
+</html>
