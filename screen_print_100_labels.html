@@ -2,7 +2,7 @@
 <html dir="rtl" lang="ar">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <title>طباعة الملصقات الحرارية - دفعة 100 شتلة</title>
   <style>
     * {
@@ -230,7 +230,36 @@
         font-size: 8px !important;
       }
     }
+  
+    /* 📱 iPhone & Mobile Responsive Enhancements */
+    @media (max-width: 600px) {
+      body {
+        padding: 8px;
+      }
+      .print-control-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 12px;
+        position: static;
+      }
+      .header-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+      }
+      .btn-main-print, .btn-back {
+        width: 100%;
+        justify-content: center;
+        padding: 11px;
+      }
+      .labels-grid-container {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
+
+</style>
 </head>
 <body>
 
@@ -244,8 +273,11 @@
     </div>
 
     <div class="header-actions">
+      <a href="index.html" class="btn-back" style="background:#15803d; color:#ffffff; border:none; font-weight:700;">
+        <span>← العودة لقائمة البحث الرئيسية</span>
+      </a>
       <a href="screen_seedling_updated.html" class="btn-back">
-        <span>← العودة لنموذج الصرف</span>
+        <span>← نموذج الصرف</span>
       </a>
       <button type="button" class="btn-main-print" onclick="window.print()">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -264,15 +296,37 @@
   </div>
 
   <script>
-    // بيانات الدفعة المصروفة
+    // قراءة معلمات الرابط URL وتحميل بيانات الصنف المحددة
+    const urlParams = new URLSearchParams(window.location.search);
+    const pCode = urlParams.get('code') || 'PM-01-12';
+    const pFruit = urlParams.get('fruit') || 'رمان';
+    const pVariety = urlParams.get('variety') || 'بيدا';
+    const pStation = urlParams.get('station') || 'محطة أبحاث الباحة';
+    const pSeed = urlParams.get('seed') || 'KSA11000033';
+    const pBen = urlParams.get('ben') || 'مؤسسة الورد الطائفي الزراعية';
+    const pCount = parseInt(urlParams.get('count') || '100', 10);
+    const pStart = parseInt(urlParams.get('start') || '1', 10);
+
     const batchConfig = {
-      cropTitle: "رمان - صنف بيدا",
-      codePrefix: "PM-01-12",
-      startSerial: 125,
-      count: 100,
-      beneficiary: "المستفيد: محمد خالد بن فهد العمري",
-      footerInfo: "المحطة: محطة الباحة | الأصل: بذرة KSA11000033"
+      cropTitle: `${pFruit} - صنف ${pVariety}`,
+      codePrefix: pCode,
+      startSerial: pStart,
+      count: Math.min(pCount, 100),
+      beneficiary: `المستفيد: ${pBen}`,
+      footerInfo: `المحطة: ${pStation} | الأصل: بذرة ${pSeed}`
     };
+
+    // تحديث ترويسة الصفحة فورياً
+    document.addEventListener('DOMContentLoaded', function() {
+      const titleEl = document.querySelector('.header-info-title');
+      if (titleEl) titleEl.textContent = `طباعة الملصقات الحرارية (${batchConfig.count} ملصق متسلسل)`;
+      const subEl = document.querySelector('.header-info-sub');
+      if (subEl) {
+        const startSeq = String(batchConfig.startSerial).padStart(6, '0');
+        const endSeq = String(batchConfig.startSerial + batchConfig.count - 1).padStart(6, '0');
+        subEl.innerHTML = `الصنف: <strong>${batchConfig.cropTitle}</strong> | النطاق: <strong style="font-family:monospace; color:#15803d;">${batchConfig.codePrefix}-${startSeq}</strong> إلى <strong style="font-family:monospace; color:#15803d;">${batchConfig.codePrefix}-${endSeq}</strong> | المستفيد: <strong>${pBen}</strong>`;
+      }
+    });
 
     // خوارزمية توليد كود SVG QR مطابق تماماً للتصميم عالي الدقة
     function generateQR_SVG(text) {

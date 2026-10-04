@@ -2,7 +2,7 @@
 <html dir="rtl" lang="ar">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <title>نظام إدارة وتكويد الشتلات الزراعية</title>
   <style>
     * {
@@ -817,7 +817,57 @@
       .issue-summary-grid { grid-template-columns: 1fr 1fr; }
       .range-box { flex-direction: column; gap: 12px; }
     }
+  
+    /* 📱 iPhone & Mobile Responsive Enhancements */
+    @media (max-width: 768px) {
+      body {
+        padding: 8px !important;
+      }
+      .page-container {
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .top-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 12px 16px;
+      }
+      .top-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+      }
+      .btn-import, .btn-save {
+        width: 100%;
+        justify-content: center;
+        padding: 11px;
+      }
+      .tabs-nav {
+        padding: 0 12px;
+        gap: 14px;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+      .tab-btn {
+        padding: 12px 4px;
+        font-size: 13px;
+      }
+      .form-grid, .grid-3-col, .grid-2-col {
+        grid-template-columns: 1fr !important;
+        gap: 12px;
+      }
+      .section-box {
+        padding: 14px 12px;
+      }
+      .input-control, select, input {
+        font-size: 16px !important; /* Prevents iPhone Safari zoom */
+      }
+    }
   </style>
+
+</style>
 </head>
 <body>
 
@@ -1672,7 +1722,7 @@
 
     function printAllBatchLabels() {
       // فتح صفحة طباعة الـ 100 ملصق حراري المتسلسلة
-      window.open('screen_print_100_labels.html', '_blank');
+      window.open(`screen_print_100_labels.html?code=${encodeURIComponent(currentFruitCode+'-'+currentVarietyCode+'-'+currentRegionCode)}&fruit=${encodeURIComponent(currentFruitName)}&variety=${encodeURIComponent(currentVarietyName)}&seed=${encodeURIComponent(currentSeedBarcode)}&count=${currentIssueQuantity}`, '_blank');
     }
 
     function onMapCanvasClick(e) {
@@ -1750,182 +1800,166 @@
       alert("تم حفظ البيانات بنجاح.");
     }
 
+        const SEEDLINGS_CATALOG = [{"id": 1, "code": "GR-02-08", "fruit": "عنب (GR)", "variety": "عنب طومسون", "region": "حائل", "station": "محطة حائل", "seedLot": "KSAB8018417", "beneficiaryType": "مزرعة", "beneficiaryName": "مؤسسة مدرجات الجنوب الزراعية", "beneficiaryId": "2019485731", "issueDate": "2026/10/02", "quantity": 5000, "printed": 5000, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/b560f9e55825/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/b8018417-8bd1-f0c0-2177-3a1410066e6f", "serialRange": "000001 إلى 005000"}, {"id": 2, "code": "GR-02-11", "fruit": "عنب (GR)", "variety": "عنب طومسون", "region": "نجران", "station": "محطة نجران", "seedLot": "KSAB8018417", "beneficiaryType": "مزرعة", "beneficiaryName": "مزرعة السعادة لإنتاج الفاكهة", "beneficiaryId": "1029384756", "issueDate": "2026/09/28", "quantity": 100, "printed": 100, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/d1bdbec90c49/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/b8018417-8bd1-f0c0-2177-3a1410066e6f", "serialRange": "000001 إلى 000100"}, {"id": 3, "code": "GR-01-08", "fruit": "عنب (GR)", "variety": "عنب سوبيريور", "region": "حائل", "station": "محطة حائل", "seedLot": "KSA9CBC5845", "beneficiaryType": "مزرعة", "beneficiaryName": "مزارع نجد للحمضيات النموذجية", "beneficiaryId": "1092837465", "issueDate": "2026/09/25", "quantity": 2000, "printed": 0, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/242670e295c7/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/9cbc5845-dad8-8415-b882-3a141003c4fa", "serialRange": "000001 إلى 002000"}, {"id": 4, "code": "GV-01-10", "fruit": "جوافة (GV)", "variety": "جوافة بلدي", "region": "جازان", "station": "محطة جازان", "seedLot": "KSAF3D3EB98", "beneficiaryType": "مزرعة", "beneficiaryName": "شركة مشاريع حائل الزراعية", "beneficiaryId": "3049582716", "issueDate": "2026/09/20", "quantity": 250, "printed": 250, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/58388a610378/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/f3d3eb98-ac60-3d17-657e-3a14a065d56b", "serialRange": "000001 إلى 000250"}, {"id": 5, "code": "GV-01-01", "fruit": "جوافة (GV)", "variety": "جوافة بلدي", "region": "الرياض", "station": "محطة الخرج", "seedLot": "KSAF3D3EB98", "beneficiaryType": "مزرعة", "beneficiaryName": "مؤسسة واحة النماص الخضراء", "beneficiaryId": "1083746291", "issueDate": "2026/09/15", "quantity": 250, "printed": 250, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/c12313d5b238/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/f3d3eb98-ac60-3d17-657e-3a14a065d56b", "serialRange": "000001 إلى 000250"}, {"id": 6, "code": "GV-01-11", "fruit": "جوافة (GV)", "variety": "جوافة بلدي", "region": "نجران", "station": "محطة نجران", "seedLot": "KSAF3D3EB98", "beneficiaryType": "مزرعة", "beneficiaryName": "مزرعة جازان للفاكهة الاستوائية", "beneficiaryId": "2048596013", "issueDate": "2026/09/10", "quantity": 100, "printed": 100, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/f93a928f99dd/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/f3d3eb98-ac60-3d17-657e-3a14a065d56b", "serialRange": "000001 إلى 000100"}, {"id": 7, "code": "PM-01-12", "fruit": "رمان (PM)", "variety": "رمان بيدا", "region": "الباحة", "station": "محطة الباحة", "seedLot": "KSA009F1EB6", "beneficiaryType": "مزرعة", "beneficiaryName": "مزارع نجران التراثية", "beneficiaryId": "1074829104", "issueDate": "2026/08/30", "quantity": 700, "printed": 700, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/95ee2ecd6ee0/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/009f1eb6-77b0-a36a-9976-3a0d764b563d", "serialRange": "000001 إلى 000700"}, {"id": 8, "code": "PM-02-06", "fruit": "رمان (PM)", "variety": "رمان طائفي", "region": "عسير", "station": "محطة أبها", "seedLot": "KSAEEB1C2A1", "beneficiaryType": "مزرعة", "beneficiaryName": "مزارع طيبة العضوية", "beneficiaryId": "3094857261", "issueDate": "2026/08/25", "quantity": 10000, "printed": 10000, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/7eb499ed5622/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/eeb1c2a1-eaef-98df-7d6b-3a0d765b9ef8", "serialRange": "000001 إلى 010000"}, {"id": 9, "code": "PM-02-03", "fruit": "رمان (PM)", "variety": "رمان طائفي", "region": "المدينة المنورة", "station": "محطة المدينة المنورة", "seedLot": "KSAEEB1C2A1", "beneficiaryType": "فرد", "beneficiaryName": "محمد بن سعيد الغامدي", "beneficiaryId": "1087654321", "issueDate": "2026/08/15", "quantity": 250, "printed": 250, "status": "منصرف", "statusLabel": "تم الصرف لفرد", "statusBadgeClass": "badge-issued-individual", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/c5c87baa8594/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/eeb1c2a1-eaef-98df-7d6b-3a0d765b9ef8", "serialRange": "000001 إلى 000250"}, {"id": 10, "code": "PM-02-06", "fruit": "رمان (PM)", "variety": "رمان طائفي", "region": "عسير", "station": "محطة النماص", "seedLot": "KSAEEB1C2A1", "beneficiaryType": "فرد", "beneficiaryName": "سالم بن منصور القرشي", "beneficiaryId": "1074629183", "issueDate": "2026/08/01", "quantity": 2500, "printed": 2500, "status": "منصرف", "statusLabel": "تم الصرف لفرد", "statusBadgeClass": "badge-issued-individual", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/6107796c3b0a/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/eeb1c2a1-eaef-98df-7d6b-3a0d765b9ef8", "serialRange": "000001 إلى 002500"}, {"id": 11, "code": "MU-01-01", "fruit": "توت (MU)", "variety": "توت بلدي", "region": "الرياض", "station": "محطة الخرج", "seedLot": "KSAC3D765A9", "beneficiaryType": "فرد", "beneficiaryName": "عبدالله بن أحمد الزهراني", "beneficiaryId": "1045239871", "issueDate": "2026/10/02", "quantity": 200, "printed": 0, "status": "منصرف", "statusLabel": "تم الصرف لفرد", "statusBadgeClass": "badge-issued-individual", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/ed759527e6a3/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/c3d765a9-b909-9e63-07cb-3a14e7f7f59f", "serialRange": "000001 إلى 000200"}, {"id": 12, "code": "MU-01-10", "fruit": "توت (MU)", "variety": "توت بلدي", "region": "جازان", "station": "محطة جازان", "seedLot": "KSAC3D765A9", "beneficiaryType": "فرد", "beneficiaryName": "يحيى بن حسن الفيفي", "beneficiaryId": "1098273645", "issueDate": "2026/09/28", "quantity": 50, "printed": 0, "status": "منصرف", "statusLabel": "تم الصرف لفرد", "statusBadgeClass": "badge-issued-individual", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/f083153b5f43/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/c3d765a9-b909-9e63-07cb-3a14e7f7f59f", "serialRange": "000001 إلى 000050"}, {"id": 13, "code": "MU-01-06", "fruit": "توت (MU)", "variety": "توت بلدي", "region": "عسير", "station": "محطة أبها", "seedLot": "KSAC3D765A9", "beneficiaryType": "فرد", "beneficiaryName": "خالد بن فهد الشمري", "beneficiaryId": "1038475920", "issueDate": "2026/09/25", "quantity": 1000, "printed": 0, "status": "منصرف", "statusLabel": "تم الصرف لفرد", "statusBadgeClass": "badge-issued-individual", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/aa4f9afb1098/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/c3d765a9-b909-9e63-07cb-3a14e7f7f59f", "serialRange": "000001 إلى 001000"}, {"id": 14, "code": "MU-01-08", "fruit": "توت (MU)", "variety": "توت بلدي", "region": "حائل", "station": "محطة حائل", "seedLot": "KSAC3D765A9", "beneficiaryType": "فرد", "beneficiaryName": "سعد بن علي القحطاني", "beneficiaryId": "1064738291", "issueDate": "2026/09/20", "quantity": 2000, "printed": 0, "status": "منصرف", "statusLabel": "تم الصرف لفرد", "statusBadgeClass": "badge-issued-individual", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/96e06a86ac24/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/c3d765a9-b909-9e63-07cb-3a14e7f7f59f", "serialRange": "000001 إلى 002000"}, {"id": 15, "code": "MU-08-12", "fruit": "توت (MU)", "variety": "توت بلاك بيري", "region": "الباحة", "station": "محطة الباحة", "seedLot": "KSAXFBQ99", "beneficiaryType": "فرد", "beneficiaryName": "صالح بن ناصر اليامي", "beneficiaryId": "1057382910", "issueDate": "2026/09/15", "quantity": 3700, "printed": 3700, "status": "منصرف", "statusLabel": "تم الصرف لفرد", "statusBadgeClass": "badge-issued-individual", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/c50ba595ff14/", "naamaUrl": "https://scanned.page/XfBq99", "serialRange": "000001 إلى 003700"}, {"id": 16, "code": "MU-02-01", "fruit": "توت (MU)", "variety": "توت كشميري", "region": "الرياض", "station": "محطة الخرج", "seedLot": "KSA3A9B15F3", "beneficiaryType": "مزرعة", "beneficiaryName": "مؤسسة مدرجات الجنوب الزراعية", "beneficiaryId": "2019485731", "issueDate": "2026/09/10", "quantity": 100, "printed": 100, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/9da3b421b0b9/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/3a9b15f3-c5c8-bcb0-b5d8-3a14e7fa8e39", "serialRange": "000001 إلى 000100"}, {"id": 17, "code": "MU-02-06", "fruit": "توت (MU)", "variety": "توت كشميري", "region": "عسير", "station": "محطة النماص", "seedLot": "KSA3A9B15F3", "beneficiaryType": "مزرعة", "beneficiaryName": "مزرعة السعادة لإنتاج الفاكهة", "beneficiaryId": "1029384756", "issueDate": "2026/08/30", "quantity": 200, "printed": 200, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/5c3bc84e3944/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/3a9b15f3-c5c8-bcb0-b5d8-3a14e7fa8e39", "serialRange": "000001 إلى 000200"}, {"id": 18, "code": "MU-02-06", "fruit": "توت (MU)", "variety": "توت كشميري", "region": "عسير", "station": "محطة أبها", "seedLot": "KSA3A9B15F3", "beneficiaryType": "مزرعة", "beneficiaryName": "مزارع نجد للحمضيات النموذجية", "beneficiaryId": "1092837465", "issueDate": "2026/08/25", "quantity": 200, "printed": 200, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/8b7c94515733/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/3a9b15f3-c5c8-bcb0-b5d8-3a14e7fa8e39", "serialRange": "000001 إلى 000200"}, {"id": 19, "code": "SI-01-12", "fruit": "سدر (SI)", "variety": "سدر بلدي", "region": "الباحة", "station": "محطة الباحة", "seedLot": "KSAECD7E4EA", "beneficiaryType": "مزرعة", "beneficiaryName": "شركة مشاريع حائل الزراعية", "beneficiaryId": "3049582716", "issueDate": "2026/08/15", "quantity": 200, "printed": 200, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/27745cba73bc/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/ecd7e4ea-60fb-38b9-c97f-3a11631c32c4", "serialRange": "000001 إلى 000200"}, {"id": 20, "code": "CI-01-01", "fruit": "حمضيات (CI)", "variety": "ليمون أضاليا", "region": "الرياض", "station": "محطة الخرج", "seedLot": "KSA977ED917", "beneficiaryType": "مزرعة", "beneficiaryName": "مؤسسة واحة النماص الخضراء", "beneficiaryId": "1083746291", "issueDate": "2026/08/01", "quantity": 700, "printed": 0, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/e20e2e5160d8/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/977ed917-8c5a-e525-d21f-3a15071af029", "serialRange": "000001 إلى 000700"}, {"id": 21, "code": "CI-01-10", "fruit": "حمضيات (CI)", "variety": "ليمون أضاليا", "region": "جازان", "station": "محطة جازان", "seedLot": "KSA977ED917", "beneficiaryType": "مزرعة", "beneficiaryName": "مزرعة جازان للفاكهة الاستوائية", "beneficiaryId": "2048596013", "issueDate": "2026/10/02", "quantity": 300, "printed": 0, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/21f0272347be/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/977ed917-8c5a-e525-d21f-3a15071af029", "serialRange": "000001 إلى 000300"}, {"id": 22, "code": "CI-01-10", "fruit": "حمضيات (CI)", "variety": "ليمون بن زهير", "region": "جازان", "station": "محطة جازان", "seedLot": "KSA979C1ABA", "beneficiaryType": "مزرعة", "beneficiaryName": "مزارع نجران التراثية", "beneficiaryId": "1074829104", "issueDate": "2026/09/28", "quantity": 200, "printed": 200, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/2fe1a1b2413c/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/979c1aba-5ee8-428a-8ed1-3a1507176cb3", "serialRange": "000001 إلى 000200"}, {"id": 23, "code": "FI-01-01", "fruit": "تين (FI)", "variety": "تين براون تركي", "region": "الرياض", "station": "محطة الخرج", "seedLot": "KSA45B59D41", "beneficiaryType": "مزرعة", "beneficiaryName": "مزارع طيبة العضوية", "beneficiaryId": "3094857261", "issueDate": "2026/09/25", "quantity": 2000, "printed": 2000, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/30ae37483882/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/45b59d41-f20d-946b-135f-3a0d6cac9edd", "serialRange": "000001 إلى 002000"}, {"id": 24, "code": "FI-01-03", "fruit": "تين (FI)", "variety": "تين براون تركي", "region": "المدينة المنورة", "station": "محطة المدينة المنورة", "seedLot": "KSA45B59D41", "beneficiaryType": "فرد", "beneficiaryName": "محمد بن سعيد الغامدي", "beneficiaryId": "1087654321", "issueDate": "2026/09/20", "quantity": 100, "printed": 100, "status": "منصرف", "statusLabel": "تم الصرف لفرد", "statusBadgeClass": "badge-issued-individual", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/dc27b43048b6/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/45b59d41-f20d-946b-135f-3a0d6cac9edd", "serialRange": "000001 إلى 000100"}, {"id": 25, "code": "FI-01-10", "fruit": "تين (FI)", "variety": "تين براون تركي", "region": "جازان", "station": "محطة جازان", "seedLot": "KSA45B59D41", "beneficiaryType": "فرد", "beneficiaryName": "سالم بن منصور القرشي", "beneficiaryId": "1074629183", "issueDate": "2026/09/15", "quantity": 200, "printed": 200, "status": "منصرف", "statusLabel": "تم الصرف لفرد", "statusBadgeClass": "badge-issued-individual", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/4fa3c22aa36e/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/45b59d41-f20d-946b-135f-3a0d6cac9edd", "serialRange": "000001 إلى 000200"}, {"id": 26, "code": "FI-01-06", "fruit": "تين (FI)", "variety": "تين براون تركي", "region": "عسير", "station": "محطة أبها", "seedLot": "KSA45B59D41", "beneficiaryType": "فرد", "beneficiaryName": "عبدالله بن أحمد الزهراني", "beneficiaryId": "1045239871", "issueDate": "2026/09/10", "quantity": 2000, "printed": 2000, "status": "منصرف", "statusLabel": "تم الصرف لفرد", "statusBadgeClass": "badge-issued-individual", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/52cc099dfb94/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/45b59d41-f20d-946b-135f-3a0d6cac9edd", "serialRange": "000001 إلى 002000"}, {"id": 27, "code": "FI-01-08", "fruit": "تين (FI)", "variety": "تين براون تركي", "region": "حائل", "station": "محطة حائل", "seedLot": "KSA45B59D41", "beneficiaryType": "فرد", "beneficiaryName": "يحيى بن حسن الفيفي", "beneficiaryId": "1098273645", "issueDate": "2026/08/30", "quantity": 2000, "printed": 2000, "status": "منصرف", "statusLabel": "تم الصرف لفرد", "statusBadgeClass": "badge-issued-individual", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/9358abf09791/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/45b59d41-f20d-946b-135f-3a0d6cac9edd", "serialRange": "000001 إلى 002000"}, {"id": 28, "code": "FI-01-11", "fruit": "تين (FI)", "variety": "تين براون تركي", "region": "نجران", "station": "محطة نجران", "seedLot": "KSA45B59D41", "beneficiaryType": "فرد", "beneficiaryName": "خالد بن فهد الشمري", "beneficiaryId": "1038475920", "issueDate": "2026/08/25", "quantity": 200, "printed": 200, "status": "منصرف", "statusLabel": "تم الصرف لفرد", "statusBadgeClass": "badge-issued-individual", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/ad9a6969fc67/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/45b59d41-f20d-946b-135f-3a0d6cac9edd", "serialRange": "000001 إلى 000200"}, {"id": 29, "code": "FI-01-01", "fruit": "تين (FI)", "variety": "تين أخضر", "region": "الرياض", "station": "محطة الخرج", "seedLot": "KSAC2A0713B", "beneficiaryType": "فرد", "beneficiaryName": "سعد بن علي القحطاني", "beneficiaryId": "1064738291", "issueDate": "2026/08/15", "quantity": 200, "printed": 0, "status": "منصرف", "statusLabel": "تم الصرف لفرد", "statusBadgeClass": "badge-issued-individual", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/ec1131195576/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/c2a0713b-a306-4ee1-431f-3a0d6cab2e02", "serialRange": "000001 إلى 000200"}, {"id": 30, "code": "FI-03-06", "fruit": "تين (FI)", "variety": "تين أخضر", "region": "عسير", "station": "محطة النماص", "seedLot": "KSAC2A0713B", "beneficiaryType": "فرد", "beneficiaryName": "صالح بن ناصر اليامي", "beneficiaryId": "1057382910", "issueDate": "2026/08/01", "quantity": 3000, "printed": 3000, "status": "منصرف", "statusLabel": "تم الصرف لفرد", "statusBadgeClass": "badge-issued-individual", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/a9ebb0d65ffe/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/c2a0713b-a306-4ee1-431f-3a0d6cab2e02", "serialRange": "000001 إلى 003000"}, {"id": 31, "code": "FI-01-06", "fruit": "تين (FI)", "variety": "تين أخضر", "region": "عسير", "station": "محطة أبها", "seedLot": "KSAC2A0713B", "beneficiaryType": "مزرعة", "beneficiaryName": "مؤسسة مدرجات الجنوب الزراعية", "beneficiaryId": "2019485731", "issueDate": "2026/10/02", "quantity": 1500, "printed": 0, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/4789ce3cf879/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/c2a0713b-a306-4ee1-431f-3a0d6cab2e02", "serialRange": "000001 إلى 001500"}, {"id": 32, "code": "FI-02-03", "fruit": "تين (FI)", "variety": "تين سلطاني", "region": "المدينة المنورة", "station": "محطة المدينة المنورة", "seedLot": "KSACD6B2BC3", "beneficiaryType": "مزرعة", "beneficiaryName": "مزرعة السعادة لإنتاج الفاكهة", "beneficiaryId": "1029384756", "issueDate": "2026/09/28", "quantity": 100, "printed": 100, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/5e9493d57be7/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/cd6b2bc3-f47f-4ffd-695a-3a0d6cadfc9a", "serialRange": "000001 إلى 000100"}, {"id": 33, "code": "FI-02-10", "fruit": "تين (FI)", "variety": "تين سلطاني", "region": "جازان", "station": "محطة جازان", "seedLot": "KSACD6B2BC3", "beneficiaryType": "مزرعة", "beneficiaryName": "مزارع نجد للحمضيات النموذجية", "beneficiaryId": "1092837465", "issueDate": "2026/09/25", "quantity": 50, "printed": 50, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/42d5de1f8ba1/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/cd6b2bc3-f47f-4ffd-695a-3a0d6cadfc9a", "serialRange": "000001 إلى 000050"}, {"id": 34, "code": "FI-02-08", "fruit": "تين (FI)", "variety": "تين سلطاني", "region": "حائل", "station": "محطة حائل", "seedLot": "KSACD6B2BC3", "beneficiaryType": "مزرعة", "beneficiaryName": "شركة مشاريع حائل الزراعية", "beneficiaryId": "3049582716", "issueDate": "2026/09/20", "quantity": 300, "printed": 300, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/3c2ffef2b341/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/cd6b2bc3-f47f-4ffd-695a-3a0d6cadfc9a", "serialRange": "000001 إلى 000300"}, {"id": 35, "code": "FI-01-08", "fruit": "تين (FI)", "variety": "تين أسود", "region": "حائل", "station": "محطة حائل", "seedLot": "KSAA405EF8B", "beneficiaryType": "مزرعة", "beneficiaryName": "مؤسسة واحة النماص الخضراء", "beneficiaryId": "1083746291", "issueDate": "2026/09/15", "quantity": 1500, "printed": 0, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/72468672c6ba/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/a405ef8b-a52f-85b7-dbe3-3a0d6c8ce734", "serialRange": "000001 إلى 001500"}, {"id": 36, "code": "GR-01-06", "fruit": "عنب (GR)", "variety": "عنب طائفي", "region": "عسير", "station": "محطة أبها", "seedLot": "KSA8EB6A1EC", "beneficiaryType": "مزرعة", "beneficiaryName": "مزرعة جازان للفاكهة الاستوائية", "beneficiaryId": "2048596013", "issueDate": "2026/09/10", "quantity": 2000, "printed": 2000, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/d4babb977f4d/", "naamaUrl": "https://uiadmin.naama.sa/barcode/barcode/summary-report-download/8eb6a1ec-e66e-797c-0566-3a1168a1e025", "serialRange": "000001 إلى 002000"}, {"id": 37, "code": "GR-01-12", "fruit": "عنب (GR)", "variety": "عنب طائفي", "region": "الباحة", "station": "محطة الباحة", "seedLot": "KSA8EB6A1EC", "beneficiaryType": "مزرعة", "beneficiaryName": "مزارع نجران التراثية", "beneficiaryId": "1074829104", "issueDate": "2026/08/30", "quantity": 450, "printed": 450, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/a4142339bfaa/", "naamaUrl": "https://uiadmin.naama.sa/barcode/barcode/summary-report-download/8eb6a1ec-e66e-797c-0566-3a1168a1e025", "serialRange": "000001 إلى 000450"}, {"id": 38, "code": "GR-01-06", "fruit": "عنب (GR)", "variety": "عنب طائفي", "region": "عسير", "station": "محطة النماص", "seedLot": "KSA8EB6A1EC", "beneficiaryType": "مزرعة", "beneficiaryName": "مزارع طيبة العضوية", "beneficiaryId": "3094857261", "issueDate": "2026/08/25", "quantity": 1000, "printed": 1000, "status": "منصرف", "statusLabel": "تم الصرف لمزرعة", "statusBadgeClass": "badge-issued-farm", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/8ef661dc6082/", "naamaUrl": "https://uiadmin.naama.sa/barcode/barcode/summary-report-download/8eb6a1ec-e66e-797c-0566-3a1168a1e025", "serialRange": "000001 إلى 001000"}, {"id": 39, "code": "GR-09-06", "fruit": "عنب (GR)", "variety": "عنب فرنساوي", "region": "عسير", "station": "محطة أبها", "seedLot": "KSA6034FDE8", "beneficiaryType": "فرد", "beneficiaryName": "محمد بن سعيد الغامدي", "beneficiaryId": "1087654321", "issueDate": "2026/08/15", "quantity": 400, "printed": 400, "status": "منصرف", "statusLabel": "تم الصرف لفرد", "statusBadgeClass": "badge-issued-individual", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/0430615e38e9/", "naamaUrl": "https://uiadmin.naama.sa/barcode/barcode/summary-report-download/6034fde8-fb5e-13b4-096b-3a1168a2ef25", "serialRange": "000001 إلى 000400"}, {"id": 40, "code": "GR-03-12", "fruit": "عنب (GR)", "variety": "عنب رزقي أبيض", "region": "الباحة", "station": "محطة الباحة", "seedLot": "KSAE7C566D2", "beneficiaryType": "فرد", "beneficiaryName": "سالم بن منصور القرشي", "beneficiaryId": "1074629183", "issueDate": "2026/08/01", "quantity": 700, "printed": 700, "status": "منصرف", "statusLabel": "تم الصرف لفرد", "statusBadgeClass": "badge-issued-individual", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/1f35d827ed06/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/e7c566d2-cfd1-b850-2965-3a1410090384", "serialRange": "000001 إلى 000700"}, {"id": 41, "code": "GR-04-06", "fruit": "عنب (GR)", "variety": "عنب رزقي أسود", "region": "عسير", "station": "محطة النماص", "seedLot": "KSAAAF0036A", "beneficiaryType": "فرد", "beneficiaryName": "عبدالله بن أحمد الزهراني", "beneficiaryId": "1045239871", "issueDate": "2026/10/02", "quantity": 2000, "printed": 2000, "status": "منصرف", "statusLabel": "تم الصرف لفرد", "statusBadgeClass": "badge-issued-individual", "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/c3f2ec038f05/", "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/aaf0036a-e580-9b94-3415-3a11689d25f7", "serialRange": "000001 إلى 002000"}];
     window.onload = function() {
-      // التحقق مما إذا كان تم فتح الصفحة في وضع الاستعراض من شاشة البحث
       const params = new URLSearchParams(window.location.search);
       const isViewMode = params.get('view') === '1' || params.get('mode') === 'view';
+      const isIssueMode = params.get('action') === 'issue' || params.get('tab') === 'issue';
 
-      if (isViewMode) {
-        // 1. إخفاء تبويب إصدار باركود الشتلات والصرف بالكامل
-        const tabIssueLink = document.getElementById('tab-link-issue');
-        if (tabIssueLink) tabIssueLink.style.display = 'none';
-        const tabIssuePanel = document.getElementById('tab-issue');
-        if (tabIssuePanel) tabIssuePanel.style.display = 'none';
+      const paramCode = params.get('code');
+      const paramFruit = params.get('fruit');
+      const paramVariety = params.get('variety');
+      const paramRegion = params.get('region');
+      const paramSeed = params.get('seed');
 
-        // 2. إخفاء أزرار الحفظ والاستيراد وزر الانتقال لإصدار الباركودات
-        const btnSave = document.querySelector('.btn-save');
-        if (btnSave) btnSave.style.display = 'none';
-        const btnImport = document.querySelector('.btn-import');
-        if (btnImport) btnImport.style.display = 'none';
-        const btnGoIssue = document.getElementById('btn-go-issue-container');
-        if (btnGoIssue) btnGoIssue.style.display = 'none';
+      // Find matching real item from catalog if available
+      let matchedItem = null;
+      if (paramCode) {
+        matchedItem = SEEDLINGS_CATALOG.find(x => x.code === paramCode) || 
+                      SEEDLINGS_CATALOG.find(x => paramCode.includes(x.code));
+      }
 
-        // 3. تحديث العنوان الرئيسي
-        const titleEl = document.querySelector('.page-title');
-        if (titleEl) titleEl.textContent = 'استعراض الملف التعريفي للصنف وسجل المصروفات';
+      const activeCode = paramCode || (matchedItem ? matchedItem.code : 'FG-02-14');
+      const activeFruit = paramFruit || (matchedItem ? matchedItem.fruit : 'تين');
+      const activeVariety = paramVariety || (matchedItem ? matchedItem.variety : 'براون تركي');
+      const activeRegion = paramRegion || (matchedItem ? matchedItem.region : 'منطقة عسير');
+      const activeSeed = paramSeed || (matchedItem ? matchedItem.seedLot : 'KSA45B59D4');
+      const activeStation = (matchedItem ? matchedItem.station : (paramRegion ? 'محطة ' + paramRegion : 'محطة أبحاث رئيسية'));
 
-        // 4. قراءة وتحديث البيانات المدخلة في الملف التعريفي
-        const code = params.get('code') || 'FG-02-14';
-        const fruit = params.get('fruit');
-        const variety = params.get('variety');
-        const region = params.get('region');
-        const seed = params.get('seed');
+      // Update basic fields
+      const parts = activeCode.split('-');
+      if (parts.length === 3) {
+        currentFruitCode = parts[0];
+        currentVarietyCode = parts[1];
+        currentRegionCode = parts[2];
+      }
 
-        if (code) {
-          const codeInput = document.getElementById('profile-code-input');
-          if (codeInput) codeInput.value = code;
-          const bannerBadge = document.querySelector('#tab-profile .section-banner span:nth-child(2)');
-          if (bannerBadge) bannerBadge.textContent = 'الكود المعتمد: ' + code;
-        }
+      const codeInput = document.getElementById('profile-code-input');
+      if (codeInput) codeInput.value = activeCode;
+      const codeDisplay = document.getElementById('profile-code-display');
+      if (codeDisplay) codeDisplay.textContent = activeCode;
+      const cardPrefix = document.getElementById('card-prefix');
+      if (cardPrefix) cardPrefix.textContent = activeCode;
+      const issueHeaderCode = document.getElementById('issue-header-code');
+      if (issueHeaderCode) issueHeaderCode.textContent = activeCode;
 
-        if (fruit) {
-          const fruitEl = document.getElementById('profile-fruit-selected');
-          if (fruitEl) fruitEl.textContent = fruit;
-        }
-        if (variety) {
-          const varEl = document.getElementById('profile-variety-selected');
-          if (varEl) varEl.textContent = variety;
-        }
-        if (region) {
-          const regSelect = document.getElementById('profile-region-select');
-          if (regSelect) {
-            for (let i = 0; i < regSelect.options.length; i++) {
-              if (regSelect.options[i].text.includes(region)) {
-                regSelect.selectedIndex = i;
-                break;
-              }
-            }
+      const fruitEl = document.getElementById('profile-fruit-selected');
+      if (fruitEl) fruitEl.textContent = activeFruit;
+      const varEl = document.getElementById('profile-variety-selected');
+      if (varEl) varEl.textContent = activeVariety;
+      const seedEl = document.getElementById('profile-seed-selected');
+      if (seedEl) seedEl.textContent = activeSeed;
+      const srcInput = document.getElementById('profile-source-input');
+      if (srcInput) srcInput.value = `حقل أمهات معتمد (بذرة: ${activeSeed})`;
+
+      // Update green banner in profile tab
+      const bannerBadge = document.querySelector('#tab-profile .section-banner span:nth-child(2)');
+      if (bannerBadge) bannerBadge.textContent = 'الكود المعتمد: ' + activeCode;
+
+      // Update Station Select
+      const stationSelect = document.getElementById('profile-station-select');
+      if (stationSelect && activeStation) {
+        stationSelect.innerHTML = `<option value="${activeStation}" selected>${activeStation}</option>`;
+      }
+
+      // Update Region Select
+      const regSelect = document.getElementById('profile-region-select');
+      if (regSelect) {
+        for (let i = 0; i < regSelect.options.length; i++) {
+          if (regSelect.options[i].text.includes(activeRegion) || activeRegion.includes(regSelect.options[i].text)) {
+            regSelect.selectedIndex = i;
+            break;
           }
         }
-        if (seed) {
-          const seedEl = document.getElementById('profile-seed-selected');
-          if (seedEl) seedEl.textContent = seed;
-          const srcInput = document.getElementById('profile-source-input');
-          if (srcInput) srcInput.value = `حقل أمهات معتمد (بذرة: ${seed})`;
+      }
+
+      // Populate history table with real records
+      const historyTbody = document.querySelector('#tab-history tbody');
+      if (historyTbody) {
+        let relatedItems = SEEDLINGS_CATALOG.filter(x => x.code === activeCode || x.variety.includes(activeVariety));
+        if (relatedItems.length === 0) relatedItems = SEEDLINGS_CATALOG.slice(0, 5);
+
+        historyTbody.innerHTML = relatedItems.map((item, i) => `
+          <tr>
+            <td><strong>DISP-2026-${String(item.id).padStart(4, '0')}</strong></td>
+            <td>${item.issueDate}</td>
+            <td>${item.fruit} ${item.variety} (${item.station})</td>
+            <td><span style="font-weight:700; color:#0284c7;">${item.quantity.toLocaleString()} شتلة</span></td>
+            <td><code>${item.code}-000001</code> إلى <code>${item.code}-${String(item.quantity).padStart(6, '0')}</code></td>
+            <td><span style="background:${item.beneficiaryType === 'مزرعة' ? '#e0f2fe' : '#f3e8ff'}; color:${item.beneficiaryType === 'مزرعة' ? '#0369a1' : '#6b21a8'}; padding:2px 6px; border-radius:4px; font-size:11px;">${item.beneficiaryType}</span></td>
+            <td>${item.beneficiaryName} (${item.beneficiaryId})</td>
+            <td><span style="background:#dcfce7; color:#15803d; font-size:11px; padding:2px 8px; border-radius:4px; font-weight:600;">تم الصرف والطباعة</span></td>
+          </tr>
+        `).join('');
+      }
+
+      if (isViewMode) {
+        // ══════════════════════════════════════════════════════
+        // وضع الاستعراض: إخفاء تاب إصدار باركود الشتلات والصرف + إخفاء زر الانتقال لإصدار الباركود
+        // ══════════════════════════════════════════════════════
+        
+        // 1. إخفاء تاب إصدار باركود الشتلات والصرف نهائياً
+        const tabLinkIssue = document.getElementById('tab-link-issue');
+        if (tabLinkIssue) {
+          tabLinkIssue.style.display = 'none';
         }
 
-        const tipEl = document.getElementById('profile-issue-tip');
-        if (tipEl) tipEl.innerHTML = `يمثل هذا الرمز التعريفي: (نوع الفاكهة: <strong>${fruit || 'تين'}</strong> - الصنف: <strong>${variety || 'وزيري'}</strong> - المنطقة: <strong>${region || 'مكة المكرمة'}</strong>). للاطلاع على الشتلات المصروفة المعتمدة لهذا الكود انتقل إلى تاب <strong>سجل الشتلات المصدرة</strong>.`;
+        // 2. إخفاء بانل إصدار باركود الشتلات والصرف
+        const tabIssuePanel = document.getElementById('tab-issue');
+        if (tabIssuePanel) {
+          tabIssuePanel.style.display = 'none';
+        }
 
-        // إضافة شريط تنبيهي أنيق يفيد بأنه في وضع الاستعراض مع زر عودة صريح
+        // 3. إخفاء زر الانتقال لإصدار باركود الشتلات والصرف في أسفل الملف التعريفي
+        const btnGoIssue = document.getElementById('btn-go-issue');
+        if (btnGoIssue) {
+          btnGoIssue.style.display = 'none';
+        }
+        const btnGoIssueContainer = document.getElementById('btn-go-issue-container');
+        if (btnGoIssueContainer) {
+          btnGoIssueContainer.style.display = 'none';
+        }
+
+        // تثبيت العرض على الملف التعريفي
+        switchTab('tab-profile');
+
+        // شريط تنبيهي أنيق لوضع الاستعراض
         const viewAlert = document.createElement('div');
         viewAlert.style.cssText = 'background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; border-bottom: 1px solid #dbeafe;';
         viewAlert.innerHTML = `
           <div style="display:flex; align-items:center; gap:8px;">
             <span style="font-size:16px;">🔍</span>
-            <span>وضع الاستعراض المعتمد: عرض بيانات وتفاصيل البذرة وسجل الشتلات المصدرة للكود (${code || 'FG-02-14'})</span>
+            <span>وضع الاستعراض المعتمد: تفاصيل الصنف (${activeCode}) - ${activeFruit} ${activeVariety} (${activeRegion})</span>
           </div>
-          <a href="index.html" style="background:#1e40af; color:#ffffff; padding:6px 14px; border-radius:4px; text-decoration:none; font-size:12px; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
-            ← العودة لقائمة البحث
-          </a>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <a href="screen_print_100_labels.html?code=${encodeURIComponent(activeCode)}&fruit=${encodeURIComponent(activeFruit)}&variety=${encodeURIComponent(activeVariety)}&station=${encodeURIComponent(activeStation)}&seed=${encodeURIComponent(activeSeed)}" target="_blank" style="background:#15803d; color:#ffffff; padding:6px 14px; border-radius:4px; text-decoration:none; font-size:12px; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+              🖨️ طباعة الملصقات
+            </a>
+            <a href="index.html" style="background:#1e40af; color:#ffffff; padding:6px 14px; border-radius:4px; text-decoration:none; font-size:12px; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+              ← العودة لقائمة البحث
+            </a>
+          </div>
         `;
         document.querySelector('.top-header').insertAdjacentElement('afterend', viewAlert);
 
-        // تخصيص سجل الشتلات المصدرة ليتناسب مع الكود المستعرض
-        const historyTbody = document.querySelector('#tab-history tbody');
-        if (historyTbody && code) {
-          historyTbody.innerHTML = `
-            <tr>
-              <td><strong>DISP-2026-0089</strong></td>
-              <td>2026-10-02</td>
-              <td>${fruit || 'تين'} ${variety || 'وزيري'} (${region || 'مكة المكرمة'})</td>
-              <td><span style="font-weight:700; color:#0284c7;">100 شتلة</span></td>
-              <td><code>${code}-000001</code> إلى <code>${code}-000100</code></td>
-              <td><span style="background:#e0f2fe; color:#0369a1; padding:2px 6px; border-radius:4px; font-size:11px;">مزرعة</span></td>
-              <td>مؤسسة الورد الطائفي الزراعية (2019485731)</td>
-              <td><span style="background:#dcfce7; color:#15803d; font-size:11px; padding:2px 8px; border-radius:4px; font-weight:600;">تم الصرف والطباعة</span></td>
-            </tr>
-            <tr>
-              <td><strong>DISP-2026-0042</strong></td>
-              <td>2026-09-15</td>
-              <td>${fruit || 'تين'} ${variety || 'وزيري'} (${region || 'مكة المكرمة'})</td>
-              <td><span style="font-weight:700; color:#0284c7;">150 شتلة</span></td>
-              <td><code>${code}-000101</code> إلى <code>${code}-000250</code></td>
-              <td><span style="background:#f3e8ff; color:#6b21a8; padding:2px 6px; border-radius:4px; font-size:11px;">فرد</span></td>
-              <td>مواطن / مزارع معتمد (1084592014)</td>
-              <td><span style="background:#dcfce7; color:#15803d; font-size:11px; padding:2px 8px; border-radius:4px; font-weight:600;">تم الصرف والطباعة</span></td>
-            </tr>
-          `;
-        }
-      } else if (params.get('action') === 'issue' || params.get('tab') === 'issue') {
-        // وضع إصدار وصرف شتلات جديدة
-        const code = params.get('code') || 'FG-02-14';
-        const fruit = params.get('fruit');
-        const variety = params.get('variety');
-        const region = params.get('region');
-        const seed = params.get('seed');
-
-        if (code) {
-          const parts = code.split('-');
-          if (parts.length === 3) {
-            currentFruitCode = parts[0];
-            currentVarietyCode = parts[1];
-            currentRegionCode = parts[2];
-          }
-          const codeInput = document.getElementById('profile-code-input');
-          if (codeInput) codeInput.value = code;
-          const bannerBadge = document.querySelector('#tab-profile .section-banner span:nth-child(2)');
-          if (bannerBadge) bannerBadge.textContent = 'الكود المعتمد: ' + code;
-          const cardPrefix = document.getElementById('card-prefix');
-          if (cardPrefix) cardPrefix.textContent = code;
-          const issueHeaderCode = document.getElementById('issue-header-code');
-          if (issueHeaderCode) issueHeaderCode.textContent = code;
-        }
-
-        if (fruit) {
-          currentFruitName = fruit;
-          const fruitEl = document.getElementById('profile-fruit-selected');
-          if (fruitEl) fruitEl.textContent = fruit;
-        }
-        if (variety) {
-          currentVarietyName = variety;
-          const varEl = document.getElementById('profile-variety-selected');
-          if (varEl) varEl.textContent = variety;
-        }
-        if (region) {
-          currentRegionName = region;
-          const regSelect = document.getElementById('profile-region-select');
-          if (regSelect) {
-            for (let i = 0; i < regSelect.options.length; i++) {
-              if (regSelect.options[i].text.includes(region)) {
-                regSelect.selectedIndex = i;
-                break;
-              }
-            }
-          }
-        }
-        if (seed) {
-          currentSeedBarcode = seed;
-          const seedEl = document.getElementById('profile-seed-selected');
-          if (seedEl) seedEl.textContent = seed;
-          const srcInput = document.getElementById('profile-source-input');
-          if (srcInput) srcInput.value = `حقل أمهات معتمد (بذرة: ${seed})`;
-        }
-
-        // الانتقال المباشر لتبويب إصدار باركود الشتلات والصرف
+      } else if (isIssueMode) {
+        // ══════════════════════════════════════════════════════
+        // وضع إصدار وصرف شتلات جديدة: فتح تاب الإصدار مباشرة
+        // ══════════════════════════════════════════════════════
         switchTab('tab-issue');
 
-        // إضافة شريط تنبيهي أنيق يوضح الصنف المختار للصرف مع زر للعودة لقائمة البحث
         const issueAlert = document.createElement('div');
         issueAlert.style.cssText = 'background: #f0fdf4; border: 1px solid #86efac; color: #166534; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; border-bottom: 1px solid #bbf7d0;';
         issueAlert.innerHTML = `
           <div style="display:flex; align-items:center; gap:8px;">
             <span style="font-size:16px;">🌱</span>
-            <span>نموذج إصدار وصرف شتلات جديدة للصنف: (<strong>${code || 'FG-02-14'}</strong>) - ${fruit || 'تين'} ${variety || 'وزيري'}</span>
+            <span>نموذج إصدار وصرف شتلات جديدة للصنف: (<strong>${activeCode}</strong>) - ${activeFruit} ${activeVariety}</span>
           </div>
-          <a href="index.html" style="background:#15803d; color:#ffffff; padding:6px 14px; border-radius:4px; text-decoration:none; font-size:12px; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
-            ← العودة لقائمة البحث
-          </a>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <a href="index.html" style="background:#15803d; color:#ffffff; padding:6px 14px; border-radius:4px; text-decoration:none; font-size:12px; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+              ← العودة لقائمة البحث
+            </a>
+          </div>
         `;
         document.querySelector('.top-header').insertAdjacentElement('afterend', issueAlert);
       }

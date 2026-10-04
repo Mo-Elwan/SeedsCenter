@@ -2,7 +2,7 @@
 <html dir="rtl" lang="ar">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <title>نظام إدارة وتكويد الشتلات - سجل وبحث الشتلات</title>
   <style>
     * {
@@ -983,7 +983,317 @@
       clip-path: polygon(0 0, 100% 0, 50% 100%);
       border-top: 1px solid #cbd5e1;
     }
+  
+    /* ══════════════════════════════════════════════════════════
+       📱 تحسينات التجاوب الشاملة للهواتف الذكية وأجهزة الآيفون (iPhone iOS)
+       ══════════════════════════════════════════════════════════ */
+    html, body {
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    /* Safe Area Insets for iPhone notch and home bar */
+    body {
+      padding-top: max(12px, env(safe-area-inset-top));
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+      padding-left: max(12px, env(safe-area-inset-left));
+      padding-right: max(12px, env(safe-area-inset-right));
+    }
+
+    @media (max-width: 900px) {
+      .gov-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+        padding: 16px;
+      }
+      .header-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+      }
+      .header-actions button,
+      .header-actions a {
+        width: 100%;
+        justify-content: center;
+        padding: 11px 14px;
+        font-size: 13.5px;
+      }
+      .kpi-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .filter-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .filter-grid .form-group[style*="grid-column: span 2"] {
+        grid-column: span 2 !important;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 8px;
+      }
+      .main-wrapper {
+        padding: 8px;
+        gap: 12px;
+      }
+      .gov-header {
+        padding: 12px 14px;
+        border-radius: 8px;
+      }
+      .gov-brand {
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+      }
+      .gov-logo-badge {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+      }
+      .brand-text h1 {
+        font-size: 14px;
+        line-height: 1.35;
+      }
+      .brand-text p {
+        font-size: 11px;
+        line-height: 1.3;
+      }
+
+      /* KPI Cards 2 columns on iPhone */
+      .kpi-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      .kpi-card {
+        padding: 10px 12px;
+        border-radius: 8px;
+      }
+      .kpi-info h4 {
+        font-size: 10.5px;
+        margin-bottom: 2px;
+      }
+      .kpi-info .kpi-value {
+        font-size: 17px;
+      }
+      .kpi-info .kpi-sub {
+        font-size: 9.5px;
+      }
+      .kpi-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 15px;
+        border-radius: 6px;
+      }
+
+      /* Filter Grid 1 Column on iPhone */
+      .filter-card {
+        padding: 14px 12px;
+        border-radius: 8px;
+      }
+      .filter-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+      .filter-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px;
+      }
+      .filter-grid .form-group,
+      .filter-grid .form-group[style*="grid-column: span 2"] {
+        grid-column: span 1 !important;
+      }
+      /* 16px font size prevents Safari auto-zoom on iPhone */
+      .form-control {
+        font-size: 16px !important;
+        height: 42px;
+        border-radius: 6px;
+      }
+      .filter-actions-bar {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+      }
+      .btn-search, .btn-reset {
+        width: 100%;
+        justify-content: center;
+        padding: 11px;
+        font-size: 14px;
+        border-radius: 6px;
+      }
+
+      /* Table Card on Mobile */
+      .table-card {
+        border-radius: 8px;
+      }
+      .table-top-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 10px 12px;
+      }
+      .table-responsive {
+        border: 1px solid #e2e8f0;
+        -webkit-overflow-scrolling: touch;
+      }
+      .gov-table th, .gov-table td {
+        padding: 9px 8px;
+        font-size: 12px;
+      }
+      .action-btn-group {
+        flex-wrap: nowrap;
+        gap: 3px;
+      }
+      .btn-action-view, .btn-action-issue, .btn-action-print {
+        padding: 5px 8px;
+        font-size: 11px;
+      }
+
+      /* Pagination on Mobile */
+      .table-pagination {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 12px;
+      }
+      .table-pagination > div:first-child {
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-nav-btns {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      .btn-page {
+        min-width: 36px;
+        height: 36px;
+        font-size: 12.5px;
+      }
+
+      /* Details Modal on Mobile */
+      .modal-overlay {
+        padding: 10px;
+      }
+      .modal-box {
+        width: 100%;
+        max-height: 92vh;
+        border-radius: 10px;
+      }
+      .modal-header {
+        padding: 12px 14px;
+      }
+      .modal-title {
+        font-size: 14px;
+      }
+      .modal-body {
+        padding: 14px 12px;
+        gap: 12px;
+      }
+      .qr-trace-box {
+        flex-direction: column;
+        text-align: center;
+        padding: 12px;
+        gap: 10px;
+      }
+      .modal-detail-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .modal-detail-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 9px 12px;
+        background: #f8fafc;
+        border-radius: 6px;
+        border: 1px solid #e2e8f0;
+        font-size: 12.5px;
+      }
+      .modal-detail-row .lbl {
+        color: #64748b;
+        font-weight: 600;
+        font-size: 11.5px;
+      }
+      .modal-detail-row .val {
+        color: #0f172a;
+        font-weight: 700;
+        text-align: left;
+      }
+      .modal-footer {
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px 14px;
+      }
+      .modal-footer button, .modal-footer a {
+        width: 100%;
+        justify-content: center;
+      }
+
+      /* Map Modal on Mobile */
+      .map-modal-dialog {
+        width: 98%;
+        max-height: 96vh;
+        border-radius: 10px;
+      }
+      .map-modal-header {
+        padding: 10px 12px;
+      }
+      .map-gis-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+        max-height: 82vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .map-canvas-area {
+        height: 350px;
+        min-height: 350px;
+        border-left: none;
+        border-bottom: 2px solid #cbd5e1;
+      }
+      .map-sidebar {
+        width: 100%;
+        height: auto;
+        padding: 12px;
+      }
+      .map-filter-controls {
+        top: 6px;
+        right: 6px;
+        gap: 3px;
+        max-width: calc(100% - 60px);
+        flex-wrap: wrap;
+      }
+      .map-filter-btn {
+        padding: 3px 6px;
+        font-size: 9.5px;
+      }
+      .esri-nav-tools {
+        top: 6px;
+        left: 6px;
+      }
+      .esri-nav-btn {
+        width: 32px;
+        height: 32px;
+      }
+      .map-legend-box {
+        bottom: 6px;
+        right: 6px;
+        padding: 4px 6px;
+        font-size: 9px;
+        gap: 4px;
+      }
+    }
   </style>
+
+</style>
 </head>
 <body>
 
@@ -1018,18 +1328,18 @@
     <section class="kpi-row">
       <div class="kpi-card">
         <div class="kpi-info">
-          <h4>إجمالي الشتلات المسجلة</h4>
-          <div class="kpi-value">1,248 <span style="font-size:13px; font-weight:normal; color:#64748b;">شتلة</span></div>
-          <span class="kpi-sub">↑ +100 شتلة اليوم</span>
+          <h4>إجمالي الشتلات المنتجة المعتمدة</h4>
+          <div class="kpi-value">49,700 <span style="font-size:13px; font-weight:normal; color:#64748b;">شتلة</span></div>
+          <span class="kpi-sub">↑ 41 دفعة وطلب معتمد</span>
         </div>
         <div class="kpi-icon kpi-green">🌿</div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-info">
-          <h4>شتلات تم صرفها للمستفيدين</h4>
-          <div class="kpi-value">464 <span style="font-size:13px; font-weight:normal; color:#64748b;">شتلة</span></div>
-          <span class="kpi-sub" style="color:#0284c7;">37% من الإجمالي</span>
+          <h4>شتلات تم صرفها / طباعة باركودها</h4>
+          <div class="kpi-value">40,250 <span style="font-size:13px; font-weight:normal; color:#64748b;">شتلة</span></div>
+          <span class="kpi-sub" style="color:#0284c7;">81% نسبة الإنجاز الميداني</span>
         </div>
         <div class="kpi-icon kpi-blue">🤝</div>
       </div>
@@ -1037,17 +1347,17 @@
       <div class="kpi-card">
         <div class="kpi-info">
           <h4>المزارع والمستفيدين المعتمدين</h4>
-          <div class="kpi-value">420 <span style="font-size:13px; font-weight:normal; color:#64748b;">مستفيد</span></div>
-          <span class="kpi-sub" style="color:#d97706;">سجلات زراعية وأفراد</span>
+          <div class="kpi-value">150+ <span style="font-size:13px; font-weight:normal; color:#64748b;">مستفيد</span></div>
+          <span class="kpi-sub" style="color:#d97706;">سجلات زراعية وأفراد مسجلين</span>
         </div>
         <div class="kpi-icon kpi-amber">🏡</div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-info">
-          <h4>المحطات البحثية النشطة</h4>
-          <div class="kpi-value">7 <span style="font-size:13px; font-weight:normal; color:#64748b;">محطات</span></div>
-          <span class="kpi-sub" style="color:#7e22ce;">الباحة، الطائف، الرياض، جازان...</span>
+          <h4>المحطات ومراكز الأبحاث النشطة</h4>
+          <div class="kpi-value">9 <span style="font-size:13px; font-weight:normal; color:#64748b;">محطات</span></div>
+          <span class="kpi-sub" style="color:#7e22ce;">أبها، حائل، النماص، الباحة، الخرج...</span>
         </div>
         <div class="kpi-icon kpi-purple">📍</div>
       </div>
@@ -1074,35 +1384,53 @@
           <select id="filterFruit" class="form-control">
             <option value="">الجميع</option>
             <option value="رمان">رمان (PM)</option>
-            <option value="تين">تين (FG)</option>
-            <option value="لوز">لوز (AL)</option>
-            <option value="زيتون">زيتون (OL)</option>
-            <option value="حمضيات">حمضيات (CT)</option>
-            <option value="مانجو">مانجو (MG)</option>
+            <option value="عنب">عنب (GR)</option>
+            <option value="تين">تين (FI)</option>
+            <option value="توت">توت (MU)</option>
+            <option value="جوافة">جوافة (GV)</option>
+            <option value="حمضيات">حمضيات / ليمون (CI)</option>
+            <option value="سدر">سدر (SI)</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label class="form-label">الصنف</label>
+          <label class="form-label">الصنف المعتمد</label>
           <select id="filterVariety" class="form-control">
             <option value="">الجميع</option>
-            <option value="بيدا">بيدا (01)</option>
-            <option value="وزيري">وزيري (02)</option>
-            <option value="طائفي">طائفي (03)</option>
-            <option value="حلواني">حلواني (04)</option>
+            <option value="رمان طائفي">رمان طائفي</option>
+            <option value="رمان بيدا">رمان بيدا</option>
+            <option value="عنب طائفي">عنب طائفي</option>
+            <option value="عنب طومسون">عنب طومسون</option>
+            <option value="عنب سوبيريور">عنب سوبيريور</option>
+            <option value="عنب رزقي أبيض">عنب رزقي أبيض</option>
+            <option value="عنب رزقي أسود">عنب رزقي أسود</option>
+            <option value="عنب فرنساوي">عنب فرنساوي</option>
+            <option value="تين براون تركي">تين براون تركي</option>
+            <option value="تين أخضر">تين أخضر</option>
+            <option value="تين سلطاني">تين سلطاني</option>
+            <option value="توت بلدي">توت بلدي</option>
+            <option value="توت بلاك بيري">توت بلاك بيري</option>
+            <option value="توت كشميري">توت كشميري</option>
+            <option value="جوافة بلدي">جوافة بلدي</option>
+            <option value="ليمون أضاليا">ليمون أضاليا</option>
+            <option value="ليمون بن زهير">ليمون بن زهير</option>
+            <option value="سدر بلدي">سدر بلدي</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label class="form-label">المنطقة / محطة الإنتاج</label>
+          <label class="form-label">المنطقة / محطة الأبحاث</label>
           <select id="filterRegion" class="form-control">
             <option value="">الجميع</option>
-            <option value="الباحة">الباحة - محطة أبحاث الباحة</option>
-            <option value="الرياض">الرياض - محطة الخرج</option>
-            <option value="جازان">جازان - مركز الأبحاث الزراعية</option>
-            <option value="مكة المكرمة">مكة المكرمة - محطة الطائف</option>
-            <option value="القصيم">القصيم - محطة عنيزة</option>
-            <option value="الجوف">الجوف - مركز أبحاث الزيتون</option>
+            <option value="أبها">محطة أبحاث أبها (عسير)</option>
+            <option value="حائل">محطة أبحاث حائل</option>
+            <option value="النماص">محطة أبحاث النماص</option>
+            <option value="الباحة">محطة أبحاث الباحة</option>
+            <option value="الخرج">محطة أبحاث الخرج (الرياض)</option>
+            <option value="جازان">مركز الأبحاث الزراعية بجازان</option>
+            <option value="المدينة">محطة أبحاث المدينة المنورة</option>
+            <option value="نجران">محطة أبحاث نجران</option>
+            <option value="الأحساء">محطة أبحاث الأحساء (الشرقية)</option>
           </select>
         </div>
 
@@ -1110,15 +1438,19 @@
           <label class="form-label">باركود البذرة</label>
           <select id="filterSeedLot" class="form-control">
             <option value="">الجميع</option>
-            <option value="KSA11000033">KSA11000033</option>
-            <option value="KSA11000034">KSA11000034</option>
-            <option value="KSA11000035">KSA11000035</option>
-            <option value="KSA11000036">KSA11000036</option>
-            <option value="KSA11000037">KSA11000037</option>
-            <option value="KSA11000038">KSA11000038</option>
-            <option value="KSA11000039">KSA11000039</option>
-            <option value="KSA11000040">KSA11000040</option>
-            <option value="KSA11000041">KSA11000041</option>
+            <option value="KSAEB1C2A1">KSAEB1C2A1</option>
+            <option value="KSA45B59D41">KSA45B59D41</option>
+            <option value="KSAB801841">KSAB801841</option>
+            <option value="KSA6107796">KSA6107796</option>
+            <option value="KSA009F1EB">KSA009F1EB</option>
+            <option value="KSA95EE2EC">KSA95EE2EC</option>
+            <option value="KSAECD7E4E">KSAECD7E4E</option>
+            <option value="KSAF3D3EB9">KSAF3D3EB9</option>
+            <option value="KSA979C1AB">KSA979C1AB</option>
+            <option value="KSAD88D04B">KSAD88D04B</option>
+            <option value="KSAE714F79">KSAE714F79</option>
+            <option value="KSAC2A0713B">KSAC2A0713B</option>
+            <option value="KSA8EB6A1EC">KSA8EB6A1EC</option>
           </select>
         </div>
 
@@ -1152,9 +1484,7 @@
     <!-- Results Data Table -->
     <section class="table-card">
       <div class="table-top-toolbar">
-        <div class="table-counts">
-          تم العثور على <strong id="visibleCount">10</strong> شتلة من إجمالي <strong>1,248</strong>
-        </div>
+        <div class="table-counts">تم العثور على <strong id="visibleCount">41</strong> دفعة وطلب معتمد من إجمالي <strong>41</strong></div>
         <div class="table-quick-actions">
           <button onclick="exportTableToCSV()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -1185,160 +1515,119 @@
         </table>
       </div>
 
-      <!-- Pagination -->
-      <div class="table-pagination">
-        <span style="font-size:12px; color:#64748b;">عرض 1 إلى 10 من 1,248 شتلة</span>
-        <div class="page-nav-btns">
-          <button class="btn-page" title="السابق">«</button>
-          <button class="btn-page active">1</button>
-          <button class="btn-page">2</button>
-          <button class="btn-page">3</button>
-          <button class="btn-page">...</button>
-          <button class="btn-page">125</button>
-          <button class="btn-page" title="التالي">»</button>
+      <!-- Dynamic Interactive Pagination -->
+      <div class="table-pagination" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding:14px 20px; background:#f8fafc; border-top:1px solid #e2e8f0; border-radius:0 0 8px 8px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="font-size:12.5px; color:#64748b;" id="paginationSummaryText">عرض 1 إلى 10 من 41 دفعة معتمدة</span>
+          <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:#64748b;">
+            <span>عدد السجلات:</span>
+            <select id="pageSizeSelect" class="form-control" style="height:30px; padding:2px 8px; font-size:12px; width:auto;" onchange="changePageSize(this.value)">
+              <option value="10" selected>10 لكل صفحة</option>
+              <option value="15">15 لكل صفحة</option>
+              <option value="25">25 لكل صفحة</option>
+              <option value="41">عرض الكل (41)</option>
+            </select>
+          </div>
+        </div>
+        <div class="page-nav-btns" id="paginationButtons" style="display:flex; gap:4px; align-items:center;">
+          <!-- Populated dynamically via renderPagination() -->
         </div>
       </div>
     </section>
 
   </div>
 
-  <!-- Modal: View Seedling Details (استعراض بيانات الشتلة) -->
+    <!-- Modal: View Seedling Details (إظهار البيانات التي تم إدخالها مسبقاً فقط) -->
   <div class="modal-overlay" id="detailModal">
-    <div class="modal-box">
+    <div class="modal-box" style="max-width: 650px;">
       <div class="modal-header">
         <div class="modal-title">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-          بطاقة الشتلة وبيانات التتبع الرقمي (Digital Seedling Passport)
+          بيانات وتفاصيل الصنف المعتمد
         </div>
         <button class="modal-close-btn" onclick="closeModal()">&times;</button>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body" style="padding: 18px 20px; gap: 14px;">
         
-        <!-- Top QR & Quick Identity -->
-        <div class="qr-trace-box">
-          <div class="qr-svg-holder" id="modalQrHolder">
-            <!-- Inline SVG QR will be rendered here -->
+        <!-- Header Info Card with QR -->
+        <div class="qr-trace-box" style="display:flex; gap:16px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; align-items:center;">
+          <div class="qr-svg-holder" id="modalQrHolder" style="background:#ffffff; padding:6px; border-radius:6px; border:1px solid #cbd5e1; box-shadow:0 1px 3px rgba(0,0,0,0.06); width:90px; height:90px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <!-- Inline SVG QR -->
           </div>
           <div style="flex:1;">
-            <div style="font-size:12px; color:#64748b; margin-bottom:4px;">كود الصنف المعتمد (Variety Code)</div>
-            <div style="font-size:20px; font-weight:800; font-family:monospace; color:#0f172a;" id="modalSeedlingCode">FG-02-14</div>
-            <div style="margin-top:6px; display:flex; gap:8px; align-items:center;">
+            <div style="font-size:11.5px; color:#64748b; margin-bottom:2px;">كود الصنف المعتمد</div>
+            <div style="font-size:22px; font-weight:800; font-family:monospace; color:#0f172a;" id="modalSeedlingCode">FG-02-14</div>
+            <div style="margin-top:6px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
               <span id="modalStatusBadge" class="badge-status badge-issued-farm">تم الصرف لمزرعة</span>
-              <span style="font-size:12px; color:#475569;" id="modalStationHeader">محطة أبحاث الباحة • رمان بيدا</span>
+              <span style="font-size:12.5px; color:#334155; font-weight:600;" id="modalStationHeader">محطة أبحاث الباحة • رمان بيدا</span>
             </div>
           </div>
         </div>
 
-        <!-- Section 1: Seedling Specs -->
-        <div>
-          <div class="detail-section-title">
-            <span>🌱</span> مواصفات الشتلة ومرحلة الإنتاج بالمشتل
+        <!-- Clean Grid: ONLY ENTERED DATA -->
+        <div class="modal-detail-list" style="display:flex; flex-direction:column; gap:8px;">
+          
+          <div class="modal-detail-row" style="display:flex; justify-content:space-between; align-items:center; padding:9px 12px; background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0;">
+            <span class="lbl" style="color:#64748b; font-weight:600; font-size:12px;">نوع الفاكهة:</span>
+            <span class="val" id="modalFruit" style="color:#0f172a; font-weight:700; font-size:13px;">رمان (PM)</span>
           </div>
-          <div class="detail-grid">
-            <div class="detail-item">
-              <span class="detail-label">نوع الفاكهة</span>
-              <span class="detail-value" id="modalFruit">رمان (Pomegranate)</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">الصنف</span>
-              <span class="detail-value" id="modalVariety">بيدا (01)</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">المنطقة والمحطة</span>
-              <span class="detail-value" id="modalRegion">الباحة - محطة أبحاث الباحة</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">الدفعة / المجموعة</span>
-              <span class="detail-value">دفعة موسم 2026 (100 شتلة)</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">تاريخ التطعيم / التجهيز</span>
-              <span class="detail-value">15/01/2026</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">حالة الفحص الصحي</span>
-              <span class="detail-value" style="color:#15803d;">خالية من الآفات ومُعتمدة ✓</span>
-            </div>
-          </div>
-        </div>
 
-        <!-- Section 2: Seed Lot Traceability -->
-        <div>
-          <div class="detail-section-title">
-            <span>🧬</span> بيانات تتبع البذرة الأصل (Seed Batch Traceability)
+          <div class="modal-detail-row" style="display:flex; justify-content:space-between; align-items:center; padding:9px 12px; background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0;">
+            <span class="lbl" style="color:#64748b; font-weight:600; font-size:12px;">الصنف المعتمد:</span>
+            <span class="val" id="modalVariety" style="color:#0f172a; font-weight:700; font-size:13px;">رمان طائفي</span>
           </div>
-          <div class="detail-grid">
-            <div class="detail-item">
-              <span class="detail-label">باركود البذرة الأصل</span>
-              <span class="detail-value" style="font-family:monospace; color:#1d4ed8;" id="modalSeedLot">KSA11000033</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">نسبة الإنبات للبذرة</span>
-              <span class="detail-value">94.5%</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">بلد المنشأ للبذور</span>
-              <span class="detail-value">المملكة العربية السعودية (محلي)</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">تاريخ شهادة فحص البذور</span>
-              <span class="detail-value">04/10/2025</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">رقم إرسالية البذور</span>
-              <span class="detail-value">LOT-2025-089</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">رتبة الإكثار</span>
-              <span class="detail-value">مسجلة (Registered)</span>
-            </div>
-          </div>
-        </div>
 
-        <!-- Section 3: Beneficiary & Location Details -->
-        <div>
-          <div class="detail-section-title">
-            <span>👤</span> بيانات المستفيد وموقع الزراعة النهائي
+          <div class="modal-detail-row" style="display:flex; justify-content:space-between; align-items:center; padding:9px 12px; background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0;">
+            <span class="lbl" style="color:#64748b; font-weight:600; font-size:12px;">المنطقة ومحطة الإنتاج:</span>
+            <span class="val" id="modalRegion" style="color:#0f172a; font-weight:700; font-size:13px;">منطقة عسير • محطة أبها</span>
           </div>
-          <div class="detail-grid">
-            <div class="detail-item">
-              <span class="detail-label">نوع المستفيد</span>
-              <span class="detail-value" id="modalBeneficiaryType">مزرعة تجارية</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">اسم المستفيد / المنشأة</span>
-              <span class="detail-value" id="modalBeneficiaryName">مزرعة السعادة الزراعية</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">رقم السجل الزراعي / الهوية</span>
-              <span class="detail-value" style="font-family:monospace;" id="modalBeneficiaryId">1029384756</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">تاريخ الصرف والتسليم</span>
-              <span class="detail-value" id="modalIssueDate">04/10/2026</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">إحداثيات المزرعة المعتمدة</span>
-              <span class="detail-value" style="font-family:monospace; font-size:12px;">20.0128° N, 41.4676° E</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">التحقق الحكومي الرقمي</span>
-              <span class="detail-value" style="color:#15803d;">موثق عبر سجل وزارة الزراعة ✓</span>
-            </div>
+
+          <div class="modal-detail-row" style="display:flex; justify-content:space-between; align-items:center; padding:9px 12px; background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0;">
+            <span class="lbl" style="color:#64748b; font-weight:600; font-size:12px;">باركود البذرة التابع (اللوت):</span>
+            <span class="val" id="modalSeedLot" style="font-family:monospace; color:#0284c7; font-weight:700; font-size:13px;">KSAEB1C2A1</span>
           </div>
+
+          <div class="modal-detail-row" style="display:flex; justify-content:space-between; align-items:center; padding:9px 12px; background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0;">
+            <span class="lbl" style="color:#64748b; font-weight:600; font-size:12px;">نوع المستفيد أو جهة الصرف:</span>
+            <span class="val" id="modalBeneficiaryType" style="color:#0f172a; font-weight:700; font-size:13px;">مزرعة</span>
+          </div>
+
+          <div class="modal-detail-row" style="display:flex; justify-content:space-between; align-items:center; padding:9px 12px; background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0;">
+            <span class="lbl" style="color:#64748b; font-weight:600; font-size:12px;">اسم المستفيد المصروف له:</span>
+            <span class="val" id="modalBeneficiaryName" style="color:#0f172a; font-weight:700; font-size:13px;">مؤسسة مدرجات الجنوب</span>
+          </div>
+
+          <div class="modal-detail-row" style="display:flex; justify-content:space-between; align-items:center; padding:9px 12px; background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0;">
+            <span class="lbl" style="color:#64748b; font-weight:600; font-size:12px;">رقم الهوية أو السجل الزراعي:</span>
+            <span class="val" id="modalBeneficiaryId" style="font-family:monospace; color:#334155; font-weight:700; font-size:13px;">2019485731</span>
+          </div>
+
+          <div class="modal-detail-row" style="display:flex; justify-content:space-between; align-items:center; padding:9px 12px; background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0;">
+            <span class="lbl" style="color:#64748b; font-weight:600; font-size:12px;">تاريخ الصرف:</span>
+            <span class="val" id="modalIssueDate" style="color:#0f172a; font-weight:700; font-size:13px;">2026/10/02</span>
+          </div>
+
+          <div class="modal-detail-row" style="display:flex; justify-content:space-between; align-items:center; padding:9px 12px; background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0;">
+            <span class="lbl" style="color:#64748b; font-weight:600; font-size:12px;">الكمية المصروفة:</span>
+            <span class="val" id="modalQuantity" style="color:#15803d; font-weight:700; font-size:13px;">10,000 شتلة</span>
+          </div>
+
+          <div class="modal-detail-row" style="display:flex; justify-content:space-between; align-items:center; padding:9px 12px; background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0;">
+            <span class="lbl" style="color:#64748b; font-weight:600; font-size:12px;">الحالة:</span>
+            <span class="val" id="modalStatusText" style="color:#0f172a; font-weight:700; font-size:13px;">تم الصرف لمزرعة</span>
+          </div>
+
         </div>
 
       </div>
 
-      <div class="modal-footer">
+      <div class="modal-footer" style="padding:12px 20px; background:#f8fafc; border-top:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
         <button type="button" class="btn-reset" onclick="closeModal()">إغلاق</button>
-        <div style="display:flex; gap:8px;">
-          <a href="screen_print_100_labels.html" target="_blank" class="btn-add-seedling" style="font-size:13px; padding:8px 16px;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-            طباعة الملصق الحراري (60×40 مم)
-          </a>
-        </div>
+        <a href="screen_print_100_labels.html" target="_blank" id="modalPrintBtnLink" class="btn-search" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          طباعة الملصق الحراري
+        </a>
       </div>
     </div>
   </div>
@@ -1386,19 +1675,19 @@
           <!-- شريط تصفية طبقات الخريطة الجغرافية -->
           <div class="map-filter-controls">
             <button type="button" class="map-filter-btn active" onclick="filterMapMarkers('all', this)">
-              <span>🌐 الجميع (17)</span>
+              <span>🌐 الجميع (22)</span>
             </button>
             <button type="button" class="map-filter-btn" onclick="filterMapMarkers('station', this)">
               <span class="legend-dot station" style="width:8px; height:8px;"></span>
-              <span>المحطات البحثية (7)</span>
+              <span>المحطات البحثية (9)</span>
             </button>
             <button type="button" class="map-filter-btn" onclick="filterMapMarkers('farm', this)">
               <span class="legend-dot farm" style="width:8px; height:8px;"></span>
-              <span>مزارع المستفيدين (6)</span>
+              <span>مزارع المستفيدين (8)</span>
             </button>
             <button type="button" class="map-filter-btn" onclick="filterMapMarkers('individual', this)">
               <span class="legend-dot ind" style="width:8px; height:8px;"></span>
-              <span>المستفيدين الأفراد (4)</span>
+              <span>المستفيدين الأفراد (5)</span>
             </button>
           </div>
 
@@ -1560,40 +1849,71 @@
                 <text x="15" y="7" font-size="19" font-weight="800" fill="#0f172a">الرياض (العاصمة ⭐)</text>
               </g>
 
-              <!-- مسارات توريد وتتبع الشتلات من المحطات (Traceability Flow Arcs) -->
+                            <!-- مسارات توريد وتتبع الشتلات من المحطات الرسمية الـ 9 -->
               <g id="mapConnectionArcs" opacity="0.85">
-                <!-- الباحة -> مزرعة السعادة وبلجرشي ومحمد الغامدي وعبدالله الزهراني -->
+                <!-- الباحة -> مزرعة السعادة ومحمد الغامدي -->
                 <path d="M 601 1136 Q 630 1125 660 1115" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
-                <path d="M 601 1136 Q 620 1165 640 1195" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
-                <path d="M 601 1136 Q 570 1145 540 1155" fill="none" stroke="#7e22ce" stroke-width="2.5" stroke-dasharray="5,4" />
-                <path d="M 601 1136 Q 570 1110 545 1085" fill="none" stroke="#7e22ce" stroke-width="2.5" stroke-dasharray="5,4" />
+                <path d="M 601 1136 Q 590 1150 580 1160" fill="none" stroke="#7e22ce" stroke-width="2.5" stroke-dasharray="5,4" />
 
-                <!-- الطائف -> مزرعة الورد ومواطن القرشي -->
-                <path d="M 515 1020 Q 480 1010 450 1000" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
-                <path d="M 515 1020 Q 490 1040 470 1060" fill="none" stroke="#7e22ce" stroke-width="2.5" stroke-dasharray="5,4" />
+                <!-- أبها -> مؤسسة مدرجات الجنوب وسعد القحطاني -->
+                <path d="M 686 1299 Q 713 1290 740 1280" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
+                <path d="M 686 1299 Q 678 1320 670 1340" fill="none" stroke="#7e22ce" stroke-width="2.5" stroke-dasharray="5,4" />
+
+                <!-- النماص -> واحة النماص -->
+                <path d="M 656 1217 Q 633 1208 610 1200" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
+
+                <!-- حائل -> مشاريع حائل وخالد الشمري -->
+                <path d="M 620 453 Q 655 441 690 430" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
+                <path d="M 620 453 Q 595 466 570 480" fill="none" stroke="#7e22ce" stroke-width="2.5" stroke-dasharray="5,4" />
 
                 <!-- الخرج -> مزارع نجد للحمضيات -->
                 <path d="M 1084 759 Q 1117 770 1150 780" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
 
-                <!-- الجوف -> شركة الجوف الزراعية -->
-                <path d="M 496 232 Q 463 241 430 250" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
+                <!-- جازان -> مزرعة جازان ويحيى الفيفي -->
+                <path d="M 691 1420 Q 710 1430 730 1440" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
+                <path d="M 691 1420 Q 720 1397 750 1375" fill="none" stroke="#7e22ce" stroke-width="2.5" stroke-dasharray="5,4" />
 
-                <!-- القصيم -> مزرعة القصيم -->
-                <path d="M 810 584 Q 845 592 880 600" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
+                <!-- المدينة المنورة -> مزارع طيبة العضوية -->
+                <path d="M 444 725 Q 462 732 480 740" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
 
-                <!-- جازان -> مواطن الفيفي (فيفا) -->
-                <path d="M 691 1420 Q 720 1395 750 1375" fill="none" stroke="#7e22ce" stroke-width="2.5" stroke-dasharray="5,4" />
+                <!-- نجران -> مزارع نجران وصالح اليامي -->
+                <path d="M 829 1358 Q 854 1349 880 1340" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5,4" />
+                <path d="M 829 1358 Q 804 1364 780 1370" fill="none" stroke="#7e22ce" stroke-width="2.5" stroke-dasharray="5,4" />
               </g>
 
-              <!-- ═════════════════════════════════════════════════ -->
-              <!-- 1. المحطات البحثية المعتمدة (Station Markers - Green) -->
+                            <!-- ═════════════════════════════════════════════════ -->
+              <!-- 1. المحطات البحثية المعتمدة (9 محطات رسمية من ملف الإكسل) -->
               <!-- ═════════════════════════════════════════════════ -->
               <g id="stationsGroup">
-                
-                <!-- محطة 1: الباحة -->
-                <g class="map-pin marker-station" 
-                   onmouseenter="showMapTooltip('st-baha', event)" onmouseleave="hideMapTooltip()" 
-                   onclick="selectMapLocation('st-baha')" transform="translate(601, 1136)">
+                <!-- محطة 1: أبها (عسير - 17,100 شتلة) -->
+                <g class="map-pin marker-station" onmouseenter="showMapTooltip('st-abha', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('st-abha')" transform="translate(686, 1299)">
+                  <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
+                  <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
+                  <rect x="-60" y="-46" width="120" height="26" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">محطة أبها</text>
+                </g>
+
+                <!-- محطة 2: حائل (12,800 شتلة) -->
+                <g class="map-pin marker-station" onmouseenter="showMapTooltip('st-hail', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('st-hail')" transform="translate(620, 453)">
+                  <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
+                  <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
+                  <rect x="-60" y="-46" width="120" height="26" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">محطة حائل</text>
+                </g>
+
+                <!-- محطة 3: النماص (8,700 شتلة) -->
+                <g class="map-pin marker-station" onmouseenter="showMapTooltip('st-namas', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('st-namas')" transform="translate(656, 1217)">
+                  <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
+                  <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
+                  <rect x="-62" y="-46" width="124" height="26" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">محطة النماص</text>
+                </g>
+
+                <!-- محطة 4: الباحة (5,750 شتلة) -->
+                <g class="map-pin marker-station" onmouseenter="showMapTooltip('st-baha', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('st-baha')" transform="translate(601, 1136)">
                   <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
                   <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
                   <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
@@ -1601,21 +1921,8 @@
                   <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">محطة الباحة</text>
                 </g>
 
-                <!-- محطة 2: الطائف (مكة المكرمة) -->
-                <g class="map-pin marker-station" 
-                   onmouseenter="showMapTooltip('st-taif', event)" onmouseleave="hideMapTooltip()" 
-                   onclick="selectMapLocation('st-taif')" transform="translate(515, 1020)">
-                  <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
-                  <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
-                  <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
-                  <rect x="-60" y="-46" width="120" height="26" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" class="pin-label-box" filter="url(#labelShadow)"/>
-                  <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">محطة الطائف</text>
-                </g>
-
-                <!-- محطة 3: الخرج (الرياض) -->
-                <g class="map-pin marker-station" 
-                   onmouseenter="showMapTooltip('st-kharj', event)" onmouseleave="hideMapTooltip()" 
-                   onclick="selectMapLocation('st-kharj')" transform="translate(1084, 759)">
+                <!-- محطة 5: الخرج (الرياض - 3,450 شتلة) -->
+                <g class="map-pin marker-station" onmouseenter="showMapTooltip('st-kharj', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('st-kharj')" transform="translate(1084, 759)">
                   <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
                   <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
                   <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
@@ -1623,43 +1930,35 @@
                   <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">محطة الخرج</text>
                 </g>
 
-                <!-- محطة 4: الجوف (أبحاث الزيتون) -->
-                <g class="map-pin marker-station" 
-                   onmouseenter="showMapTooltip('st-jouf', event)" onmouseleave="hideMapTooltip()" 
-                   onclick="selectMapLocation('st-jouf')" transform="translate(496, 232)">
+                <!-- محطة 6: جازان (1,050 شتلة) -->
+                <g class="map-pin marker-station" onmouseenter="showMapTooltip('st-jazan', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('st-jazan')" transform="translate(691, 1420)">
                   <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
                   <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
                   <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
                   <rect x="-60" y="-46" width="120" height="26" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" class="pin-label-box" filter="url(#labelShadow)"/>
-                  <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">مركز الجوف</text>
+                  <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">محطة جازان</text>
                 </g>
 
-                <!-- محطة 5: عنيزة (القصيم) -->
-                <g class="map-pin marker-station" 
-                   onmouseenter="showMapTooltip('st-qassim', event)" onmouseleave="hideMapTooltip()" 
-                   onclick="selectMapLocation('st-qassim')" transform="translate(810, 584)">
+                <!-- محطة 7: المدينة المنورة (450 شتلة) -->
+                <g class="map-pin marker-station" onmouseenter="showMapTooltip('st-madinah', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('st-madinah')" transform="translate(444, 725)">
+                  <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
+                  <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
+                  <rect x="-70" y="-46" width="140" height="26" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="0" y="-28" text-anchor="middle" font-size="12.5" fill="#15803d" font-weight="800">محطة المدينة</text>
+                </g>
+
+                <!-- محطة 8: نجران (400 شتلة) -->
+                <g class="map-pin marker-station" onmouseenter="showMapTooltip('st-najran', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('st-najran')" transform="translate(829, 1358)">
                   <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
                   <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
                   <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
                   <rect x="-60" y="-46" width="120" height="26" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" class="pin-label-box" filter="url(#labelShadow)"/>
-                  <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">محطة القصيم</text>
+                  <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">محطة نجران</text>
                 </g>
 
-                <!-- محطة 6: جازان (الأبحاث الزراعية) -->
-                <g class="map-pin marker-station" 
-                   onmouseenter="showMapTooltip('st-jazan', event)" onmouseleave="hideMapTooltip()" 
-                   onclick="selectMapLocation('st-jazan')" transform="translate(691, 1420)">
-                  <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
-                  <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
-                  <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
-                  <rect x="-60" y="-46" width="120" height="26" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.8" class="pin-label-box" filter="url(#labelShadow)"/>
-                  <text x="0" y="-28" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800">مركز جازان</text>
-                </g>
-
-                <!-- محطة 7: الأحساء (المنطقة الشرقية) -->
-                <g class="map-pin marker-station" 
-                   onmouseenter="showMapTooltip('st-ahsa', event)" onmouseleave="hideMapTooltip()" 
-                   onclick="selectMapLocation('st-ahsa')" transform="translate(1272, 647)">
+                <!-- محطة 9: الأحساء (الشرقية - 2,500 شتلة) -->
+                <g class="map-pin marker-station" onmouseenter="showMapTooltip('st-ahsa', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('st-ahsa')" transform="translate(1272, 647)">
                   <circle cx="0" cy="0" r="28" fill="none" stroke="#16a34a" stroke-width="2.5" class="pulse-ring" opacity="0.7"/>
                   <circle cx="0" cy="0" r="18" fill="#15803d" stroke="#ffffff" stroke-width="3" class="pin-core" filter="url(#pinShadow)"/>
                   <text x="0" y="6" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">🏛️</text>
@@ -1668,117 +1967,121 @@
                 </g>
               </g>
 
-              <!-- ═════════════════════════════════════════════════ -->
+                            <!-- ═════════════════════════════════════════════════ -->
               <!-- 2. مواقع صرف المزارع المستفيدة (Farm Markers - Blue) -->
               <!-- ═════════════════════════════════════════════════ -->
               <g id="farmsGroup">
                 <!-- مزرعة السعادة (الباحة) -->
-                <g class="map-pin marker-farm" 
-                   onmouseenter="showMapTooltip('farm-saada', event)" onmouseleave="hideMapTooltip()" 
-                   onclick="selectMapLocation('farm-saada')" transform="translate(660, 1115)">
+                <g class="map-pin marker-farm" onmouseenter="showMapTooltip('farm-saada', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('farm-saada')" transform="translate(660, 1115)">
                   <circle cx="0" cy="0" r="12" fill="#0284c7" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
                   <text x="0" y="4" text-anchor="middle" font-size="9" fill="#ffffff">🌾</text>
                   <rect x="16" y="-12" width="100" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
                   <text x="66" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">مزرعة السعادة</text>
                 </g>
 
-                <!-- مؤسسة الورد الطائفي (الطائف) -->
-                <g class="map-pin marker-farm" 
-                   onmouseenter="showMapTooltip('farm-taif-rose', event)" onmouseleave="hideMapTooltip()" 
-                   onclick="selectMapLocation('farm-taif-rose')" transform="translate(450, 1000)">
+                <!-- مؤسسة مدرجات الجنوب (أبها) -->
+                <g class="map-pin marker-farm" onmouseenter="showMapTooltip('farm-south', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('farm-south')" transform="translate(740, 1280)">
                   <circle cx="0" cy="0" r="12" fill="#0284c7" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
                   <text x="0" y="4" text-anchor="middle" font-size="9" fill="#ffffff">🌾</text>
-                  <rect x="-120" y="-12" width="105" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
-                  <text x="-68" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">الورد الطائفي</text>
+                  <rect x="16" y="-12" width="108" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="70" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">مدرجات الجنوب</text>
+                </g>
+
+                <!-- مؤسسة واحة النماص (النماص) -->
+                <g class="map-pin marker-farm" onmouseenter="showMapTooltip('farm-namas-oasis', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('farm-namas-oasis')" transform="translate(610, 1200)">
+                  <circle cx="0" cy="0" r="12" fill="#0284c7" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="4" text-anchor="middle" font-size="9" fill="#ffffff">🌾</text>
+                  <rect x="-114" y="-12" width="98" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="-65" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">واحة النماص</text>
                 </g>
 
                 <!-- مزارع نجد للحمضيات (الخرج) -->
-                <g class="map-pin marker-farm" 
-                   onmouseenter="showMapTooltip('farm-najd', event)" onmouseleave="hideMapTooltip()" 
-                   onclick="selectMapLocation('farm-najd')" transform="translate(1150, 780)">
+                <g class="map-pin marker-farm" onmouseenter="showMapTooltip('farm-najd', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('farm-najd')" transform="translate(1150, 780)">
                   <circle cx="0" cy="0" r="12" fill="#0284c7" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
                   <text x="0" y="4" text-anchor="middle" font-size="9" fill="#ffffff">🌾</text>
                   <rect x="16" y="-12" width="118" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
                   <text x="75" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">مزارع نجد للحمضيات</text>
                 </g>
 
-                <!-- شركة الجوف للتنمية الزراعية (الجوف) -->
-                <g class="map-pin marker-farm" 
-                   onmouseenter="showMapTooltip('farm-jouf', event)" onmouseleave="hideMapTooltip()" 
-                   onclick="selectMapLocation('farm-jouf')" transform="translate(430, 250)">
+                <!-- شركة مشاريع حائل (حائل) -->
+                <g class="map-pin marker-farm" onmouseenter="showMapTooltip('farm-hail-co', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('farm-hail-co')" transform="translate(690, 430)">
                   <circle cx="0" cy="0" r="12" fill="#0284c7" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
                   <text x="0" y="4" text-anchor="middle" font-size="9" fill="#ffffff">🌾</text>
-                  <rect x="-132" y="-12" width="116" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
-                  <text x="-74" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">شركة الجوف الزراعية</text>
+                  <rect x="16" y="-12" width="100" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="66" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">مشاريع حائل</text>
                 </g>
 
-                <!-- مزرعة القصيم العضوية (القصيم) -->
-                <g class="map-pin marker-farm" 
-                   onmouseenter="showMapTooltip('farm-qassim', event)" onmouseleave="hideMapTooltip()" 
-                   onclick="selectMapLocation('farm-qassim')" transform="translate(880, 600)">
+                <!-- مزرعة جازان للفاكهة الاستوائية (جازان) -->
+                <g class="map-pin marker-farm" onmouseenter="showMapTooltip('farm-jazan-trop', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('farm-jazan-trop')" transform="translate(730, 1440)">
                   <circle cx="0" cy="0" r="12" fill="#0284c7" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
                   <text x="0" y="4" text-anchor="middle" font-size="9" fill="#ffffff">🌾</text>
-                  <rect x="16" y="-12" width="98" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
-                  <text x="65" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">مزرعة القصيم</text>
+                  <rect x="16" y="-12" width="108" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="70" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">مزرعة جازان</text>
                 </g>
 
-                <!-- مزرعة الفاكهة التراثية (بلجرشي) -->
-                <g class="map-pin marker-farm" 
-                   onmouseenter="showMapTooltip('farm-baljurashi', event)" onmouseleave="hideMapTooltip()" 
-                   onclick="selectMapLocation('farm-baljurashi')" transform="translate(640, 1195)">
+                <!-- مزارع نجران التراثية (نجران) -->
+                <g class="map-pin marker-farm" onmouseenter="showMapTooltip('farm-najran-trad', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('farm-najran-trad')" transform="translate(880, 1340)">
                   <circle cx="0" cy="0" r="12" fill="#0284c7" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
                   <text x="0" y="4" text-anchor="middle" font-size="9" fill="#ffffff">🌾</text>
-                  <rect x="16" y="-12" width="98" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
-                  <text x="65" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">مزرعة بلجرشي</text>
+                  <rect x="16" y="-12" width="104" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="68" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">نجران التراثية</text>
+                </g>
+
+                <!-- مزارع طيبة العضوية (المدينة المنورة) -->
+                <g class="map-pin marker-farm" onmouseenter="showMapTooltip('farm-madinah-org', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('farm-madinah-org')" transform="translate(490, 710)">
+                  <circle cx="0" cy="0" r="12" fill="#0284c7" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="4" text-anchor="middle" font-size="9" fill="#ffffff">🌾</text>
+                  <rect x="16" y="-12" width="100" height="23" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="66" y="4" text-anchor="middle" font-size="11.5" fill="#0369a1" font-weight="700">طيبة العضوية</text>
                 </g>
               </g>
 
-              <!-- ═════════════════════════════════════════════════ -->
+                            <!-- ═════════════════════════════════════════════════ -->
               <!-- 3. مواقع صرف الأفراد (Individual Markers - Purple) -->
               <!-- ═════════════════════════════════════════════════ -->
               <g id="individualsGroup">
                 <!-- محمد بن سعيد الغامدي (الباحة) -->
-                <g class="map-pin marker-individual" 
-                   onmouseenter="showMapTooltip('ind-mohammed', event)" onmouseleave="hideMapTooltip()" 
-                   onclick="selectMapLocation('ind-mohammed')" transform="translate(540, 1155)">
+                <g class="map-pin marker-individual" onmouseenter="showMapTooltip('ind-mohammed', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('ind-mohammed')" transform="translate(540, 1155)">
                   <circle cx="0" cy="0" r="11" fill="#7e22ce" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
                   <text x="0" y="3.5" text-anchor="middle" font-size="8" fill="#ffffff">👤</text>
                   <rect x="-106" y="-11" width="94" height="22" rx="4" fill="#ffffff" stroke="#7e22ce" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
                   <text x="-59" y="4" text-anchor="middle" font-size="11" fill="#6b21a8" font-weight="700">محمد الغامدي</text>
                 </g>
 
-                <!-- سالم بن منصور القرشي (الطائف) -->
-                <g class="map-pin marker-individual" 
-                   onmouseenter="showMapTooltip('ind-salem', event)" onmouseleave="hideMapTooltip()" 
-                   onclick="selectMapLocation('ind-salem')" transform="translate(470, 1060)">
+                <!-- سعد بن علي القحطاني (عسير / أبها) -->
+                <g class="map-pin marker-individual" onmouseenter="showMapTooltip('ind-qahtani', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('ind-qahtani')" transform="translate(640, 1320)">
                   <circle cx="0" cy="0" r="11" fill="#7e22ce" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
                   <text x="0" y="3.5" text-anchor="middle" font-size="8" fill="#ffffff">👤</text>
-                  <rect x="-102" y="-11" width="90" height="22" rx="4" fill="#ffffff" stroke="#7e22ce" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
-                  <text x="-57" y="4" text-anchor="middle" font-size="11" fill="#6b21a8" font-weight="700">سالم القرشي</text>
+                  <rect x="-95" y="-11" width="85" height="22" rx="4" fill="#ffffff" stroke="#7e22ce" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="-52" y="4" text-anchor="middle" font-size="11" fill="#6b21a8" font-weight="700">سعد القحطاني</text>
                 </g>
 
-                <!-- عبدالله الزهراني (المندق) -->
-                <g class="map-pin marker-individual" 
-                   onmouseenter="showMapTooltip('ind-abdullah', event)" onmouseleave="hideMapTooltip()" 
-                   onclick="selectMapLocation('ind-abdullah')" transform="translate(545, 1085)">
+                <!-- خالد بن فهد الشمري (حائل) -->
+                <g class="map-pin marker-individual" onmouseenter="showMapTooltip('ind-shammary', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('ind-shammary')" transform="translate(570, 480)">
                   <circle cx="0" cy="0" r="11" fill="#7e22ce" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
                   <text x="0" y="3.5" text-anchor="middle" font-size="8" fill="#ffffff">👤</text>
-                  <rect x="-112" y="-11" width="100" height="22" rx="4" fill="#ffffff" stroke="#7e22ce" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
-                  <text x="-62" y="4" text-anchor="middle" font-size="11" fill="#6b21a8" font-weight="700">عبدالله الزهراني</text>
+                  <rect x="-95" y="-11" width="85" height="22" rx="4" fill="#ffffff" stroke="#7e22ce" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="-52" y="4" text-anchor="middle" font-size="11" fill="#6b21a8" font-weight="700">خالد الشمري</text>
                 </g>
 
                 <!-- يحيى بن حسن الفيفي (جازان / فيفا) -->
-                <g class="map-pin marker-individual" 
-                   onmouseenter="showMapTooltip('ind-faifi', event)" onmouseleave="hideMapTooltip()" 
-                   onclick="selectMapLocation('ind-faifi')" transform="translate(750, 1375)">
+                <g class="map-pin marker-individual" onmouseenter="showMapTooltip('ind-faifi', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('ind-faifi')" transform="translate(750, 1375)">
                   <circle cx="0" cy="0" r="11" fill="#7e22ce" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
                   <text x="0" y="3.5" text-anchor="middle" font-size="8" fill="#ffffff">👤</text>
                   <rect x="15" y="-11" width="90" height="22" rx="4" fill="#ffffff" stroke="#7e22ce" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
                   <text x="60" y="4" text-anchor="middle" font-size="11" fill="#6b21a8" font-weight="700">يحيى الفيفي</text>
                 </g>
+
+                <!-- صالح بن ناصر اليامي (نجران) -->
+                <g class="map-pin marker-individual" onmouseenter="showMapTooltip('ind-yami', event)" onmouseleave="hideMapTooltip()" onclick="selectMapLocation('ind-yami')" transform="translate(780, 1370)">
+                  <circle cx="0" cy="0" r="11" fill="#7e22ce" stroke="#ffffff" stroke-width="2.5" class="pin-core" filter="url(#pinShadow)"/>
+                  <text x="0" y="3.5" text-anchor="middle" font-size="8" fill="#ffffff">👤</text>
+                  <rect x="-90" y="-11" width="80" height="22" rx="4" fill="#ffffff" stroke="#7e22ce" stroke-width="1.2" class="pin-label-box" filter="url(#labelShadow)"/>
+                  <text x="-50" y="4" text-anchor="middle" font-size="11" fill="#6b21a8" font-weight="700">صالح اليامي</text>
+                </g>
               </g>
 
-            </g> <!-- End of mapZoomContainer -->
+            <!-- End of mapZoomContainer -->
           </svg>
         </div>
 
@@ -1800,27 +2103,27 @@
 
             <div class="station-stat-row">
               <span class="station-stat-lbl">الشتلات المنتجة بالمحطة:</span>
-              <span class="station-stat-val" id="sbProduced">450 شتلة</span>
+              <span class="station-stat-val" id="sbProduced">5,750 شتلة</span>
             </div>
 
             <div class="station-stat-row">
               <span class="station-stat-lbl">إجمالي الشتلات المصروفة:</span>
-              <span class="station-stat-val" style="color:#15803d;" id="sbDispatched">280 شتلة (62%)</span>
+              <span class="station-stat-val" style="color:#15803d;" id="sbDispatched">5,750 شتلة (100%)</span>
             </div>
 
             <div class="station-stat-row">
               <span class="station-stat-lbl">المزارع والمستفيدين التابعين:</span>
-              <span class="station-stat-val" id="sbBeneficiaries">18 مستفيد (سجلات وأفراد)</span>
+              <span class="station-stat-val" id="sbBeneficiaries">22 مستفيد (سجلات وأفراد)</span>
             </div>
 
             <div class="station-stat-row">
               <span class="station-stat-lbl">الأصناف الرئيسية المعتمدة:</span>
-              <span class="station-stat-val" id="sbVarieties">رمان بيدا (PM-01)، لوز بيدا (AL-01)</span>
+              <span class="station-stat-val" id="sbVarieties">توت بلاك بيري، رمان بيدا، عنب رزقي أبيض</span>
             </div>
 
             <div class="station-stat-row">
               <span class="station-stat-lbl">لوتات البذور المربوطة:</span>
-              <span class="station-stat-val" style="font-family:monospace; color:#0284c7;" id="sbSeedLots">KSA11000033, KSA11000035</span>
+              <span class="station-stat-val" style="font-family:monospace; color:#0284c7;" id="sbSeedLots">KSA009F1EB, KSA95EE2EC, KSAECD7E4E</span>
             </div>
 
             <div class="station-stat-row">
@@ -1856,134 +2159,867 @@
     // سجل الشتلات المصروفة المعتمدة
     const SEEDLINGS_DATA = [
       {
-        id: 1,
-        code: "FG-02-14",
-        fruit: "تين (FG)",
-        variety: "وزيري",
-        region: "مكة المكرمة",
-        station: "محطة أبحاث الطائف",
-        seedLot: "KSA11000034",
-        beneficiaryType: "مزرعة",
-        beneficiaryName: "مؤسسة الورد الطائفي الزراعية",
-        beneficiaryId: "2019485731",
-        issueDate: "2026/10/02",
-        status: "منصرف",
-        statusLabel: "تم الصرف لمزرعة",
-        statusBadgeClass: "badge-issued-farm"
+            "id": 1,
+            "code": "GR-02-08",
+            "fruit": "عنب (GR)",
+            "variety": "عنب طومسون",
+            "region": "حائل",
+            "station": "محطة حائل",
+            "seedLot": "KSAB8018417",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مؤسسة مدرجات الجنوب الزراعية",
+            "beneficiaryId": "2019485731",
+            "issueDate": "2026/10/02",
+            "quantity": 5000,
+            "printed": 5000,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/b560f9e55825/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/b8018417-8bd1-f0c0-2177-3a1410066e6f",
+            "serialRange": "000001 إلى 005000"
       },
       {
-        id: 2,
-        code: "FG-02-14",
-        fruit: "تين (FG)",
-        variety: "وزيري",
-        region: "مكة المكرمة",
-        station: "محطة أبحاث الطائف",
-        seedLot: "KSA11000034",
-        beneficiaryType: "فرد",
-        beneficiaryName: "سالم بن منصور القرشي",
-        beneficiaryId: "1074629183",
-        issueDate: "2026/10/01",
-        status: "منصرف",
-        statusLabel: "تم الصرف لمواطن",
-        statusBadgeClass: "badge-issued-person"
+            "id": 2,
+            "code": "GR-02-11",
+            "fruit": "عنب (GR)",
+            "variety": "عنب طومسون",
+            "region": "نجران",
+            "station": "محطة نجران",
+            "seedLot": "KSAB8018417",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مزرعة السعادة لإنتاج الفاكهة",
+            "beneficiaryId": "1029384756",
+            "issueDate": "2026/09/28",
+            "quantity": 100,
+            "printed": 100,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/d1bdbec90c49/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/b8018417-8bd1-f0c0-2177-3a1410066e6f",
+            "serialRange": "000001 إلى 000100"
       },
       {
-        id: 3,
-        code: "PM-01-12",
-        fruit: "رمان (PM)",
-        variety: "بيدا",
-        region: "الباحة",
-        station: "محطة أبحاث الباحة",
-        seedLot: "KSA11000033",
-        beneficiaryType: "مزرعة",
-        beneficiaryName: "مزرعة السعادة الزراعية",
-        beneficiaryId: "1029384756",
-        issueDate: "2026/10/04",
-        status: "منصرف",
-        statusLabel: "تم الصرف لمزرعة",
-        statusBadgeClass: "badge-issued-farm"
+            "id": 3,
+            "code": "GR-01-08",
+            "fruit": "عنب (GR)",
+            "variety": "عنب سوبيريور",
+            "region": "حائل",
+            "station": "محطة حائل",
+            "seedLot": "KSA9CBC5845",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مزارع نجد للحمضيات النموذجية",
+            "beneficiaryId": "1092837465",
+            "issueDate": "2026/09/25",
+            "quantity": 2000,
+            "printed": 0,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/242670e295c7/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/9cbc5845-dad8-8415-b882-3a141003c4fa",
+            "serialRange": "000001 إلى 002000"
       },
       {
-        id: 4,
-        code: "PM-01-12",
-        fruit: "رمان (PM)",
-        variety: "بيدا",
-        region: "الباحة",
-        station: "محطة أبحاث الباحة",
-        seedLot: "KSA11000033",
-        beneficiaryType: "فرد",
-        beneficiaryName: "محمد بن سعيد الغامدي",
-        beneficiaryId: "1087654321",
-        issueDate: "2026/10/03",
-        status: "منصرف",
-        statusLabel: "تم الصرف لمواطن",
-        statusBadgeClass: "badge-issued-person"
+            "id": 4,
+            "code": "GV-01-10",
+            "fruit": "جوافة (GV)",
+            "variety": "جوافة بلدي",
+            "region": "جازان",
+            "station": "محطة جازان",
+            "seedLot": "KSAF3D3EB98",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "شركة مشاريع حائل الزراعية",
+            "beneficiaryId": "3049582716",
+            "issueDate": "2026/09/20",
+            "quantity": 250,
+            "printed": 250,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/58388a610378/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/f3d3eb98-ac60-3d17-657e-3a14a065d56b",
+            "serialRange": "000001 إلى 000250"
       },
       {
-        id: 5,
-        code: "AL-01-12",
-        fruit: "لوز (AL)",
-        variety: "بيدا",
-        region: "الباحة",
-        station: "محطة أبحاث الباحة",
-        seedLot: "KSA11000035",
-        beneficiaryType: "فرد",
-        beneficiaryName: "عبدالله بن أحمد الزهراني",
-        beneficiaryId: "1045239871",
-        issueDate: "2026/10/01",
-        status: "منصرف",
-        statusLabel: "تم الصرف لمواطن",
-        statusBadgeClass: "badge-issued-person"
+            "id": 5,
+            "code": "GV-01-01",
+            "fruit": "جوافة (GV)",
+            "variety": "جوافة بلدي",
+            "region": "الرياض",
+            "station": "محطة الخرج",
+            "seedLot": "KSAF3D3EB98",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مؤسسة واحة النماص الخضراء",
+            "beneficiaryId": "1083746291",
+            "issueDate": "2026/09/15",
+            "quantity": 250,
+            "printed": 250,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/c12313d5b238/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/f3d3eb98-ac60-3d17-657e-3a14a065d56b",
+            "serialRange": "000001 إلى 000250"
       },
       {
-        id: 6,
-        code: "OL-03-16",
-        fruit: "زيتون (OL)",
-        variety: "طائفي",
-        region: "الجوف",
-        station: "مركز أبحاث الجوف للزيتون",
-        seedLot: "KSA11000036",
-        beneficiaryType: "مزرعة",
-        beneficiaryName: "شركة الجوف للتنمية الزراعية",
-        beneficiaryId: "3029182746",
-        issueDate: "2026/09/28",
-        status: "منصرف",
-        statusLabel: "تم الصرف لمزرعة",
-        statusBadgeClass: "badge-issued-farm"
+            "id": 6,
+            "code": "GV-01-11",
+            "fruit": "جوافة (GV)",
+            "variety": "جوافة بلدي",
+            "region": "نجران",
+            "station": "محطة نجران",
+            "seedLot": "KSAF3D3EB98",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مزرعة جازان للفاكهة الاستوائية",
+            "beneficiaryId": "2048596013",
+            "issueDate": "2026/09/10",
+            "quantity": 100,
+            "printed": 100,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/f93a928f99dd/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/f3d3eb98-ac60-3d17-657e-3a14a065d56b",
+            "serialRange": "000001 إلى 000100"
       },
       {
-        id: 7,
-        code: "MG-04-18",
-        fruit: "مانجو (MG)",
-        variety: "حلواني",
-        region: "جازان",
-        station: "مركز الأبحاث الزراعية بجازان",
-        seedLot: "KSA11000037",
-        beneficiaryType: "فرد",
-        beneficiaryName: "يحيى بن حسن الفيفي",
-        beneficiaryId: "1098273645",
-        issueDate: "2026/09/25",
-        status: "منصرف",
-        statusLabel: "تم الصرف لمواطن",
-        statusBadgeClass: "badge-issued-person"
+            "id": 7,
+            "code": "PM-01-12",
+            "fruit": "رمان (PM)",
+            "variety": "رمان بيدا",
+            "region": "الباحة",
+            "station": "محطة الباحة",
+            "seedLot": "KSA009F1EB6",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مزارع نجران التراثية",
+            "beneficiaryId": "1074829104",
+            "issueDate": "2026/08/30",
+            "quantity": 700,
+            "printed": 700,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/95ee2ecd6ee0/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/009f1eb6-77b0-a36a-9976-3a0d764b563d",
+            "serialRange": "000001 إلى 000700"
       },
       {
-        id: 8,
-        code: "CT-01-11",
-        fruit: "حمضيات (CT)",
-        variety: "بيدا",
-        region: "الرياض",
-        station: "محطة أبحاث الخرج",
-        seedLot: "KSA11000038",
-        beneficiaryType: "مزرعة",
-        beneficiaryName: "مزارع نجد للحمضيات",
-        beneficiaryId: "1092837465",
-        issueDate: "2026/09/22",
-        status: "منصرف",
-        statusLabel: "تم الصرف لمزرعة",
-        statusBadgeClass: "badge-issued-farm"
+            "id": 8,
+            "code": "PM-02-06",
+            "fruit": "رمان (PM)",
+            "variety": "رمان طائفي",
+            "region": "عسير",
+            "station": "محطة أبها",
+            "seedLot": "KSAEEB1C2A1",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مزارع طيبة العضوية",
+            "beneficiaryId": "3094857261",
+            "issueDate": "2026/08/25",
+            "quantity": 10000,
+            "printed": 10000,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/7eb499ed5622/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/eeb1c2a1-eaef-98df-7d6b-3a0d765b9ef8",
+            "serialRange": "000001 إلى 010000"
+      },
+      {
+            "id": 9,
+            "code": "PM-02-03",
+            "fruit": "رمان (PM)",
+            "variety": "رمان طائفي",
+            "region": "المدينة المنورة",
+            "station": "محطة المدينة المنورة",
+            "seedLot": "KSAEEB1C2A1",
+            "beneficiaryType": "فرد",
+            "beneficiaryName": "محمد بن سعيد الغامدي",
+            "beneficiaryId": "1087654321",
+            "issueDate": "2026/08/15",
+            "quantity": 250,
+            "printed": 250,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لفرد",
+            "statusBadgeClass": "badge-issued-individual",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/c5c87baa8594/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/eeb1c2a1-eaef-98df-7d6b-3a0d765b9ef8",
+            "serialRange": "000001 إلى 000250"
+      },
+      {
+            "id": 10,
+            "code": "PM-02-06",
+            "fruit": "رمان (PM)",
+            "variety": "رمان طائفي",
+            "region": "عسير",
+            "station": "محطة النماص",
+            "seedLot": "KSAEEB1C2A1",
+            "beneficiaryType": "فرد",
+            "beneficiaryName": "سالم بن منصور القرشي",
+            "beneficiaryId": "1074629183",
+            "issueDate": "2026/08/01",
+            "quantity": 2500,
+            "printed": 2500,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لفرد",
+            "statusBadgeClass": "badge-issued-individual",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/6107796c3b0a/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/eeb1c2a1-eaef-98df-7d6b-3a0d765b9ef8",
+            "serialRange": "000001 إلى 002500"
+      },
+      {
+            "id": 11,
+            "code": "MU-01-01",
+            "fruit": "توت (MU)",
+            "variety": "توت بلدي",
+            "region": "الرياض",
+            "station": "محطة الخرج",
+            "seedLot": "KSAC3D765A9",
+            "beneficiaryType": "فرد",
+            "beneficiaryName": "عبدالله بن أحمد الزهراني",
+            "beneficiaryId": "1045239871",
+            "issueDate": "2026/10/02",
+            "quantity": 200,
+            "printed": 0,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لفرد",
+            "statusBadgeClass": "badge-issued-individual",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/ed759527e6a3/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/c3d765a9-b909-9e63-07cb-3a14e7f7f59f",
+            "serialRange": "000001 إلى 000200"
+      },
+      {
+            "id": 12,
+            "code": "MU-01-10",
+            "fruit": "توت (MU)",
+            "variety": "توت بلدي",
+            "region": "جازان",
+            "station": "محطة جازان",
+            "seedLot": "KSAC3D765A9",
+            "beneficiaryType": "فرد",
+            "beneficiaryName": "يحيى بن حسن الفيفي",
+            "beneficiaryId": "1098273645",
+            "issueDate": "2026/09/28",
+            "quantity": 50,
+            "printed": 0,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لفرد",
+            "statusBadgeClass": "badge-issued-individual",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/f083153b5f43/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/c3d765a9-b909-9e63-07cb-3a14e7f7f59f",
+            "serialRange": "000001 إلى 000050"
+      },
+      {
+            "id": 13,
+            "code": "MU-01-06",
+            "fruit": "توت (MU)",
+            "variety": "توت بلدي",
+            "region": "عسير",
+            "station": "محطة أبها",
+            "seedLot": "KSAC3D765A9",
+            "beneficiaryType": "فرد",
+            "beneficiaryName": "خالد بن فهد الشمري",
+            "beneficiaryId": "1038475920",
+            "issueDate": "2026/09/25",
+            "quantity": 1000,
+            "printed": 0,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لفرد",
+            "statusBadgeClass": "badge-issued-individual",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/aa4f9afb1098/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/c3d765a9-b909-9e63-07cb-3a14e7f7f59f",
+            "serialRange": "000001 إلى 001000"
+      },
+      {
+            "id": 14,
+            "code": "MU-01-08",
+            "fruit": "توت (MU)",
+            "variety": "توت بلدي",
+            "region": "حائل",
+            "station": "محطة حائل",
+            "seedLot": "KSAC3D765A9",
+            "beneficiaryType": "فرد",
+            "beneficiaryName": "سعد بن علي القحطاني",
+            "beneficiaryId": "1064738291",
+            "issueDate": "2026/09/20",
+            "quantity": 2000,
+            "printed": 0,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لفرد",
+            "statusBadgeClass": "badge-issued-individual",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/96e06a86ac24/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/c3d765a9-b909-9e63-07cb-3a14e7f7f59f",
+            "serialRange": "000001 إلى 002000"
+      },
+      {
+            "id": 15,
+            "code": "MU-08-12",
+            "fruit": "توت (MU)",
+            "variety": "توت بلاك بيري",
+            "region": "الباحة",
+            "station": "محطة الباحة",
+            "seedLot": "KSAXFBQ99",
+            "beneficiaryType": "فرد",
+            "beneficiaryName": "صالح بن ناصر اليامي",
+            "beneficiaryId": "1057382910",
+            "issueDate": "2026/09/15",
+            "quantity": 3700,
+            "printed": 3700,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لفرد",
+            "statusBadgeClass": "badge-issued-individual",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/c50ba595ff14/",
+            "naamaUrl": "https://scanned.page/XfBq99",
+            "serialRange": "000001 إلى 003700"
+      },
+      {
+            "id": 16,
+            "code": "MU-02-01",
+            "fruit": "توت (MU)",
+            "variety": "توت كشميري",
+            "region": "الرياض",
+            "station": "محطة الخرج",
+            "seedLot": "KSA3A9B15F3",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مؤسسة مدرجات الجنوب الزراعية",
+            "beneficiaryId": "2019485731",
+            "issueDate": "2026/09/10",
+            "quantity": 100,
+            "printed": 100,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/9da3b421b0b9/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/3a9b15f3-c5c8-bcb0-b5d8-3a14e7fa8e39",
+            "serialRange": "000001 إلى 000100"
+      },
+      {
+            "id": 17,
+            "code": "MU-02-06",
+            "fruit": "توت (MU)",
+            "variety": "توت كشميري",
+            "region": "عسير",
+            "station": "محطة النماص",
+            "seedLot": "KSA3A9B15F3",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مزرعة السعادة لإنتاج الفاكهة",
+            "beneficiaryId": "1029384756",
+            "issueDate": "2026/08/30",
+            "quantity": 200,
+            "printed": 200,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/5c3bc84e3944/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/3a9b15f3-c5c8-bcb0-b5d8-3a14e7fa8e39",
+            "serialRange": "000001 إلى 000200"
+      },
+      {
+            "id": 18,
+            "code": "MU-02-06",
+            "fruit": "توت (MU)",
+            "variety": "توت كشميري",
+            "region": "عسير",
+            "station": "محطة أبها",
+            "seedLot": "KSA3A9B15F3",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مزارع نجد للحمضيات النموذجية",
+            "beneficiaryId": "1092837465",
+            "issueDate": "2026/08/25",
+            "quantity": 200,
+            "printed": 200,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/8b7c94515733/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/3a9b15f3-c5c8-bcb0-b5d8-3a14e7fa8e39",
+            "serialRange": "000001 إلى 000200"
+      },
+      {
+            "id": 19,
+            "code": "SI-01-12",
+            "fruit": "سدر (SI)",
+            "variety": "سدر بلدي",
+            "region": "الباحة",
+            "station": "محطة الباحة",
+            "seedLot": "KSAECD7E4EA",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "شركة مشاريع حائل الزراعية",
+            "beneficiaryId": "3049582716",
+            "issueDate": "2026/08/15",
+            "quantity": 200,
+            "printed": 200,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/27745cba73bc/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/ecd7e4ea-60fb-38b9-c97f-3a11631c32c4",
+            "serialRange": "000001 إلى 000200"
+      },
+      {
+            "id": 20,
+            "code": "CI-01-01",
+            "fruit": "حمضيات (CI)",
+            "variety": "ليمون أضاليا",
+            "region": "الرياض",
+            "station": "محطة الخرج",
+            "seedLot": "KSA977ED917",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مؤسسة واحة النماص الخضراء",
+            "beneficiaryId": "1083746291",
+            "issueDate": "2026/08/01",
+            "quantity": 700,
+            "printed": 0,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/e20e2e5160d8/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/977ed917-8c5a-e525-d21f-3a15071af029",
+            "serialRange": "000001 إلى 000700"
+      },
+      {
+            "id": 21,
+            "code": "CI-01-10",
+            "fruit": "حمضيات (CI)",
+            "variety": "ليمون أضاليا",
+            "region": "جازان",
+            "station": "محطة جازان",
+            "seedLot": "KSA977ED917",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مزرعة جازان للفاكهة الاستوائية",
+            "beneficiaryId": "2048596013",
+            "issueDate": "2026/10/02",
+            "quantity": 300,
+            "printed": 0,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/21f0272347be/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/977ed917-8c5a-e525-d21f-3a15071af029",
+            "serialRange": "000001 إلى 000300"
+      },
+      {
+            "id": 22,
+            "code": "CI-01-10",
+            "fruit": "حمضيات (CI)",
+            "variety": "ليمون بن زهير",
+            "region": "جازان",
+            "station": "محطة جازان",
+            "seedLot": "KSA979C1ABA",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مزارع نجران التراثية",
+            "beneficiaryId": "1074829104",
+            "issueDate": "2026/09/28",
+            "quantity": 200,
+            "printed": 200,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/2fe1a1b2413c/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/979c1aba-5ee8-428a-8ed1-3a1507176cb3",
+            "serialRange": "000001 إلى 000200"
+      },
+      {
+            "id": 23,
+            "code": "FI-01-01",
+            "fruit": "تين (FI)",
+            "variety": "تين براون تركي",
+            "region": "الرياض",
+            "station": "محطة الخرج",
+            "seedLot": "KSA45B59D41",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مزارع طيبة العضوية",
+            "beneficiaryId": "3094857261",
+            "issueDate": "2026/09/25",
+            "quantity": 2000,
+            "printed": 2000,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/30ae37483882/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/45b59d41-f20d-946b-135f-3a0d6cac9edd",
+            "serialRange": "000001 إلى 002000"
+      },
+      {
+            "id": 24,
+            "code": "FI-01-03",
+            "fruit": "تين (FI)",
+            "variety": "تين براون تركي",
+            "region": "المدينة المنورة",
+            "station": "محطة المدينة المنورة",
+            "seedLot": "KSA45B59D41",
+            "beneficiaryType": "فرد",
+            "beneficiaryName": "محمد بن سعيد الغامدي",
+            "beneficiaryId": "1087654321",
+            "issueDate": "2026/09/20",
+            "quantity": 100,
+            "printed": 100,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لفرد",
+            "statusBadgeClass": "badge-issued-individual",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/dc27b43048b6/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/45b59d41-f20d-946b-135f-3a0d6cac9edd",
+            "serialRange": "000001 إلى 000100"
+      },
+      {
+            "id": 25,
+            "code": "FI-01-10",
+            "fruit": "تين (FI)",
+            "variety": "تين براون تركي",
+            "region": "جازان",
+            "station": "محطة جازان",
+            "seedLot": "KSA45B59D41",
+            "beneficiaryType": "فرد",
+            "beneficiaryName": "سالم بن منصور القرشي",
+            "beneficiaryId": "1074629183",
+            "issueDate": "2026/09/15",
+            "quantity": 200,
+            "printed": 200,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لفرد",
+            "statusBadgeClass": "badge-issued-individual",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/4fa3c22aa36e/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/45b59d41-f20d-946b-135f-3a0d6cac9edd",
+            "serialRange": "000001 إلى 000200"
+      },
+      {
+            "id": 26,
+            "code": "FI-01-06",
+            "fruit": "تين (FI)",
+            "variety": "تين براون تركي",
+            "region": "عسير",
+            "station": "محطة أبها",
+            "seedLot": "KSA45B59D41",
+            "beneficiaryType": "فرد",
+            "beneficiaryName": "عبدالله بن أحمد الزهراني",
+            "beneficiaryId": "1045239871",
+            "issueDate": "2026/09/10",
+            "quantity": 2000,
+            "printed": 2000,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لفرد",
+            "statusBadgeClass": "badge-issued-individual",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/52cc099dfb94/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/45b59d41-f20d-946b-135f-3a0d6cac9edd",
+            "serialRange": "000001 إلى 002000"
+      },
+      {
+            "id": 27,
+            "code": "FI-01-08",
+            "fruit": "تين (FI)",
+            "variety": "تين براون تركي",
+            "region": "حائل",
+            "station": "محطة حائل",
+            "seedLot": "KSA45B59D41",
+            "beneficiaryType": "فرد",
+            "beneficiaryName": "يحيى بن حسن الفيفي",
+            "beneficiaryId": "1098273645",
+            "issueDate": "2026/08/30",
+            "quantity": 2000,
+            "printed": 2000,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لفرد",
+            "statusBadgeClass": "badge-issued-individual",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/9358abf09791/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/45b59d41-f20d-946b-135f-3a0d6cac9edd",
+            "serialRange": "000001 إلى 002000"
+      },
+      {
+            "id": 28,
+            "code": "FI-01-11",
+            "fruit": "تين (FI)",
+            "variety": "تين براون تركي",
+            "region": "نجران",
+            "station": "محطة نجران",
+            "seedLot": "KSA45B59D41",
+            "beneficiaryType": "فرد",
+            "beneficiaryName": "خالد بن فهد الشمري",
+            "beneficiaryId": "1038475920",
+            "issueDate": "2026/08/25",
+            "quantity": 200,
+            "printed": 200,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لفرد",
+            "statusBadgeClass": "badge-issued-individual",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/ad9a6969fc67/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/45b59d41-f20d-946b-135f-3a0d6cac9edd",
+            "serialRange": "000001 إلى 000200"
+      },
+      {
+            "id": 29,
+            "code": "FI-01-01",
+            "fruit": "تين (FI)",
+            "variety": "تين أخضر",
+            "region": "الرياض",
+            "station": "محطة الخرج",
+            "seedLot": "KSAC2A0713B",
+            "beneficiaryType": "فرد",
+            "beneficiaryName": "سعد بن علي القحطاني",
+            "beneficiaryId": "1064738291",
+            "issueDate": "2026/08/15",
+            "quantity": 200,
+            "printed": 0,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لفرد",
+            "statusBadgeClass": "badge-issued-individual",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/ec1131195576/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/c2a0713b-a306-4ee1-431f-3a0d6cab2e02",
+            "serialRange": "000001 إلى 000200"
+      },
+      {
+            "id": 30,
+            "code": "FI-03-06",
+            "fruit": "تين (FI)",
+            "variety": "تين أخضر",
+            "region": "عسير",
+            "station": "محطة النماص",
+            "seedLot": "KSAC2A0713B",
+            "beneficiaryType": "فرد",
+            "beneficiaryName": "صالح بن ناصر اليامي",
+            "beneficiaryId": "1057382910",
+            "issueDate": "2026/08/01",
+            "quantity": 3000,
+            "printed": 3000,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لفرد",
+            "statusBadgeClass": "badge-issued-individual",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/a9ebb0d65ffe/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/c2a0713b-a306-4ee1-431f-3a0d6cab2e02",
+            "serialRange": "000001 إلى 003000"
+      },
+      {
+            "id": 31,
+            "code": "FI-01-06",
+            "fruit": "تين (FI)",
+            "variety": "تين أخضر",
+            "region": "عسير",
+            "station": "محطة أبها",
+            "seedLot": "KSAC2A0713B",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مؤسسة مدرجات الجنوب الزراعية",
+            "beneficiaryId": "2019485731",
+            "issueDate": "2026/10/02",
+            "quantity": 1500,
+            "printed": 0,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/4789ce3cf879/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/c2a0713b-a306-4ee1-431f-3a0d6cab2e02",
+            "serialRange": "000001 إلى 001500"
+      },
+      {
+            "id": 32,
+            "code": "FI-02-03",
+            "fruit": "تين (FI)",
+            "variety": "تين سلطاني",
+            "region": "المدينة المنورة",
+            "station": "محطة المدينة المنورة",
+            "seedLot": "KSACD6B2BC3",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مزرعة السعادة لإنتاج الفاكهة",
+            "beneficiaryId": "1029384756",
+            "issueDate": "2026/09/28",
+            "quantity": 100,
+            "printed": 100,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/5e9493d57be7/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/cd6b2bc3-f47f-4ffd-695a-3a0d6cadfc9a",
+            "serialRange": "000001 إلى 000100"
+      },
+      {
+            "id": 33,
+            "code": "FI-02-10",
+            "fruit": "تين (FI)",
+            "variety": "تين سلطاني",
+            "region": "جازان",
+            "station": "محطة جازان",
+            "seedLot": "KSACD6B2BC3",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مزارع نجد للحمضيات النموذجية",
+            "beneficiaryId": "1092837465",
+            "issueDate": "2026/09/25",
+            "quantity": 50,
+            "printed": 50,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/42d5de1f8ba1/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/cd6b2bc3-f47f-4ffd-695a-3a0d6cadfc9a",
+            "serialRange": "000001 إلى 000050"
+      },
+      {
+            "id": 34,
+            "code": "FI-02-08",
+            "fruit": "تين (FI)",
+            "variety": "تين سلطاني",
+            "region": "حائل",
+            "station": "محطة حائل",
+            "seedLot": "KSACD6B2BC3",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "شركة مشاريع حائل الزراعية",
+            "beneficiaryId": "3049582716",
+            "issueDate": "2026/09/20",
+            "quantity": 300,
+            "printed": 300,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/3c2ffef2b341/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/cd6b2bc3-f47f-4ffd-695a-3a0d6cadfc9a",
+            "serialRange": "000001 إلى 000300"
+      },
+      {
+            "id": 35,
+            "code": "FI-01-08",
+            "fruit": "تين (FI)",
+            "variety": "تين أسود",
+            "region": "حائل",
+            "station": "محطة حائل",
+            "seedLot": "KSAA405EF8B",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مؤسسة واحة النماص الخضراء",
+            "beneficiaryId": "1083746291",
+            "issueDate": "2026/09/15",
+            "quantity": 1500,
+            "printed": 0,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/72468672c6ba/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/a405ef8b-a52f-85b7-dbe3-3a0d6c8ce734",
+            "serialRange": "000001 إلى 001500"
+      },
+      {
+            "id": 36,
+            "code": "GR-01-06",
+            "fruit": "عنب (GR)",
+            "variety": "عنب طائفي",
+            "region": "عسير",
+            "station": "محطة أبها",
+            "seedLot": "KSA8EB6A1EC",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مزرعة جازان للفاكهة الاستوائية",
+            "beneficiaryId": "2048596013",
+            "issueDate": "2026/09/10",
+            "quantity": 2000,
+            "printed": 2000,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/d4babb977f4d/",
+            "naamaUrl": "https://uiadmin.naama.sa/barcode/barcode/summary-report-download/8eb6a1ec-e66e-797c-0566-3a1168a1e025",
+            "serialRange": "000001 إلى 002000"
+      },
+      {
+            "id": 37,
+            "code": "GR-01-12",
+            "fruit": "عنب (GR)",
+            "variety": "عنب طائفي",
+            "region": "الباحة",
+            "station": "محطة الباحة",
+            "seedLot": "KSA8EB6A1EC",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مزارع نجران التراثية",
+            "beneficiaryId": "1074829104",
+            "issueDate": "2026/08/30",
+            "quantity": 450,
+            "printed": 450,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/a4142339bfaa/",
+            "naamaUrl": "https://uiadmin.naama.sa/barcode/barcode/summary-report-download/8eb6a1ec-e66e-797c-0566-3a1168a1e025",
+            "serialRange": "000001 إلى 000450"
+      },
+      {
+            "id": 38,
+            "code": "GR-01-06",
+            "fruit": "عنب (GR)",
+            "variety": "عنب طائفي",
+            "region": "عسير",
+            "station": "محطة النماص",
+            "seedLot": "KSA8EB6A1EC",
+            "beneficiaryType": "مزرعة",
+            "beneficiaryName": "مزارع طيبة العضوية",
+            "beneficiaryId": "3094857261",
+            "issueDate": "2026/08/25",
+            "quantity": 1000,
+            "printed": 1000,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لمزرعة",
+            "statusBadgeClass": "badge-issued-farm",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/8ef661dc6082/",
+            "naamaUrl": "https://uiadmin.naama.sa/barcode/barcode/summary-report-download/8eb6a1ec-e66e-797c-0566-3a1168a1e025",
+            "serialRange": "000001 إلى 001000"
+      },
+      {
+            "id": 39,
+            "code": "GR-09-06",
+            "fruit": "عنب (GR)",
+            "variety": "عنب فرنساوي",
+            "region": "عسير",
+            "station": "محطة أبها",
+            "seedLot": "KSA6034FDE8",
+            "beneficiaryType": "فرد",
+            "beneficiaryName": "محمد بن سعيد الغامدي",
+            "beneficiaryId": "1087654321",
+            "issueDate": "2026/08/15",
+            "quantity": 400,
+            "printed": 400,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لفرد",
+            "statusBadgeClass": "badge-issued-individual",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/0430615e38e9/",
+            "naamaUrl": "https://uiadmin.naama.sa/barcode/barcode/summary-report-download/6034fde8-fb5e-13b4-096b-3a1168a2ef25",
+            "serialRange": "000001 إلى 000400"
+      },
+      {
+            "id": 40,
+            "code": "GR-03-12",
+            "fruit": "عنب (GR)",
+            "variety": "عنب رزقي أبيض",
+            "region": "الباحة",
+            "station": "محطة الباحة",
+            "seedLot": "KSAE7C566D2",
+            "beneficiaryType": "فرد",
+            "beneficiaryName": "سالم بن منصور القرشي",
+            "beneficiaryId": "1074629183",
+            "issueDate": "2026/08/01",
+            "quantity": 700,
+            "printed": 700,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لفرد",
+            "statusBadgeClass": "badge-issued-individual",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/1f35d827ed06/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/e7c566d2-cfd1-b850-2965-3a1410090384",
+            "serialRange": "000001 إلى 000700"
+      },
+      {
+            "id": 41,
+            "code": "GR-04-06",
+            "fruit": "عنب (GR)",
+            "variety": "عنب رزقي أسود",
+            "region": "عسير",
+            "station": "محطة النماص",
+            "seedLot": "KSAAAF0036A",
+            "beneficiaryType": "فرد",
+            "beneficiaryName": "عبدالله بن أحمد الزهراني",
+            "beneficiaryId": "1045239871",
+            "issueDate": "2026/10/02",
+            "quantity": 2000,
+            "printed": 2000,
+            "status": "منصرف",
+            "statusLabel": "تم الصرف لفرد",
+            "statusBadgeClass": "badge-issued-individual",
+            "cardUrl": "https://namas-seedlings.n-alutaibi1981.workers.dev/cards/c3f2ec038f05/",
+            "naamaUrl": "https://ui.naama.sa/barcode/barcode/summary-report-download/aaf0036a-e580-9b94-3415-3a11689d25f7",
+            "serialRange": "000001 إلى 002000"
       }
-    ];
+];
 
     // SVG QR Code generator (100% offline & reliable)
     function generateOfflineSvgQR(text) {
@@ -2028,66 +3064,147 @@
       </svg>`;
     }
 
-    // Render table rows
+    // State Management
+    let currentFilteredData = [...SEEDLINGS_DATA];
+    let currentPage = 1;
+    let pageSize = 10;
+
+    // Render table with pagination
     function renderTable(data) {
+      currentFilteredData = data;
+      currentPage = 1;
+      renderCurrentPage();
+    }
+
+    function changePageSize(val) {
+      pageSize = parseInt(val, 10);
+      currentPage = 1;
+      renderCurrentPage();
+    }
+
+    function goToPage(page) {
+      const totalPages = Math.ceil(currentFilteredData.length / pageSize) || 1;
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      renderCurrentPage();
+    }
+
+    function renderCurrentPage() {
       const tbody = document.getElementById("tableBody");
       tbody.innerHTML = "";
 
-      if (data.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; padding: 32px; color: #94a3b8;">لا توجد شتلات مطابقة لمعايير البحث المدخلة.</td></tr>`;
-        document.getElementById("visibleCount").innerText = "0";
+      const totalItems = currentFilteredData.length;
+      document.getElementById("visibleCount").innerText = totalItems;
+
+      if (totalItems === 0) {
+        tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; padding: 36px; color: #94a3b8; font-size:14px;">لا توجد شتلات مطابقة لمعايير البحث المدخلة. يرجى تجربة كلمات بحث أخرى.</td></tr>`;
+        document.getElementById("paginationSummaryText").innerText = "عرض 0 من 0";
+        document.getElementById("paginationButtons").innerHTML = "";
         return;
       }
 
-      document.getElementById("visibleCount").innerText = data.length;
+      const totalPages = Math.ceil(totalItems / pageSize) || 1;
+      if (currentPage > totalPages) currentPage = totalPages;
 
-      data.forEach((row, index) => {
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = Math.min(startIndex + pageSize, totalItems);
+      const pageData = currentFilteredData.slice(startIndex, endIndex);
+
+      // Summary text
+      document.getElementById("paginationSummaryText").innerText = 
+        `عرض ${startIndex + 1} إلى ${endIndex} من إجمالي ${totalItems} دفعة معتمدة`;
+
+      // Render rows
+      pageData.forEach((row, idx) => {
+        const absoluteIndex = startIndex + idx + 1;
         const tr = document.createElement("tr");
+        tr.style.cursor = "pointer";
         tr.innerHTML = `
-          <td style="text-align: center; color: #94a3b8; font-weight: 600;">${index + 1}</td>
+          <td style="text-align: center; color: #94a3b8; font-weight: 600;">${absoluteIndex}</td>
           <td>
             <span class="badge-code">${row.code}</span>
           </td>
           <td><strong>${row.fruit}</strong></td>
-          <td>${row.variety}</td>
+          <td><span style="font-weight:600; color:#0f172a;">${row.variety}</span></td>
           <td>
-            <div>${row.region}</div>
-            <div style="font-size: 11px; color: #64748b;">${row.station}</div>
+            <div style="font-weight:600;">${row.region}</div>
+            <div style="font-size: 11.5px; color: #15803d; font-weight:600;">${row.station}</div>
           </td>
           <td>
             <span class="badge-seed">${row.seedLot}</span>
           </td>
           <td>
-            <div>${row.beneficiaryName}</div>
+            <div style="font-weight:600;">${row.beneficiaryName}</div>
             <div style="font-size: 11px; color: #64748b; font-family: monospace;">${row.beneficiaryId !== '—' ? 'سجل/هوية: ' + row.beneficiaryId : ''}</div>
           </td>
           <td>${row.issueDate}</td>
           <td>
             <span class="badge-status ${row.statusBadgeClass}">${row.statusLabel}</span>
           </td>
-          <td style="text-align: center;">
-            <div class="action-btn-group" style="justify-content: center;">
-              <!-- زر استعراض ينقل للصفحة الكاملة التي تحتوي تفاصيل البذرة وسجل الشتلات المصدرة مع إخفاء تبويب الإصدار -->
-              <a href="screen_seedling_updated.html?view=1&code=${encodeURIComponent(row.code)}&fruit=${encodeURIComponent(row.fruit)}&variety=${encodeURIComponent(row.variety)}&region=${encodeURIComponent(row.region)}&seed=${encodeURIComponent(row.seedLot)}" class="btn-action-view" title="استعراض تفاصيل الصنف والبذرة وسجل الصرف">
+          <td style="text-align: center;" onclick="event.stopPropagation()">
+            <div class="action-btn-group" style="justify-content: center; gap:4px; flex-wrap:nowrap;">
+              <!-- زر تفاصيل الصنف السريعة (مودال البطاقة المعتمدة) -->
+              <button type="button" class="btn-action-view" onclick="openDetailsModal(${row.id})" title="عرض بطاقة الصنف الرقمية وتفاصيل البذرة" style="background:#0f172a; color:#ffffff; border:none; cursor:pointer;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                تفاصيل
+              </button>
+              <!-- زر استعراض ينقل للصفحة الكاملة -->
+              <a href="screen_seedling_updated.html?view=1&code=${encodeURIComponent(row.code)}&fruit=${encodeURIComponent(row.fruit)}&variety=${encodeURIComponent(row.variety)}&region=${encodeURIComponent(row.region)}&seed=${encodeURIComponent(row.seedLot)}" class="btn-action-view" title="استعراض كامل في شاشة الشتلات">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 استعراض
               </a>
-              <!-- زر إصدار/صرف شتلات جديدة ينقل مباشرة لصفحة إصدار باركود الشتلات والصرف -->
+              <!-- زر إصدار/صرف شتلات جديدة -->
               <a href="screen_seedling_updated.html?action=issue&code=${encodeURIComponent(row.code)}&fruit=${encodeURIComponent(row.fruit)}&variety=${encodeURIComponent(row.variety)}&region=${encodeURIComponent(row.region)}&seed=${encodeURIComponent(row.seedLot)}" class="btn-action-issue" title="إصدار وصرف شتلات جديدة لهذا الصنف">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                إصدار/صرف شتلات جديدة
+                صرف
               </a>
-              <a href="screen_print_100_labels.html" target="_blank" class="btn-action-print" title="طباعة الملصق الحراري">
+              <!-- زر طباعة الملصقات الحرارية الخاص بهذا الصنف -->
+              <a href="screen_print_100_labels.html?code=${encodeURIComponent(row.code)}&fruit=${encodeURIComponent(row.fruit)}&variety=${encodeURIComponent(row.variety)}&station=${encodeURIComponent(row.station)}&seed=${encodeURIComponent(row.seedLot)}&ben=${encodeURIComponent(row.beneficiaryName)}&count=100" target="_blank" class="btn-action-print" title="طباعة الملصقات الحرارية لهذا الصنف">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
               </a>
             </div>
           </td>
         `;
+        // Clicking row opens details modal
+        tr.onclick = () => openDetailsModal(row.id);
         tbody.appendChild(tr);
       });
+
+      // Render pagination buttons
+      renderPaginationControls(totalPages);
     }
 
-    // Filter Logic
+    function renderPaginationControls(totalPages) {
+      const container = document.getElementById("paginationButtons");
+      container.innerHTML = "";
+
+      // Previous button
+      const prevBtn = document.createElement("button");
+      prevBtn.className = "btn-page";
+      prevBtn.innerHTML = "« السابق";
+      prevBtn.disabled = currentPage === 1;
+      prevBtn.onclick = () => goToPage(currentPage - 1);
+      container.appendChild(prevBtn);
+
+      // Page numbers
+      for (let p = 1; p <= totalPages; p++) {
+        const pageBtn = document.createElement("button");
+        pageBtn.className = `btn-page ${p === currentPage ? 'active' : ''}`;
+        pageBtn.innerText = p;
+        pageBtn.onclick = () => goToPage(p);
+        container.appendChild(pageBtn);
+      }
+
+      // Next button
+      const nextBtn = document.createElement("button");
+      nextBtn.className = "btn-page";
+      nextBtn.innerHTML = "التالي »";
+      nextBtn.disabled = currentPage === totalPages;
+      nextBtn.onclick = () => goToPage(currentPage + 1);
+      container.appendChild(nextBtn);
+    }
+
+    // Filter Logic (Fixed to match both region & station)
     function applyFilters() {
       const codeVal = document.getElementById("filterSeedlingCode").value.trim().toLowerCase();
       const fruitVal = document.getElementById("filterFruit").value;
@@ -2101,7 +3218,7 @@
         if (codeVal && !item.code.toLowerCase().includes(codeVal)) return false;
         if (fruitVal && !item.fruit.includes(fruitVal)) return false;
         if (varietyVal && !item.variety.includes(varietyVal)) return false;
-        if (regionVal && !item.region.includes(regionVal)) return false;
+        if (regionVal && !item.region.includes(regionVal) && !item.station.includes(regionVal)) return false;
         if (seedLotVal && item.seedLot !== seedLotVal) return false;
         if (benTypeVal && item.beneficiaryType !== benTypeVal) return false;
         if (benTextVal) {
@@ -2126,7 +3243,7 @@
       renderTable(SEEDLINGS_DATA);
     }
 
-    // Modal Details functions
+    // Modal Details functions - 100% Real Data
     function openDetailsModal(id) {
       const item = SEEDLINGS_DATA.find(x => x.id === id);
       if (!item) return;
@@ -2134,17 +3251,31 @@
       document.getElementById("modalSeedlingCode").innerText = item.code;
       document.getElementById("modalFruit").innerText = item.fruit;
       document.getElementById("modalVariety").innerText = item.variety;
-      document.getElementById("modalRegion").innerText = `${item.region} - ${item.station}`;
+      document.getElementById("modalRegion").innerText = `${item.region} • ${item.station}`;
       document.getElementById("modalSeedLot").innerText = item.seedLot;
-      document.getElementById("modalBeneficiaryType").innerText = item.beneficiaryType === 'مزرعة' ? 'مزرعة (سجل زراعي)' : (item.beneficiaryType === 'فرد' ? 'فرد (مواطن/مزارع)' : 'غير منصرفة');
+      document.getElementById("modalBeneficiaryType").innerText = item.beneficiaryType === 'مزرعة' ? 'مزرعة' : 'فرد';
       document.getElementById("modalBeneficiaryName").innerText = item.beneficiaryName;
       document.getElementById("modalBeneficiaryId").innerText = item.beneficiaryId;
       document.getElementById("modalIssueDate").innerText = item.issueDate;
       document.getElementById("modalStationHeader").innerText = `${item.station} • ${item.fruit} صنف ${item.variety}`;
+      
+      const qtyEl = document.getElementById("modalQuantity");
+      if (qtyEl) qtyEl.innerText = `${item.quantity.toLocaleString()} شتلة`;
+      
+      const statusTextEl = document.getElementById("modalStatusText");
+      if (statusTextEl) statusTextEl.innerText = item.statusLabel;
 
       const statusBadge = document.getElementById("modalStatusBadge");
-      statusBadge.className = `badge-status ${item.statusBadgeClass}`;
-      statusBadge.innerText = item.statusLabel;
+      if (statusBadge) {
+        statusBadge.className = `badge-status ${item.statusBadgeClass}`;
+        statusBadge.innerText = item.statusLabel;
+      }
+
+      // Update modal print button
+      const modalPrintBtn = document.getElementById("modalPrintBtnLink");
+      if (modalPrintBtn) {
+        modalPrintBtn.href = `screen_print_100_labels.html?code=${encodeURIComponent(item.code)}&fruit=${encodeURIComponent(item.fruit)}&variety=${encodeURIComponent(item.variety)}&station=${encodeURIComponent(item.station)}&seed=${encodeURIComponent(item.seedLot)}&ben=${encodeURIComponent(item.beneficiaryName)}&count=100`;
+      }
 
       // Generate offline QR
       document.getElementById("modalQrHolder").innerHTML = generateOfflineSvgQR(item.code);
@@ -2158,9 +3289,9 @@
 
     // Export Table CSV
     function exportTableToCSV() {
-      let csv = "\uFEFFالرقم,كود الشتلة,نوع الفاكهة,الصنف,المنطقة,المحطة,باركود البذرة,المستفيد,الهوية/السجل,تاريخ الصرف,الحالة\n";
-      SEEDLINGS_DATA.forEach(row => {
-        csv += `"${row.id}","${row.code}","${row.fruit}","${row.variety}","${row.region}","${row.station}","${row.seedLot}","${row.beneficiaryName}","${row.beneficiaryId}","${row.issueDate}","${row.statusLabel}"\n`;
+      let csv = "\uFEFFالرقم,كود الصنف,نوع الفاكهة,الصنف,المنطقة,المحطة,باركود البذرة,المستفيد,الهوية/السجل,تاريخ الصرف,الكمية,المطبوع,الحالة,رابط البطاقة\n";
+      currentFilteredData.forEach((row, idx) => {
+        csv += `"${idx + 1}","${row.code}","${row.fruit}","${row.variety}","${row.region}","${row.station}","${row.seedLot}","${row.beneficiaryName}","${row.beneficiaryId}","${row.issueDate}","${row.quantity}","${row.printed}","${row.statusLabel}","${row.cardUrl}"\n`;
       });
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
       const link = document.createElement("a");
@@ -2169,232 +3300,300 @@
       link.click();
     }
 
+    
+
+
     // ══════════════════════════════════════════════════════════
     // بيانات وإحصائيات المحطات ونقاط الصرف على الخريطة
     // ══════════════════════════════════════════════════════════
     const MAP_LOCATIONS = {
-      'st-baha': {
-        type: 'محطة أبحاث رئيسية معتمدة',
-        typeColor: '#15803d',
-        title: 'محطة أبحاث الباحة',
-        region: 'منطقة الباحة • مركز الأبحاث الزراعية',
-        produced: '450 شتلة',
-        dispatched: '280 شتلة (62%)',
-        beneficiaries: '18 مستفيد (سجلات وأفراد)',
-        varieties: 'رمان بيدا (PM-01)، لوز بيدا (AL-01)',
-        seedLots: 'KSA11000033, KSA11000035',
-        coords: '20.0128° N, 41.4676° E',
-        searchQuery: 'الباحة'
+      "st-abha": {
+            "type": "محطة أبحاث رئيسية معتمدة",
+            "typeColor": "#15803d",
+            "title": "محطة أبحاث أبها (عسير)",
+            "region": "منطقة عسير • المركز الوطني للبذور والتقاوي",
+            "produced": "17,100 شتلة",
+            "dispatched": "14,600 شتلة (85%)",
+            "beneficiaries": "24 مزرعة ومنشأة",
+            "varieties": "رمان طائفي (10000)، تين براون تركي (2000)، عنب طائفي (2000)",
+            "seedLots": "KSAEB1C2A1, KSA45B59D4",
+            "coords": "18.2164° N, 42.5053° E",
+            "searchQuery": "أبها"
       },
-      'st-taif': {
-        type: 'محطة أبحاث رئيسية معتمدة',
-        typeColor: '#15803d',
-        title: 'محطة أبحاث الطائف',
-        region: 'منطقة مكة المكرمة • الهدا والشفا',
-        produced: '380 شتلة',
-        dispatched: '210 شتلة (55%)',
-        beneficiaries: '14 مستفيد معتمد',
-        varieties: 'تين وزيري (FG-02)، ورد طائفي',
-        seedLots: 'KSA11000034',
-        coords: '21.2854° N, 40.4244° E',
-        searchQuery: 'مكة المكرمة'
+      "st-hail": {
+            "type": "محطة أبحاث رئيسية معتمدة",
+            "typeColor": "#15803d",
+            "title": "محطة أبحاث حائل",
+            "region": "منطقة حائل • مركز الأبحاث والتطوير الزراعي",
+            "produced": "12,800 شتلة",
+            "dispatched": "7,300 شتلة (57%)",
+            "beneficiaries": "28 مزرعة ومستفيد",
+            "varieties": "عنب طومسون (5000)، تين براون تركي (2000)، عنب سوبيريور (2000)",
+            "seedLots": "KSAB801841, KSA45B59D4",
+            "coords": "27.5219° N, 41.6961° E",
+            "searchQuery": "حائل"
       },
-      'st-kharj': {
-        type: 'محطة أبحاث رئيسية معتمدة',
-        typeColor: '#15803d',
-        title: 'محطة أبحاث الخرج',
-        region: 'منطقة الرياض • محطة الأبحاث والإنتاج',
-        produced: '520 شتلة',
-        dispatched: '340 شتلة (65%)',
-        beneficiaries: '22 مزرعة ومنشأة',
-        varieties: 'حمضيات بيدا (CT-01)',
-        seedLots: 'KSA11000038',
-        coords: '24.1556° N, 47.3119° E',
-        searchQuery: 'الرياض'
+      "st-namas": {
+            "type": "محطة أبحاث رئيسية معتمدة",
+            "typeColor": "#15803d",
+            "title": "محطة أبحاث النماص",
+            "region": "منطقة عسير • محافظة النماص",
+            "produced": "8,700 شتلة",
+            "dispatched": "8,700 شتلة (100%)",
+            "beneficiaries": "19 مزرعة ومستفيد",
+            "varieties": "تين أخضر (3000)، رمان طائفي (2500)، عنب رزقي أسود (2000)",
+            "seedLots": "KSAEB1C2A1, KSA6107796",
+            "coords": "19.1167° N, 42.1333° E",
+            "searchQuery": "النماص"
       },
-      'st-jouf': {
-        type: 'محطة أبحاث رئيسية معتمدة',
-        typeColor: '#15803d',
-        title: 'مركز أبحاث الجوف للزيتون',
-        region: 'منطقة الجوف • سكاكا وبسيطا',
-        produced: '600 شتلة',
-        dispatched: '420 شتلة (70%)',
-        beneficiaries: '28 شركة ومزرعة',
-        varieties: 'زيتون طائفي ومحلي (OL-03)',
-        seedLots: 'KSA11000036',
-        coords: '29.9539° N, 40.1970° E',
-        searchQuery: 'الجوف'
+      "st-baha": {
+            "type": "محطة أبحاث رئيسية معتمدة",
+            "typeColor": "#15803d",
+            "title": "محطة أبحاث الباحة",
+            "region": "منطقة الباحة • مركز الأبحاث الزراعية",
+            "produced": "5,750 شتلة",
+            "dispatched": "5,750 شتلة (100%)",
+            "beneficiaries": "22 مستفيد (سجلات وأفراد)",
+            "varieties": "توت بلاك بيري (3700)، رمان بيدا (700)، عنب رزقي أبيض (700)",
+            "seedLots": "KSA009F1EB, KSA95EE2EC, KSAECD7E4E",
+            "coords": "20.0128° N, 41.4676° E",
+            "searchQuery": "الباحة"
       },
-      'st-qassim': {
-        type: 'محطة أبحاث رئيسية معتمدة',
-        typeColor: '#15803d',
-        title: 'محطة أبحاث القصيم (عنيزة)',
-        region: 'منطقة القصيم • مركز التنمية الزراعية',
-        produced: '310 شتلة',
-        dispatched: '190 شتلة (61%)',
-        beneficiaries: '12 مزرعة',
-        varieties: 'أشجار فاكهة وبذور محمية',
-        seedLots: 'KSA11000039',
-        coords: '26.0843° N, 43.9934° E',
-        searchQuery: 'القصيم'
+      "st-kharj": {
+            "type": "محطة أبحاث رئيسية معتمدة",
+            "typeColor": "#15803d",
+            "title": "محطة أبحاث الخرج (الرياض)",
+            "region": "منطقة الرياض • محطة الأبحاث والإنتاج",
+            "produced": "3,450 شتلة",
+            "dispatched": "2,350 شتلة (68%)",
+            "beneficiaries": "16 مزرعة ومنشأة",
+            "varieties": "تين براون تركي (2000)، ليمون أضاليا (700)، جوافة بلدي (250)",
+            "seedLots": "KSAF3D3EB9, KSA45B59D4",
+            "coords": "24.1556° N, 47.3119° E",
+            "searchQuery": "الخرج"
       },
-      'st-jazan': {
-        type: 'محطة أبحاث رئيسية معتمدة',
-        typeColor: '#15803d',
-        title: 'مركز الأبحاث الزراعية بجازان',
-        region: 'منطقة جازان • مركز الفواكه الاستوائية',
-        produced: '410 شتلة',
-        dispatched: '290 شتلة (71%)',
-        beneficiaries: '19 مزارع ومواطن',
-        varieties: 'مانجو حلواني (MG-04)، موز استوائي',
-        seedLots: 'KSA11000037',
-        coords: '16.8892° N, 42.5611° E',
-        searchQuery: 'جازان'
+      "st-jazan": {
+            "type": "محطة أبحاث رئيسية معتمدة",
+            "typeColor": "#15803d",
+            "title": "مركز الأبحاث الزراعية بجازان",
+            "region": "منطقة جازان • مركز الفواكه الاستوائية",
+            "produced": "1,050 شتلة",
+            "dispatched": "700 شتلة (67%)",
+            "beneficiaries": "14 مزارع ومواطن",
+            "varieties": "جوافة بلدي (250)، ليمون أضاليا (300)، ليمون بن زهير (200)",
+            "seedLots": "KSAF3D3EB9, KSA979C1AB",
+            "coords": "16.8892° N, 42.5611° E",
+            "searchQuery": "جازان"
       },
-      'st-ahsa': {
-        type: 'محطة أبحاث رئيسية معتمدة',
-        typeColor: '#15803d',
-        title: 'محطة أبحاث الأحساء',
-        region: 'المنطقة الشرقية • واحة الأحساء',
-        produced: '290 شتلة',
-        dispatched: '180 شتلة (62%)',
-        beneficiaries: '15 مزرعة',
-        varieties: 'نخيل وفاكهة شبه استوائية',
-        seedLots: 'KSA11000040',
-        coords: '25.3833° N, 49.5833° E',
-        searchQuery: 'الأحساء'
+      "st-madinah": {
+            "type": "محطة أبحاث رئيسية معتمدة",
+            "typeColor": "#15803d",
+            "title": "محطة أبحاث المدينة المنورة",
+            "region": "منطقة المدينة المنورة • مركز التنمية الزراعية",
+            "produced": "450 شتلة",
+            "dispatched": "450 شتلة (100%)",
+            "beneficiaries": "11 مزرعة ومستفيد",
+            "varieties": "رمان طائفي (250)، تين براون تركي (100)، تين سلطاني (100)",
+            "seedLots": "KSAEB1C2A1, KSA45B59D4",
+            "coords": "24.5247° N, 39.5692° E",
+            "searchQuery": "المدينة المنورة"
       },
-      'farm-saada': {
-        type: 'مزرعة مستفيدة (سجل زراعي معتمد)',
-        typeColor: '#0284c7',
-        title: 'مزرعة السعادة الزراعية',
-        region: 'الباحة • بني سار',
-        produced: 'تم استلام 100 شتلة',
-        dispatched: 'تمت الزراعة والتثبيت بالكامل',
-        beneficiaries: 'سجل زراعي: 1029384756',
-        varieties: 'رمان بيدا (PM-01-12)',
-        seedLots: 'KSA11000033 (أمهات الباحة)',
-        coords: '20.0812° N, 41.4820° E',
-        searchQuery: 'مزرعة السعادة'
+      "st-najran": {
+            "type": "محطة أبحاث رئيسية معتمدة",
+            "typeColor": "#15803d",
+            "title": "محطة أبحاث نجران",
+            "region": "منطقة نجران • الأبحاث الزراعية",
+            "produced": "400 شتلة",
+            "dispatched": "400 شتلة (100%)",
+            "beneficiaries": "9 مزارع ومستفيدين",
+            "varieties": "تين براون تركي (200)، عنب طومسون (100)، جوافة بلدي (100)",
+            "seedLots": "KSAF3D3EB9, KSA45B59D4",
+            "coords": "17.5656° N, 44.2289° E",
+            "searchQuery": "نجران"
       },
-      'farm-taif-rose': {
-        type: 'مزرعة مستفيدة (سجل زراعي معتمد)',
-        typeColor: '#0284c7',
-        title: 'مؤسسة الورد الطائفي الزراعية',
-        region: 'مكة المكرمة • الهدا',
-        produced: 'تم استلام 100 شتلة',
-        dispatched: 'مغروسة تحت إشراف المحطة',
-        beneficiaries: 'سجل زراعي: 2019485731',
-        varieties: 'تين وزيري (FG-02-14)',
-        seedLots: 'KSA11000034',
-        coords: '21.3120° N, 40.3850° E',
-        searchQuery: 'الورد الطائفي'
+      "st-ahsa": {
+            "type": "محطة أبحاث رئيسية معتمدة",
+            "typeColor": "#15803d",
+            "title": "محطة أبحاث الأحساء",
+            "region": "المنطقة الشرقية • واحة الأحساء",
+            "produced": "2,500 شتلة",
+            "dispatched": "1,800 شتلة (72%)",
+            "beneficiaries": "15 مزرعة",
+            "varieties": "نخيل وفاكهة شبه استوائية معتمدة",
+            "seedLots": "KSA11000040",
+            "coords": "25.3833° N, 49.5833° E",
+            "searchQuery": "الأحساء"
       },
-      'farm-najd': {
-        type: 'مزرعة مستفيدة (سجل زراعي معتمد)',
-        typeColor: '#0284c7',
-        title: 'مزارع نجد للحمضيات النموذجية',
-        region: 'منطقة الرياض • محافظة الخرج',
-        produced: 'تم استلام 120 شتلة',
-        dispatched: 'شبكة ري مرشدة وموثقة',
-        beneficiaries: 'سجل زراعي: 1092837465',
-        varieties: 'حمضيات بيدا (CT-01-11)',
-        seedLots: 'KSA11000038',
-        coords: '24.1950° N, 47.3480° E',
-        searchQuery: 'مزارع نجد'
+      "farm-saada": {
+            "type": "مزرعة مستفيدة (سجل زراعي معتمد)",
+            "typeColor": "#0284c7",
+            "title": "مزرعة السعادة لإنتاج الفاكهة",
+            "region": "منطقة الباحة • بني سار",
+            "produced": "تم استلام 700 شتلة",
+            "dispatched": "رمان بيدا معتمد بنظام الري المرشد",
+            "beneficiaries": "سجل زراعي: 1029384756",
+            "varieties": "رمان بيدا (PM-01-12)",
+            "seedLots": "KSA95EE2EC",
+            "coords": "20.0812° N, 41.4820° E",
+            "searchQuery": "مزرعة السعادة"
       },
-      'farm-jouf': {
-        type: 'مزرعة مستفيدة (سجل زراعي معتمد)',
-        typeColor: '#0284c7',
-        title: 'شركة الجوف للتنمية الزراعية',
-        region: 'منطقة الجوف • وادي السرحان',
-        produced: 'تم استلام 200 شتلة',
-        dispatched: 'مشروع زراعة زيتون مكثف',
-        beneficiaries: 'سجل زراعي: 3029182746',
-        varieties: 'زيتون طائفي ومحلي (OL-03-16)',
-        seedLots: 'KSA11000036',
-        coords: '29.9810° N, 40.1620° E',
-        searchQuery: 'شركة الجوف'
+      "farm-south": {
+            "type": "مزرعة مستفيدة (سجل زراعي معتمد)",
+            "typeColor": "#0284c7",
+            "title": "مؤسسة مدرجات الجنوب الزراعية",
+            "region": "منطقة عسير • أبها السودة",
+            "produced": "تم استلام 5,000 شتلة",
+            "dispatched": "رمان طائفي وتين في مدرجات جبلية",
+            "beneficiaries": "سجل زراعي: 2019485731",
+            "varieties": "رمان طائفي (PM-02-06)",
+            "seedLots": "KSAEB1C2A1",
+            "coords": "18.2350° N, 42.4820° E",
+            "searchQuery": "مدرجات الجنوب"
       },
-      'farm-qassim': {
-        type: 'مزرعة مستفيدة (سجل زراعي معتمد)',
-        typeColor: '#0284c7',
-        title: 'مزرعة القصيم العضوية',
-        region: 'منطقة القصيم • عنيزة',
-        produced: 'تم استلام 80 شتلة',
-        dispatched: 'إنتاج عضوي موثق',
-        beneficiaries: 'سجل زراعي: 4091827364',
-        varieties: 'أشجار موسمية متنوعة',
-        seedLots: 'KSA11000039',
-        coords: '26.0950° N, 44.0210° E',
-        searchQuery: 'القصيم'
+      "farm-namas-oasis": {
+            "type": "مزرعة مستفيدة (سجل زراعي معتمد)",
+            "typeColor": "#0284c7",
+            "title": "مؤسسة واحة النماص الخضراء",
+            "region": "منطقة عسير • محافظة النماص",
+            "produced": "تم استلام 2,500 شتلة",
+            "dispatched": "تين إسباني أخضر وعنب طائفي",
+            "beneficiaries": "سجل زراعي: 1083746291",
+            "varieties": "تين أخضر (FI-03-06)",
+            "seedLots": "KSA6107796",
+            "coords": "19.1250° N, 42.1450° E",
+            "searchQuery": "واحة النماص"
       },
-      'farm-baljurashi': {
-        type: 'مزرعة مستفيدة (سجل زراعي معتمد)',
-        typeColor: '#0284c7',
-        title: 'مزرعة بلجرشي التراثية',
-        region: 'منطقة الباحة • بلجرشي',
-        produced: 'تم استلام 60 شتلة',
-        dispatched: 'مدرجات زراعية مطورة',
-        beneficiaries: 'سجل زراعي: 1083746291',
-        varieties: 'رمان ولوز محلي',
-        seedLots: 'KSA11000033',
-        coords: '19.8600° N, 41.5600° E',
-        searchQuery: 'الباحة'
+      "farm-najd": {
+            "type": "مزرعة مستفيدة (سجل زراعي معتمد)",
+            "typeColor": "#0284c7",
+            "title": "مزارع نجد للحمضيات النموذجية",
+            "region": "منطقة الرياض • محافظة الخرج",
+            "produced": "تم استلام 2,000 شتلة",
+            "dispatched": "تين براون تركي وليمون أضاليا",
+            "beneficiaries": "سجل زراعي: 1092837465",
+            "varieties": "تين براون تركي (FI-01-01)",
+            "seedLots": "KSA45B59D4",
+            "coords": "24.1950° N, 47.3480° E",
+            "searchQuery": "مزارع نجد"
       },
-      'ind-mohammed': {
-        type: 'موقع صرف لفرد (مواطن / مزارع)',
-        typeColor: '#7e22ce',
-        title: 'محمد بن سعيد الغامدي',
-        region: 'منطقة الباحة • قرية الظفير',
-        produced: 'صرف 25 شتلة',
-        dispatched: 'زراعة منزلية نموذجية',
-        beneficiaries: 'هوية وطنية: 1087654321',
-        varieties: 'رمان بيدا (PM-01-12)',
-        seedLots: 'KSA11000033',
-        coords: '20.0340° N, 41.4410° E',
-        searchQuery: 'محمد بن سعيد'
+      "farm-hail-co": {
+            "type": "مزرعة مستفيدة (سجل زراعي معتمد)",
+            "typeColor": "#0284c7",
+            "title": "شركة مشاريع حائل الزراعية",
+            "region": "منطقة حائل • القاعد والخطة",
+            "produced": "تم استلام 5,000 شتلة",
+            "dispatched": "عنب طومسون وتين براون تركي",
+            "beneficiaries": "سجل زراعي: 3049582716",
+            "varieties": "عنب طومسون (GR-02-08)",
+            "seedLots": "KSAB801841",
+            "coords": "27.5620° N, 41.7250° E",
+            "searchQuery": "مشاريع حائل"
       },
-      'ind-salem': {
-        type: 'موقع صرف لفرد (مواطن / مزارع)',
-        typeColor: '#7e22ce',
-        title: 'سالم بن منصور القرشي',
-        region: 'مكة المكرمة • وادي محرم',
-        produced: 'صرف 30 شتلة',
-        dispatched: 'حقل خاص مستدام',
-        beneficiaries: 'هوية وطنية: 1074629183',
-        varieties: 'تين وزيري (FG-02-14)',
-        seedLots: 'KSA11000034',
-        coords: '21.2610° N, 40.4120° E',
-        searchQuery: 'سالم بن منصور'
+      "farm-jazan-trop": {
+            "type": "مزرعة مستفيدة (سجل زراعي معتمد)",
+            "typeColor": "#0284c7",
+            "title": "مزرعة جازان للفاكهة الاستوائية",
+            "region": "منطقة جازان • وادي جازان",
+            "produced": "تم استلام 450 شتلة",
+            "dispatched": "جوافة بلدي وليمون بن زهير",
+            "beneficiaries": "سجل زراعي: 2048596013",
+            "varieties": "جوافة بلدي (GV-01-10)",
+            "seedLots": "KSAF3D3EB9",
+            "coords": "16.9150° N, 42.5850° E",
+            "searchQuery": "جازان للفاكهة"
       },
-      'ind-abdullah': {
-        type: 'موقع صرف لفرد (مواطن / مزارع)',
-        typeColor: '#7e22ce',
-        title: 'عبدالله بن أحمد الزهراني',
-        region: 'منطقة الباحة • المندق',
-        produced: 'صرف 40 شتلة',
-        dispatched: 'مزرعة مدرجات عائلية',
-        beneficiaries: 'هوية وطنية: 1045239871',
-        varieties: 'لوز بيدا (AL-01-12)',
-        seedLots: 'KSA11000035',
-        coords: '20.1580° N, 41.2890° E',
-        searchQuery: 'عبدالله بن أحمد'
+      "farm-najran-trad": {
+            "type": "مزرعة مستفيدة (سجل زراعي معتمد)",
+            "typeColor": "#0284c7",
+            "title": "مزارع نجران التراثية",
+            "region": "منطقة نجران • حبونا وحمى",
+            "produced": "تم استلام 300 شتلة",
+            "dispatched": "عنب طومسون وتين معتمد",
+            "beneficiaries": "سجل زراعي: 1074829104",
+            "varieties": "عنب طومسون (GR-02-11)",
+            "seedLots": "KSAF3D3EB9",
+            "coords": "17.5850° N, 44.2550° E",
+            "searchQuery": "نجران التراثية"
       },
-      'ind-faifi': {
-        type: 'موقع صرف لفرد (مواطن / مزارع)',
-        typeColor: '#7e22ce',
-        title: 'يحيى بن حسن الفيفي',
-        region: 'منطقة جازان • جبال فيفا',
-        produced: 'صرف 35 شتلة',
-        dispatched: 'مدرجات استوائية جبلية',
-        beneficiaries: 'هوية وطنية: 1098273645',
-        varieties: 'مانجو حلواني (MG-04-18)',
-        seedLots: 'KSA11000037',
-        coords: '17.2620° N, 43.1180° E',
-        searchQuery: 'يحيى بن حسن'
+      "farm-madinah-org": {
+            "type": "مزرعة مستفيدة (سجل زراعي معتمد)",
+            "typeColor": "#0284c7",
+            "title": "مزارع طيبة العضوية",
+            "region": "منطقة المدينة المنورة • وادي العقيق",
+            "produced": "تم استلام 350 شتلة",
+            "dispatched": "رمان طائفي وتين سلطاني",
+            "beneficiaries": "سجل زراعي: 3094857261",
+            "varieties": "رمان طائفي (PM-02-03)",
+            "seedLots": "KSAEB1C2A1",
+            "coords": "24.5450° N, 39.5850° E",
+            "searchQuery": "طيبة العضوية"
+      },
+      "ind-mohammed": {
+            "type": "موقع صرف لفرد (مواطن / مزارع)",
+            "typeColor": "#7e22ce",
+            "title": "محمد بن سعيد الغامدي",
+            "region": "منطقة الباحة • قرية الظفير",
+            "produced": "صرف 50 شتلة",
+            "dispatched": "رمان بيدا وتوت بلاك بيري",
+            "beneficiaries": "هوية وطنية: 1087654321",
+            "varieties": "رمان بيدا (PM-01-12)",
+            "seedLots": "KSA009F1EB",
+            "coords": "20.0340° N, 41.4410° E",
+            "searchQuery": "محمد بن سعيد"
+      },
+      "ind-qahtani": {
+            "type": "موقع صرف لفرد (مواطن / مزارع)",
+            "typeColor": "#7e22ce",
+            "title": "سعد بن علي القحطاني",
+            "region": "منطقة عسير • سراة عبيدة",
+            "produced": "صرف 100 شتلة",
+            "dispatched": "رمان طائفي وعنب طائفي",
+            "beneficiaries": "هوية وطنية: 1064738291",
+            "varieties": "رمان طائفي (PM-02-06)",
+            "seedLots": "KSAEB1C2A1",
+            "coords": "18.1500° N, 42.6100° E",
+            "searchQuery": "سعد بن علي"
+      },
+      "ind-shammary": {
+            "type": "موقع صرف لفرد (مواطن / مزارع)",
+            "typeColor": "#7e22ce",
+            "title": "خالد بن فهد الشمري",
+            "region": "منطقة حائل • موقق",
+            "produced": "صرف 80 شتلة",
+            "dispatched": "عنب طومسون وتين براون تركي",
+            "beneficiaries": "هوية وطنية: 1038475920",
+            "varieties": "عنب طومسون (GR-02-08)",
+            "seedLots": "KSAB801841",
+            "coords": "27.4800° N, 41.6200° E",
+            "searchQuery": "خالد بن فهد"
+      },
+      "ind-faifi": {
+            "type": "موقع صرف لفرد (مواطن / مزارع)",
+            "typeColor": "#7e22ce",
+            "title": "يحيى بن حسن الفيفي",
+            "region": "منطقة جازان • جبال فيفا",
+            "produced": "صرف 60 شتلة",
+            "dispatched": "ليمون بن زهير وجوافة بلدي",
+            "beneficiaries": "هوية وطنية: 1098273645",
+            "varieties": "ليمون بن زهير (CI-01-10)",
+            "seedLots": "KSAF3D3EB9",
+            "coords": "17.2600° N, 43.1200° E",
+            "searchQuery": "يحيى الفيفي"
+      },
+      "ind-yami": {
+            "type": "موقع صرف لفرد (مواطن / مزارع)",
+            "typeColor": "#7e22ce",
+            "title": "صالح بن ناصر اليامي",
+            "region": "منطقة نجران • الأخدود",
+            "produced": "صرف 70 شتلة",
+            "dispatched": "تين براون تركي وجوافة بلدي",
+            "beneficiaries": "هوية وطنية: 1057382910",
+            "varieties": "تين براون تركي (FI-01-11)",
+            "seedLots": "KSAF3D3EB9",
+            "coords": "17.4900° N, 44.1800° E",
+            "searchQuery": "صالح بن ناصر"
       }
-    };
+};
 
     let currentSelectedMapId = 'st-baha';
     let currentMapZoom = 1;
@@ -2424,7 +3623,6 @@
         <div style="font-size:10px; color:#0284c7; margin-top:6px; text-align:center; font-weight:700;">👆 انقر لمعاينة التفاصيل الكاملة باللوحة الجانبية</div>
       `;
 
-      // Position tooltip nicely above mouse
       tip.style.left = Math.max(140, Math.min(rect.width - 140, x)) + 'px';
       tip.style.top = Math.max(100, y - 10) + 'px';
       tip.style.display = 'block';
@@ -2492,25 +3690,25 @@
       const arcsGroup = document.getElementById('mapConnectionArcs');
 
       if (type === 'all') {
-        stGroup.style.display = 'inline';
-        farmGroup.style.display = 'inline';
-        indGroup.style.display = 'inline';
-        arcsGroup.style.display = 'inline';
+        if (stGroup) stGroup.style.display = 'inline';
+        if (farmGroup) farmGroup.style.display = 'inline';
+        if (indGroup) indGroup.style.display = 'inline';
+        if (arcsGroup) arcsGroup.style.display = 'inline';
       } else if (type === 'station') {
-        stGroup.style.display = 'inline';
-        farmGroup.style.display = 'none';
-        indGroup.style.display = 'none';
-        arcsGroup.style.display = 'none';
+        if (stGroup) stGroup.style.display = 'inline';
+        if (farmGroup) farmGroup.style.display = 'none';
+        if (indGroup) indGroup.style.display = 'none';
+        if (arcsGroup) arcsGroup.style.display = 'none';
       } else if (type === 'farm') {
-        stGroup.style.display = 'none';
-        farmGroup.style.display = 'inline';
-        indGroup.style.display = 'none';
-        arcsGroup.style.display = 'inline';
+        if (stGroup) stGroup.style.display = 'none';
+        if (farmGroup) farmGroup.style.display = 'inline';
+        if (indGroup) indGroup.style.display = 'none';
+        if (arcsGroup) arcsGroup.style.display = 'inline';
       } else if (type === 'individual') {
-        stGroup.style.display = 'none';
-        farmGroup.style.display = 'none';
-        indGroup.style.display = 'inline';
-        arcsGroup.style.display = 'inline';
+        if (stGroup) stGroup.style.display = 'none';
+        if (farmGroup) farmGroup.style.display = 'none';
+        if (indGroup) indGroup.style.display = 'inline';
+        if (arcsGroup) arcsGroup.style.display = 'inline';
       }
     }
 
@@ -2524,7 +3722,7 @@
         const regSelect = document.getElementById('filterRegion');
         if (regSelect) {
           for (let i = 0; i < regSelect.options.length; i++) {
-            if (regSelect.options[i].text.includes(loc.searchQuery)) {
+            if (regSelect.options[i].text.includes(loc.searchQuery) || loc.searchQuery.includes(regSelect.options[i].value)) {
               regSelect.selectedIndex = i;
               break;
             }
@@ -2549,7 +3747,7 @@
       }
     };
 
-    // Initial table load
+
     renderTable(SEEDLINGS_DATA);
   </script>
 </body>
