@@ -747,7 +747,7 @@
     <div class="top-header-brand">
       <div class="icon-wrap">🌱</div>
       <div>
-        <h1>المركز الوطني للبذور والتقاوي - نظام تكويد وتتبع الشتلات</h1>
+        <h1>مركز البذور والتقاوي - نظام تكويد وتتبع الشتلات</h1>
         <p>وزارة البيئة والمياه والزراعة • منظومة إدارة دورة حياة الشتلة والترميز بالمشتل</p>
       </div>
     </div>
@@ -792,7 +792,7 @@
       <div class="section-banner banner-green">
         <div>
           <span class="section-banner-title">الملف التعريفي والمواصفات المعتمدة للصنف</span>
-          <div class="section-banner-sub">معلومات التكويد الشجري، محطة الأبحاث، وباركود شحنة البذور المعتمدة</div>
+          <div class="section-banner-sub">معلومات التكويد الشجري، المحطة، وباركود شحنة البذور المعتمدة</div>
         </div>
         <div class="banner-pill" id="profile-banner-badge">الكود المعتمد: PM-01-12</div>
       </div>
@@ -842,17 +842,17 @@
         </div>
 
         <div class="form-field">
-          <label class="field-label">محطة الأبحاث الزراعية <span class="req">*</span></label>
+          <label class="field-label">محطة المحطة الزراعية <span class="req">*</span></label>
           <select id="profile-station-select" class="field-select">
-            <option value="محطة الباحة" selected>محطة أبحاث الباحة</option>
-            <option value="محطة أبها">محطة أبحاث أبها (عسير)</option>
-            <option value="محطة حائل">محطة أبحاث حائل</option>
-            <option value="محطة النماص">محطة أبحاث النماص</option>
-            <option value="محطة الخرج">محطة أبحاث الخرج (الرياض)</option>
-            <option value="محطة جازان">مركز الأبحاث الزراعية بجازان</option>
-            <option value="محطة المدينة المنورة">محطة أبحاث المدينة المنورة</option>
-            <option value="محطة نجران">محطة أبحاث نجران</option>
-            <option value="محطة الأحساء">محطة أبحاث الأحساء</option>
+            <option value="محطة الباحة" selected>محطة الباحة</option>
+            <option value="محطة أبها">محطة أبها (عسير)</option>
+            <option value="محطة حائل">محطة حائل</option>
+            <option value="محطة النماص">محطة النماص</option>
+            <option value="محطة الخرج">محطة الخرج (الرياض)</option>
+            <option value="محطة جازان">محطة جازان</option>
+            <option value="محطة المدينة المنورة">محطة المدينة المنورة</option>
+            <option value="محطة نجران">محطة نجران</option>
+            <option value="محطة الأحساء">محطة الأحساء</option>
           </select>
         </div>
 
@@ -1071,7 +1071,7 @@
     let currentVarietyName = 'بيدا';
     let currentRegionCode = '12';
     let currentRegionName = 'الباحة';
-    let currentStationName = 'محطة أبحاث الباحة';
+    let currentStationName = 'محطة الباحة';
     let currentSeedBarcode = 'KSA009F1EB6';
     
     let lastRegisteredSequence = 124; 
@@ -1371,6 +1371,7 @@
       const isViewMode = params.get('view') === '1' || params.get('mode') === 'view';
       const isEditMode = params.get('mode') === 'edit' || params.get('action') === 'edit';
       const isQRGenMode = params.get('action') === 'generate' || params.get('action') === 'qr-gen' || params.get('tab') === 'qr-gen';
+      const isHistoryMode = params.get('tab') === 'history' || params.get('action') === 'history';
 
       const paramCode = params.get('code');
       const paramFruit = params.get('fruit');
@@ -1389,7 +1390,7 @@
       const activeVariety = paramVariety || (matchedItem ? matchedItem.variety : 'رمان بيدا');
       const activeRegion = paramRegion || (matchedItem ? matchedItem.region : 'الباحة');
       const activeSeed = paramSeed || (matchedItem ? matchedItem.seedLot : 'KSA009F1EB6');
-      currentStationName = matchedItem ? matchedItem.station : (paramRegion ? 'محطة أبحاث ' + paramRegion : 'محطة أبحاث الباحة');
+      currentStationName = matchedItem ? matchedItem.station : (paramRegion ? 'محطة ' + paramRegion : 'محطة الباحة');
 
       const parts = activeCode.split('-');
       if (parts.length === 3) {
@@ -1482,6 +1483,24 @@
           </div>
         `;
         document.querySelector('.top-header').insertAdjacentElement('afterend', qrAlert);
+
+      } else if (isHistoryMode) {
+        switchTab('tab-history');
+
+        const histAlert = document.createElement('div');
+        histAlert.style.cssText = 'background: #f8fafc; border: 1.5px solid #cbd5e1; color: #1e293b; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700; border-bottom: 1px solid #94a3b8;';
+        histAlert.innerHTML = `
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:18px;">📊</span>
+            <span>سجل الشتلات والعمليات المعتمدة للصنف (${activeCode}): ${activeFruit} ${activeVariety} (${currentStationName})</span>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <a href="index.html" style="background:#334155; color:#ffffff; padding:6px 16px; border-radius:5px; text-decoration:none; font-size:12.5px; font-weight:700;">
+              ← العودة لشاشة البحث الرئيسية
+            </a>
+          </div>
+        `;
+        document.querySelector('.top-header').insertAdjacentElement('afterend', histAlert);
       }
     };
   </script>

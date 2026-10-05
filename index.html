@@ -1546,7 +1546,7 @@
       <div class="gov-brand">
         <div class="gov-logo-badge">🌱</div>
         <div class="brand-text">
-          <h1>المركز الوطني للبذور والتقاوي - نظام تكويد وتتبع الشتلات</h1>
+          <h1>مركز البذور والتقاوي - نظام تكويد وتتبع الشتلات</h1>
           <p>وزارة البيئة والمياه والزراعة • السجل الوطني الموحد للشتلات المصدرة والمصروفة</p>
         </div>
       </div>
@@ -1680,20 +1680,20 @@
           </select>
         </div>
 
-        <!-- 5. محطة الأبحاث (مستقلة) -->
+        <!-- 5. المحطة (مستقلة) -->
         <div class="form-group">
-          <label class="form-label">محطة الأبحاث والإنتاج</label>
+          <label class="form-label">المحطة</label>
           <select id="filterStation" class="form-control" onchange="applyFilters()">
             <option value="">الجميع</option>
-            <option value="أبها">محطة أبحاث أبها</option>
-            <option value="الباحة">محطة أبحاث الباحة</option>
-            <option value="حائل">محطة أبحاث حائل</option>
-            <option value="النماص">محطة أبحاث النماص</option>
-            <option value="الخرج">محطة أبحاث الخرج</option>
-            <option value="جازان">مركز الأبحاث الزراعية بجازان</option>
-            <option value="المدينة المنورة">محطة أبحاث المدينة المنورة</option>
-            <option value="نجران">محطة أبحاث نجران</option>
-            <option value="الأحساء">محطة أبحاث الأحساء</option>
+            <option value="أبها">محطة أبها</option>
+            <option value="الباحة">محطة الباحة</option>
+            <option value="حائل">محطة حائل</option>
+            <option value="النماص">محطة النماص</option>
+            <option value="الخرج">محطة الخرج</option>
+            <option value="جازان">محطة جازان</option>
+            <option value="المدينة المنورة">محطة المدينة المنورة</option>
+            <option value="نجران">محطة نجران</option>
+            <option value="الأحساء">محطة الأحساء</option>
           </select>
         </div>
 
@@ -1711,7 +1711,7 @@
         <!-- 7. البحث السريع الشامل (يمتد بكامل العرض) -->
         <div class="form-group span-full">
           <label class="form-label">البحث السريع الشامل</label>
-          <input type="text" id="filterGeneralText" class="form-control" placeholder="البحث بكود الصنف، اسم الصنف، باركود البذرة، محطة الأبحاث، أو المنطقة..." oninput="applyFilters()">
+          <input type="text" id="filterGeneralText" class="form-control" placeholder="البحث بكود الصنف، اسم الصنف، باركود البذرة، المحطة، أو المنطقة..." oninput="applyFilters()">
         </div>
       </div>
 
@@ -1748,7 +1748,7 @@
               <th>نوع الفاكهة</th>
               <th>الصنف المعتمد</th>
               <th>المنطقة</th>
-              <th>محطة الأبحاث</th>
+              <th>المحطة</th>
               <th>باركود البذرة</th>
               <th>تاريخ الإنشاء</th>
               <th>الحالة</th>
@@ -1813,7 +1813,7 @@
                 رمان بيدا • رمان (PM)
               </div>
               <div style="font-size: 12.5px; color: #64748b; margin-top: 3px;">
-                المنطقة: <strong id="modalRegionText" style="color: #0f172a;">الباحة</strong> • المحطة: <strong id="modalStationText" style="color: #15803d;">محطة أبحاث الباحة</strong> • باركود البذرة الأم: <code id="modalSeedLotText" style="color: #0284c7; font-family: monospace; font-weight: 700;">KSAB8018417</code>
+                المنطقة: <strong id="modalRegionText" style="color: #0f172a;">الباحة</strong> • المحطة: <strong id="modalStationText" style="color: #15803d;">محطة الباحة</strong> • باركود البذرة الأم: <code id="modalSeedLotText" style="color: #0284c7; font-family: monospace; font-weight: 700;">KSAB8018417</code>
               </div>
             </div>
           </div>
@@ -1940,8 +1940,8 @@
             </div>
           </div>
           <div>
-            <span style="font-size: 11px; color: #64748b; font-weight: 600; display: block;">محطة الأبحاث والإنتاج</span>
-            <span id="dispModalStationDisplay" style="font-size: 13.5px; font-weight: 700; color: #0f172a; margin-top: 2px; display: block;">محطة أبحاث أبها</span>
+            <span style="font-size: 11px; color: #64748b; font-weight: 600; display: block;">محطة الإنتاج</span>
+            <span id="dispModalStationDisplay" style="font-size: 13.5px; font-weight: 700; color: #0f172a; margin-top: 2px; display: block;">محطة أبها</span>
           </div>
           <div>
             <span style="font-size: 11px; color: #64748b; font-weight: 600; display: block;">النطاق التسلسلي المتوفر بالمشتل</span>
@@ -2044,7 +2044,7 @@
             <div class="form-group" style="margin-bottom:0;">
               <label class="form-label" id="dispModalOrgNameLabel">اسم المنشأة / الجهة المعتمدة بعد التحقق</label>
               <input type="text" id="dispModalOrgName" class="form-control" value="مشتل واحة النماص الخضراء المعتمد" readonly style="font-weight: 700; background: #f0fdf4; color: #0f172a;">
-              <div id="dispModalOrgStatusText" style="font-size: 11.5px; color: #15803d; margin-top: 4px;">✓ الرقم الموحد 700 نشط ومطابق لسجلات المركز الوطني والوزارة</div>
+              <div id="dispModalOrgStatusText" style="font-size: 11.5px; color: #15803d; margin-top: 4px;">✓ الرقم الموحد 700 نشط ومطابق لسجلات مركز البذور والتقاوي والوزارة</div>
             </div>
           </div>
         </div>
@@ -2132,7 +2132,7 @@
           </div>
           <div>
             <div style="font-size:16px; font-weight:800; color:#0f172a;">الخريطة التفاعلية للمحطات ومواقع صرف وتوزيع الشتلات بالمملكة</div>
-            <div style="font-size:12px; color:#64748b;">المركز الوطني للبذور والتقاوي • التوزيع الجغرافي للمحطات البحثية ونقاط الصرف للمزارع والأفراد (ArcGIS Light Basemap)</div>
+            <div style="font-size:12px; color:#64748b;">مركز البذور والتقاوي • التوزيع الجغرافي لمحطات الإنتاج ونقاط الصرف للمزارع والأفراد (ArcGIS Light Basemap)</div>
           </div>
         </div>
         <button class="modal-close-btn" style="color:#64748b;" onclick="closeMapModal()">&times;</button>
@@ -2165,7 +2165,7 @@
             </button>
             <button type="button" class="map-filter-btn" onclick="filterMapMarkers('station', this)">
               <span class="legend-dot station" style="width:8px; height:8px;"></span>
-              <span>المحطات البحثية (9)</span>
+              <span>المحطات (9)</span>
             </button>
             <button type="button" class="map-filter-btn" onclick="filterMapMarkers('farm', this)">
               <span class="legend-dot farm" style="width:8px; height:8px;"></span>
@@ -2197,7 +2197,7 @@
             </div>
             <div class="map-legend-item">
               <span class="legend-dot station"></span>
-              <span>محطة أبحاث رئيسية معتمدة (7)</span>
+              <span>محطة رئيسية معتمدة (7)</span>
             </div>
             <div class="map-legend-item">
               <span class="legend-dot farm"></span>
@@ -2368,7 +2368,7 @@
               </g>
 
                             <!-- ═════════════════════════════════════════════════ -->
-              <!-- 1. المحطات البحثية المعتمدة (9 محطات رسمية من ملف الإكسل) -->
+              <!-- 1. المحطات المعتمدة (9 محطات رسمية من ملف الإكسل) -->
               <!-- ═════════════════════════════════════════════════ -->
               <g id="stationsGroup">
                 <!-- محطة 1: أبها (عسير - 17,100 شتلة) -->
@@ -2575,9 +2575,9 @@
         <div class="map-sidebar" id="mapSidebar">
           
           <div style="border-bottom: 1px solid #e2e8f0; padding-bottom: 12px;">
-            <div style="font-size:11px; color:#15803d; font-weight:800; display:inline-block; background:#f0fdf4; padding:3px 8px; border-radius:4px; border:1px solid #bbf7d0;" id="sbTypeBadge">محطة أبحاث رئيسية معتمدة</div>
-            <div style="font-size:18px; font-weight:800; color:#0f172a; margin-top:6px;" id="sbTitle">محطة أبحاث الباحة</div>
-            <div style="font-size:12px; color:#64748b; margin-top:3px;" id="sbRegion">منطقة الباحة • مركز الأبحاث الزراعية</div>
+            <div style="font-size:11px; color:#15803d; font-weight:800; display:inline-block; background:#f0fdf4; padding:3px 8px; border-radius:4px; border:1px solid #bbf7d0;" id="sbTypeBadge">محطة رئيسية معتمدة</div>
+            <div style="font-size:18px; font-weight:800; color:#0f172a; margin-top:6px;" id="sbTitle">محطة الباحة</div>
+            <div style="font-size:12px; color:#64748b; margin-top:3px;" id="sbRegion">منطقة الباحة • المحطة الزراعية</div>
           </div>
 
           <!-- بطاقة الإحصائيات الشاملة للموقع المحدد -->
@@ -3125,10 +3125,10 @@
     // ══════════════════════════════════════════════════════════
     const MAP_LOCATIONS = {
       "st-abha": {
-            "type": "محطة أبحاث رئيسية معتمدة",
+            "type": "محطة رئيسية معتمدة",
             "typeColor": "#15803d",
-            "title": "محطة أبحاث أبها (عسير)",
-            "region": "منطقة عسير • المركز الوطني للبذور والتقاوي",
+            "title": "محطة أبها (عسير)",
+            "region": "منطقة عسير • مركز البذور والتقاوي",
             "produced": "17,100 شتلة",
             "dispatched": "14,600 شتلة (85%)",
             "beneficiaries": "24 مزرعة ومنشأة",
@@ -3138,10 +3138,10 @@
             "searchQuery": "أبها"
       },
       "st-hail": {
-            "type": "محطة أبحاث رئيسية معتمدة",
+            "type": "محطة رئيسية معتمدة",
             "typeColor": "#15803d",
-            "title": "محطة أبحاث حائل",
-            "region": "منطقة حائل • مركز الأبحاث والتطوير الزراعي",
+            "title": "محطة حائل",
+            "region": "منطقة حائل • المحطة الزراعية",
             "produced": "12,800 شتلة",
             "dispatched": "7,300 شتلة (57%)",
             "beneficiaries": "28 مزرعة ومستفيد",
@@ -3151,9 +3151,9 @@
             "searchQuery": "حائل"
       },
       "st-namas": {
-            "type": "محطة أبحاث رئيسية معتمدة",
+            "type": "محطة رئيسية معتمدة",
             "typeColor": "#15803d",
-            "title": "محطة أبحاث النماص",
+            "title": "محطة النماص",
             "region": "منطقة عسير • محافظة النماص",
             "produced": "8,700 شتلة",
             "dispatched": "8,700 شتلة (100%)",
@@ -3164,10 +3164,10 @@
             "searchQuery": "النماص"
       },
       "st-baha": {
-            "type": "محطة أبحاث رئيسية معتمدة",
+            "type": "محطة رئيسية معتمدة",
             "typeColor": "#15803d",
-            "title": "محطة أبحاث الباحة",
-            "region": "منطقة الباحة • مركز الأبحاث الزراعية",
+            "title": "محطة الباحة",
+            "region": "منطقة الباحة • المحطة الزراعية",
             "produced": "5,750 شتلة",
             "dispatched": "5,750 شتلة (100%)",
             "beneficiaries": "22 مستفيد (سجلات وأفراد)",
@@ -3177,10 +3177,10 @@
             "searchQuery": "الباحة"
       },
       "st-kharj": {
-            "type": "محطة أبحاث رئيسية معتمدة",
+            "type": "محطة رئيسية معتمدة",
             "typeColor": "#15803d",
-            "title": "محطة أبحاث الخرج (الرياض)",
-            "region": "منطقة الرياض • محطة الأبحاث والإنتاج",
+            "title": "محطة الخرج (الرياض)",
+            "region": "منطقة الرياض • محطة الإنتاج",
             "produced": "3,450 شتلة",
             "dispatched": "2,350 شتلة (68%)",
             "beneficiaries": "16 مزرعة ومنشأة",
@@ -3190,9 +3190,9 @@
             "searchQuery": "الخرج"
       },
       "st-jazan": {
-            "type": "محطة أبحاث رئيسية معتمدة",
+            "type": "محطة رئيسية معتمدة",
             "typeColor": "#15803d",
-            "title": "مركز الأبحاث الزراعية بجازان",
+            "title": "محطة جازان",
             "region": "منطقة جازان • مركز الفواكه الاستوائية",
             "produced": "1,050 شتلة",
             "dispatched": "700 شتلة (67%)",
@@ -3203,9 +3203,9 @@
             "searchQuery": "جازان"
       },
       "st-madinah": {
-            "type": "محطة أبحاث رئيسية معتمدة",
+            "type": "محطة رئيسية معتمدة",
             "typeColor": "#15803d",
-            "title": "محطة أبحاث المدينة المنورة",
+            "title": "محطة المدينة المنورة",
             "region": "منطقة المدينة المنورة • مركز التنمية الزراعية",
             "produced": "450 شتلة",
             "dispatched": "450 شتلة (100%)",
@@ -3216,10 +3216,10 @@
             "searchQuery": "المدينة المنورة"
       },
       "st-najran": {
-            "type": "محطة أبحاث رئيسية معتمدة",
+            "type": "محطة رئيسية معتمدة",
             "typeColor": "#15803d",
-            "title": "محطة أبحاث نجران",
-            "region": "منطقة نجران • الأبحاث الزراعية",
+            "title": "محطة نجران",
+            "region": "منطقة نجران • المحطة الزراعية",
             "produced": "400 شتلة",
             "dispatched": "400 شتلة (100%)",
             "beneficiaries": "9 مزارع ومستفيدين",
@@ -3229,9 +3229,9 @@
             "searchQuery": "نجران"
       },
       "st-ahsa": {
-            "type": "محطة أبحاث رئيسية معتمدة",
+            "type": "محطة رئيسية معتمدة",
             "typeColor": "#15803d",
-            "title": "محطة أبحاث الأحساء",
+            "title": "محطة الأحساء",
             "region": "المنطقة الشرقية • واحة الأحساء",
             "produced": "2,500 شتلة",
             "dispatched": "1,800 شتلة (72%)",
@@ -3744,7 +3744,7 @@
           if (nameLabel) nameLabel.textContent = 'اسم الجمعية التعاونية بعد التحقق';
           if (orgInput) orgInput.value = '7001074829';
           if (orgName) orgName.value = 'جمعية مزارعي الباحة التعاونية الزراعية';
-          if (orgStatus) orgStatus.innerHTML = '✓ جمعية تعاونية زراعية مشهرة ونشطة لدى المركز الوطني';
+          if (orgStatus) orgStatus.innerHTML = '✓ جمعية تعاونية زراعية مشهرة ونشطة لدى مركز البذور والتقاوي';
         }
       }
     }
@@ -3809,7 +3809,7 @@
           st.innerHTML = `✓ المنشأة نشطة ومسجلة رسمياً كـ (${KNOWN_700_ORGS[num].type}) معتمدة لدى الوزارة`;
         } else {
           nameInput.value = `${activeDispBeneficiaryType} الزراعية الوطنية المعتمدة (${num})`;
-          st.innerHTML = '✓ الرقم الموحد 700 نشط ومطابق لسجلات المركز الوطني والوزارة';
+          st.innerHTML = '✓ الرقم الموحد 700 نشط ومطابق لسجلات مركز البذور والتقاوي والوزارة';
         }
         st.style.color = '#15803d';
       }, 400);
@@ -4020,6 +4020,10 @@
           <span style="color:#94a3b8;">صرف لمستفيد (الرصيد مكتمل)</span>
         </div>`}
         <div class="action-menu-divider"></div>
+        <a href="screen_seedling_updated.html?tab=history&code=${encodeURIComponent(row.code)}&fruit=${encodeURIComponent(row.fruit)}&variety=${encodeURIComponent(row.variety)}&region=${encodeURIComponent(row.region)}&seed=${encodeURIComponent(row.seedLot)}" class="action-menu-item" onclick="closeGlobalActionMenu()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span style="font-weight:700; color:#334155;">سجل الشتلات والعمليات</span>
+        </a>
         <a href="screen_print_100_labels.html?code=${encodeURIComponent(row.code)}&fruit=${encodeURIComponent(row.fruit)}&variety=${encodeURIComponent(row.variety)}&station=${encodeURIComponent(row.station)}&seed=${encodeURIComponent(row.seedLot)}&count=100" target="_blank" class="action-menu-item" onclick="closeGlobalActionMenu()">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
           <span>طباعة ملصقات الباركود والـ QR</span>
